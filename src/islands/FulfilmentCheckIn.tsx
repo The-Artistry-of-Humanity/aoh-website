@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import PentagonDiagram from './PentagonDiagram';
+import ReportOffer from './report/ReportOffer';
+import { loadReport } from './report/makeReport';
 import './FulfilmentCheckIn.css';
 
 // The Fulfilment check-in, ported from the old Lovable page
@@ -286,6 +288,18 @@ const FulfilmentCheckIn = () => {
     setStage('questions');
   };
 
+  // Fetch the report's PDF code while they answer, so it's ready by the results.
+  useEffect(() => {
+    if (stage !== 'questions') return;
+    const go = () => { loadReport().catch(() => {}); };
+    if ('requestIdleCallback' in window) {
+      const id = requestIdleCallback(go, { timeout: 4000 });
+      return () => cancelIdleCallback(id);
+    }
+    const t = setTimeout(go, 1500);
+    return () => clearTimeout(t);
+  }, [stage]);
+
   // Transition screen → results
   useEffect(() => {
     if (stage !== 'transition') return;
@@ -379,7 +393,6 @@ const FulfilmentCheckIn = () => {
             <div className="btns">
               <button type="button" className="btn btn-lime" onClick={() => setStage('questions')}>Start your check-in</button>
             </div>
-            <p className="fc-note">No sign-up. No email. Just for you.</p>
           </div>
         )}
 
@@ -510,12 +523,30 @@ const FulfilmentCheckIn = () => {
             </div>
             <p className="fc-hint">{interpretation.weakHint}</p>
 
-            <button type="button" className="fc-tx fc-again" onClick={reset}>
-              <IconAgain /> Take it again
-            </button>
+            <div className="fc-res-act">
+              <a className="btn btn-lime" href="#fc-report">Get your full report</a>
+              <button type="button" className="fc-tx fc-again" onClick={reset}>
+                <IconAgain /> Take it again
+              </button>
+            </div>
           </div>
         )}
       </div>
+
+      {/* THE REPORT (a PDF with their name on it) */}
+      {stage === 'results' && (
+        <ReportOffer
+          scores={pillarScores}
+          overall={overallScore}
+          answers={answers}
+          questions={PILLARS.map((pl) => pl.questions.map((q) => q.text))}
+          relationship={relationshipStatus}
+          tone={interpretation.tone}
+          weakHint={interpretation.weakHint}
+          strongest={interpretation.strongest}
+          weakest={interpretation.weakest}
+        />
+      )}
 
       {/* WHAT COMES NEXT */}
       {stage === 'results' && (

@@ -14,6 +14,12 @@ import FulfilmentCheckIn from '../islands/FulfilmentCheckIn.tsx';
         <p class="lead">Twenty honest questions. About four minutes. A picture of where you are right now, and where to put your attention next.</p>
       </div>
       <FulfilmentCheckIn client:load />
+      <!-- Lets Netlify find the report form, which only appears after the check-in. -->
+      <form name="fulfilment-report" data-netlify="true" netlify-honeypot="bot-field" hidden>
+        <input type="hidden" name="form-name" value="fulfilment-report" />
+        <input name="bot-field" /><input name="name" /><input type="email" name="email" />
+        <input name="overall" /><input name="strongest" /><input name="needs-attention" />
+      </form>
     </div>
   </section>
 </Base>
