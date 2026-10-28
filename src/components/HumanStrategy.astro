@@ -1,0 +1,463 @@
+---
+/* The human strategy landing page, used by /human-strategy and
+   /build-a-human-strategy. Written in Ian's voice (first person), as on the
+   previous site. The cost calculator runs in the browser; its benchmarks are
+   the previous site's. */
+import { PILLARS } from '../data/aoh';
+
+const BOOKING_URL = 'https://calendar.app.google/P14aVTpPNqgrVAbHA';
+const INTERESTS = ['Consulting', 'Free Masterclass', 'Wellness Accelerator', 'Leadership Coaching', 'Keynote or Workshop', 'nørma', 'Just exploring'];
+
+const PILLAR_TEXT = [
+  'The energy your team actually shows up with.',
+  'How they handle pressure, clarity and self-leadership.',
+  'The lives behind the role, and what they bring in with them.',
+  'The trust between people on your team.',
+  'Whether the way you work is sustainable, or quietly burning them out.',
+];
+
+const FORMATS = [
+  { flag: 'Deepest engagement', title: 'Consulting', text: 'I come in alongside your leadership team and build your human strategy with you. We map where your team actually stands across the Five Pillars, design the operating model, and embed it as a system you run, not a program you launch.', href: '/what-we-do/culture-consulting' },
+  { flag: 'Best starting point', title: 'Masterclass', text: 'A focused 60 to 90 minute session for your leadership team. You leave with a shared language for the human side of the business and a clear read on where your team is strong, and where it is quietly under strain.', href: '/what-we-do/masterclass' },
+  { flag: '6 weeks', title: 'Wellness Accelerator', text: 'A facilitated six-week program that takes a team through each of the Five Pillars with structured exercises, accountability and visible progress. The fastest way to move a team from idea to practice.', href: '/what-we-do/wellness-accelerator' },
+  { flag: '1:1', title: 'Leadership coaching', text: 'Private coaching for senior leaders who want to model what they are asking of their teams. Grounded in the same framework, applied to your own life and your own leadership.', href: '/what-we-do/leadership-coaching' },
+  { flag: 'Events', title: 'Keynotes and workshops', text: 'From a 45-minute keynote to a full-day immersive session. Tailored to your event, your audience and the conversation you want to start.', href: '/what-we-do/keynotes-workshops' },
+];
+
+/* Calculator benchmarks, from the previous site. Keep in step with the script
+   at the bottom of this file. */
+const INDUSTRIES: Record<string, { label: string; t: number; a: number; p: number; c: number; salary: number; note: string }> = {
+  technology:    { label: 'Technology & Software',          t: 1.40, a: 0.90, p: 1.15, c: 1.10, salary: 135000, note: 'High turnover, chronic cognitive load, heavy presenteeism.' },
+  financial:     { label: 'Financial Services & Banking',   t: 1.15, a: 1.00, p: 1.25, c: 1.15, salary: 140000, note: 'Long-hours culture, elevated psychosocial claim rates.' },
+  professional:  { label: 'Consulting, Legal & Accounting', t: 1.35, a: 0.95, p: 1.30, c: 1.20, salary: 125000, note: 'Utilisation pressure and burnout-driven exits.' },
+  healthcare:    { label: 'Healthcare & Social Care',       t: 1.30, a: 1.45, p: 1.20, c: 1.35, salary: 95000,  note: 'Highest burnout and absence rates in the economy.' },
+  retail:        { label: 'Retail & Hospitality',           t: 2.30, a: 1.20, p: 1.00, c: 1.05, salary: 65000,  note: 'Volatile workforce, replacement cost dominates.' },
+  construction:  { label: 'Construction & Trades',          t: 1.35, a: 1.30, p: 0.90, c: 1.40, salary: 100000, note: 'Highest suicide rate of any Australian sector.' },
+  education:     { label: 'Education',                      t: 0.95, a: 1.30, p: 1.20, c: 1.25, salary: 95000,  note: 'Lower turnover, high emotional load, rising burnout.' },
+  government:    { label: 'Government & Public Sector',     t: 0.70, a: 1.20, p: 1.15, c: 1.10, salary: 105000, note: 'Low turnover, elevated absence, cultural stagnation risk.' },
+  manufacturing: { label: 'Manufacturing & Logistics',      t: 1.20, a: 1.30, p: 1.00, c: 1.10, salary: 90000,  note: 'Physical demand and shift work drive absence.' },
+  media:         { label: 'Media, Marketing & Creative',    t: 1.50, a: 0.90, p: 1.25, c: 1.15, salary: 95000,  note: 'Deadline culture, high turnover, presenteeism heavy.' },
+  other:         { label: 'Other / Mixed',                  t: 1.00, a: 1.00, p: 1.00, c: 1.00, salary: 110000, note: 'Blended Australian baseline.' },
+};
+
+function calc(n: number, key: string, salary: number) {
+  const ind = INDUSTRIES[key] || INDUSTRIES.other;
+  const absenceDays = 3.1 * ind.a;                    // Safe Work Australia 2024
+  const turnoverRate = 0.13 * ind.t;                  // AHRI 2024
+  const presRate = 0.09 * ind.p;                      // Deloitte AU 2024
+  const absenteeism = n * (salary / 230) * absenceDays;
+  const turnover = n * turnoverRate * salary * 0.5;   // Gallup / SHRM replacement midpoint
+  const presenteeism = n * salary * presRate;
+  const visible = absenteeism + turnover;
+  const total = visible + presenteeism;
+  const disengaging = Math.round(Math.round(n * 0.85) * 0.6);
+  const burnout = Math.round(disengaging * 0.35 * ind.c);
+  const crisis = Math.round(burnout * 0.04 * ind.c);
+  const claims = crisis * 0.08;                       // claim conversion from crisis
+  return {
+    absenceDays, turnoverRate, presRate, absenteeism, turnover, presenteeism, visible, total,
+    hiddenPct: total > 0 ? Math.round((presenteeism / total) * 100) : 0,
+    disengaging, heading: Math.max(0, burnout - crisis), burnout, crisis, claims,
+    low: claims * 379157 * 0.6, high: claims * 379157 * 1.4,
+    risk: n >= 500 ? 'Significant' : n >= 100 ? 'Material' : 'Emerging',
+    note: ind.note,
+  };
+}
+const aud = (v: number) => v >= 1e9 ? `$${(v / 1e9).toFixed(2)}B` : v >= 1e6 ? `$${(v / 1e6).toFixed(2)}M` : v >= 1e3 ? `$${Math.round(v / 1e3)}k` : `$${Math.round(v)}`;
+const num = (v: number) => new Intl.NumberFormat('en-AU', { maximumFractionDigits: 0 }).format(Math.max(0, Math.round(v)));
+const pct = (c: number, n: number) => { const x = n > 0 ? (c / n) * 100 : 0; return (x < 0.1 ? '<0.1' : x.toFixed(1)) + '% of team'; };
+const claimText = (x: number) => x < 1 ? 'less than one expected psychosocial claim a year.' : `${x.toFixed(1)} expected psychosocial claims a year.`;
+
+const N0 = 250, S0 = INDUSTRIES.other.salary;
+const r = calc(N0, 'other', S0);
+---
+
+<!-- Hero -->
+<section style="background:var(--cream);overflow:hidden">
+  <div class="glow" style="right:-12%;top:-20%;width:56%;background:radial-gradient(closest-side,rgba(217,234,110,.28),rgba(217,234,110,0) 70%)"></div>
+  <div class="wrap split" style="padding-top:clamp(40px,6vw,88px);padding-bottom:clamp(120px,13vw,180px)">
+    <div style="max-width:620px">
+      <span class="eyebrow">Human strategy, with Ian Williams</span>
+      <h1>Most companies have a business strategy. Few have a <span class="mk">human strategy</span>.</h1>
+      <p class="lead">I help leadership teams build theirs.</p>
+      <div class="btns">
+        <a class="btn btn-lime" href="#contact">Book time with us</a>
+        <a class="btn btn-ghost" href="#calculator">See what it’s costing you</a>
+      </div>
+    </div>
+    <figure style="margin:0;flex:0 1 400px">
+      <div class="arch" style="aspect-ratio:420/520;background:radial-gradient(64% 42% at 50% 22%,rgba(217,234,110,.6),rgba(217,234,110,.16) 55%,rgba(217,234,110,0) 82%),linear-gradient(180deg,#E8EACB,#ECE8D7 52%,#E4DFCA);position:relative">
+        <img src="/assets/ian-portrait.webp" alt="Ian Williams" width="900" height="802" style="position:absolute;left:50%;bottom:0;width:128%;max-width:none;transform:translateX(-50%)" />
+      </div>
+      <figcaption style="text-align:center;margin-top:18px"><b style="display:block;font:400 22px/1.1 var(--serif)">Ian Williams</b><span class="who" style="display:block;margin-top:8px">Founder &amp; CEO</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- The idea -->
+<section class="bg-sand lift">
+  <div class="wrap sec split" style="align-items:start">
+    <div style="flex:1 1 440px">
+      <span class="eyebrow">The idea</span>
+      <h2>You have a business strategy. The thing it actually runs on is <span class="mk">people</span>.</h2>
+      <p class="lead">You have built a strategy for the business. The market, the product, the numbers, the plan. But the thing all of it actually runs on is people. How they are doing, how they connect, whether they trust each other, whether they have anything left to give.</p>
+      <p class="body">That is your human strategy. Most leaders have never named it, let alone built one.</p>
+      <p class="body">A human strategy is the operating model for the part of your business that lives inside the people doing the work. It is the system that decides whether your team has the energy, clarity and trust to actually execute the plan you have set. Built well, it is quiet and load bearing. Built badly, or not at all, it is the reason good strategy quietly stops moving.</p>
+    </div>
+    <div class="card hs-pillars" data-rv style="flex:1 1 380px">
+      <p class="pl-lead">The Five Pillars of Fulfilment are the dimensions a team actually runs on. Not a wellbeing program. The operating model itself.</p>
+      <ol>
+        {PILLARS.map((p, i) => <li><span>0{i + 1}</span><div><h3>{p.name}</h3><p class="body">{PILLAR_TEXT[i]}</p></div></li>)}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- The cost: calculator -->
+<section class="bg-dark lift-b" id="calculator" style="scroll-margin-top:60px">
+  <div class="glow" style="left:20%;top:-20%;width:60%;background:radial-gradient(closest-side,rgba(217,234,110,.09),rgba(217,234,110,0) 70%)"></div>
+  <div class="wrap sec">
+    <div style="max-width:760px">
+      <span class="eyebrow">The cost of standing still</span>
+      <h2>What is it costing you, today, not to have a <span class="mk mk-d">human strategy</span>?</h2>
+      <p class="lead">Tell me the size of your team. I will show you what the human side looks like in real terms, what it is quietly costing you each year, and the risk you are carrying without knowing it.</p>
+    </div>
+
+    <div class="calc" data-calc data-industries={JSON.stringify(INDUSTRIES)}>
+      <div class="tile ins">
+        <div class="in">
+          <div class="in-row"><label for="hs-n">People on your team</label><output for="hs-n" class="big" data-o="n">{num(N0)}</output></div>
+          <input class="range" type="range" id="hs-n" min="10" max="5000" step="10" value={N0} style={`--p:${((N0 - 10) / 4990) * 100}%`} />
+          <div class="in-ends"><span>10</span><span>5,000</span></div>
+        </div>
+        <div class="in">
+          <div class="in-row"><label for="hs-ind">Industry</label><small>tunes the benchmarks</small></div>
+          <select id="hs-ind">{Object.entries(INDUSTRIES).map(([k, v]) => <option value={k} selected={k === 'other'}>{v.label}</option>)}</select>
+          <p class="note" data-o="note">{r.note}</p>
+          <p class="chips"><span>Turnover <b data-o="turn">{(r.turnoverRate * 100).toFixed(1)}%</b></span><span>Absence <b data-o="abs">{r.absenceDays.toFixed(1)} days</b></span><span>Presenteeism <b data-o="pres">{Math.round(r.presRate * 100)}%</b></span></p>
+        </div>
+        <div class="in">
+          <div class="in-row"><label for="hs-sal">Average salary</label><small>optional</small></div>
+          <div class="money"><span aria-hidden="true">$</span><input type="text" id="hs-sal" inputmode="numeric" autocomplete="off" value={S0} /></div>
+          <p class="note">Defaults to a sensible blended figure if you skip it.</p>
+        </div>
+        <p class="fine">Built on Gallup engagement data, SHRM turnover benchmarks and current Australian psychosocial safety regulation. Indicative for a conversation, not a substitute for one.</p>
+      </div>
+
+      <div class="outs">
+        <div class="tile">
+          <span class="eyebrow">The human picture</span>
+          <p class="body">Behind every percentage point is a person. Of your <b data-o="n">{num(N0)}</b> people, today the picture looks roughly like this.</p>
+          <div class="cells">
+            <div class="cell"><b data-o="c1">{num(r.disengaging)}</b><small data-o="p1">{pct(r.disengaging, N0)}</small><h4>Quietly disengaging</h4><span>Showing up. Holding back.</span></div>
+            <div class="cell"><b data-o="c2">{num(r.heading)}</b><small data-o="p2">{pct(r.heading, N0)}</small><h4>Heading toward burnout</h4><span>Sleep, focus, mood slipping.</span></div>
+            <div class="cell hot"><b data-o="c3">{num(r.burnout)}</b><small data-o="p3">{pct(r.burnout, N0)}</small><h4>Already in burnout</h4><span>Exhausted, often hiding it.</span></div>
+            <div class="cell hot"><b data-o="c4">{num(r.crisis)}</b><small data-o="p4">{pct(r.crisis, N0)}</small><h4>In genuine crisis</h4><span>Where harm and liability start.</span></div>
+          </div>
+          <p class="fine">Gallup 2024 · Deloitte AU Mental Health &amp; Employers 2024 · Black Dog Institute.</p>
+        </div>
+
+        <div class="tile">
+          <div class="cost-hd">
+            <div>
+              <span class="eyebrow">Annual cost to you</span>
+              <p class="body">Around <b class="hot-t" data-o="hid">{r.hiddenPct}%</b> of this never reaches the dashboard. It compounds quietly until it surfaces.</p>
+            </div>
+            <div class="cost-total"><b data-o="total">{aud(r.total)}</b><small>per year, indicative</small></div>
+          </div>
+          <div class="buckets">
+            <div class="bucket">
+              <span class="b-k">Visible</span><span class="b-t">In the books</span>
+              <p><span>Absenteeism</span><b data-o="absc">{aud(r.absenteeism)}</b></p>
+              <p><span>Turnover and replacement</span><b data-o="turnc">{aud(r.turnover)}</b></p>
+              <p class="sub"><span>Subtotal</span><b data-o="vis">{aud(r.visible)}</b></p>
+            </div>
+            <div class="bucket hidden-b">
+              <span class="b-k">Hidden</span><span class="b-t">Off the dashboard</span>
+              <p><span>Presenteeism and lost focus</span><b data-o="presc">{aud(r.presenteeism)}</b></p>
+              <p class="sub"><span>Subtotal</span><b data-o="presc">{aud(r.presenteeism)}</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile risk">
+          <p class="risk-hd"><span class="eyebrow">Regulatory exposure · Victoria</span><span class="risk-pill" data-o="risk">{r.risk}</span></p>
+          <p class="risk-line"><span data-o="crisis-n">{num(r.crisis)} {r.crisis === 1 ? 'person' : 'people'}</span> in crisis is <span class="hot-t" data-o="claims">{claimText(r.claims)}</span></p>
+          <p class="range-out"><b data-o="low">{aud(r.low)}</b><span>to</span><b data-o="high">{aud(r.high)}</b></p>
+          <p class="body">Anchored to <i>WorkSafe Victoria v Court Services Victoria</i>, 2023: AU$379,157 for a single psychosocial safety breach. Applied to your at-risk group at an 8% claim conversion rate.</p>
+          <p class="body" style="font-size:15px">Since 1 December 2025, Victoria’s amended OHS Regulations make managing psychosocial hazards an explicit legal duty. Maximum body-corporate penalties reach AU$3.85M per offence. Equivalent duties now apply in NSW, QLD, WA, SA and the UK.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="calc-end">This is the cost of not having a human strategy.<br /><span>Here is how we build one.</span></p>
+  </div>
+</section>
+
+<!-- How I can help -->
+<section class="lift" style="background:var(--cream)">
+  <div class="wrap sec">
+    <div class="split" style="align-items:end">
+      <div><span class="eyebrow">How I can help</span><h2>Five ways I work with leaders. <span class="mk">One platform</span> to keep it going.</h2></div>
+      <p class="lead" style="margin-top:0">Every team meets me at a different point. The goal is the same: a human strategy that actually runs inside your organisation, owned by the leaders who built it.</p>
+    </div>
+    <div class="grid g2" style="margin-top:clamp(44px,5vw,64px)">
+      {FORMATS.map(f => (
+        <a class="card fmt" href={f.href} data-rv><span class="pill">{f.flag}</span><h3 style="margin-top:16px">{f.title}</h3><p class="body">{f.text}</p><span class="link">Find out more ›</span></a>
+      ))}
+      <a class="card-dark fmt norma" href="https://joinnorma.com/" data-rv>
+        <div class="glow" style="right:-30%;top:-50%;width:90%;background:radial-gradient(closest-side,rgba(217,234,110,.18),rgba(217,234,110,0) 70%)"></div>
+        <p class="live"><span class="pill">Available now</span><span class="dot">Live</span></p>
+        <p class="norma-word"><img src="/assets/norma-app-icon.png" alt="" width="44" height="44" />nørma</p>
+        <p class="body">The wellbeing operating system. A private fulfilment companion for your people. Honest, aggregated signals for your leaders. Your human strategy, put into practice.</p>
+        <span class="link">Get access now ↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- About Ian -->
+<section class="bg-sand lift-b">
+  <div class="wrap sec split">
+    <figure class="photo" style="margin:0;flex:1 1 400px;aspect-ratio:4/5;max-width:520px" data-rv>
+      <img src="/assets/ian-presenting.jpg" alt="Ian Williams facilitating a leadership session" width="1024" height="683" loading="lazy" style="object-position:62% 50%" />
+    </figure>
+    <div style="flex:1 1 460px">
+      <span class="eyebrow">About Ian</span>
+      <h2 style="font-size:clamp(30px,3.4vw,44px)">I am Ian Williams. I have spent more than thirty years inside the part of business that does not show up on <span class="mk">the org chart</span>.</h2>
+      <p class="lead">I am the founder and CEO of The Artistry of Humanity. I work with leadership teams as a consultant, facilitator and keynote speaker. The work is the same in every form: helping leaders see the human side of their business clearly, and giving them a way to actually run it.</p>
+      <p class="body">I grew up in Liverpool and took my first leadership role at eighteen. Since then I have turned around underperforming businesses and built high-performing cultures across three continents, including at DHL and some of the world’s largest organisations.</p>
+      <p class="body">I built the Five Pillars of Fulfilment because the language we were using for wellbeing was not load bearing enough to carry the weight leaders are now carrying. Human strategy is the conversation I think every leadership team needs to have, and most are not having yet.</p>
+      <a class="link" href="/about">Read my story ›</a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="lift" id="contact" style="background:var(--cream);scroll-margin-top:60px">
+  <div class="wrap sec">
+    <div class="narrow center">
+      <span class="eyebrow">Book time with us</span>
+      <h2>Start with a free <span class="mk">diagnostic session</span>.</h2>
+      <p class="lead" style="margin-left:auto;margin-right:auto">Thirty minutes with Ian, direct. A chance to get to know each other, unpack the challenges you are sitting with, and see how a human strategy might help. In most conversations you will leave with something useful, whether we work together or not.</p>
+    </div>
+    <div class="split" style="align-items:start;margin-top:clamp(44px,5vw,64px)">
+      <div class="card" data-rv style="flex:1 1 360px">
+        <span class="pill">Free · 30 minutes · No obligation</span>
+        <h3 style="margin-top:16px">A conversation with Ian, on the house.</h3>
+        <ul class="list" style="margin-top:20px">
+          <li>Get to know each other</li>
+          <li>Unpack the challenges you are facing</li>
+          <li>Explore how a human strategy might help</li>
+          <li>Leave with something useful, either way</li>
+        </ul>
+        <div class="btns" style="margin-top:26px"><a class="btn btn-lime" href={BOOKING_URL} rel="noopener">Book a slot ↗</a></div>
+      </div>
+      <div style="flex:1 1 460px">
+        <span class="eyebrow">Or write us a message</span>
+        <form class="card form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks">
+          <input type="hidden" name="form-name" value="contact" />
+          <p hidden><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+          <div class="fields">
+            <label class="field"><span>Your name</span><input type="text" name="name" autocomplete="name" maxlength="100" required /></label>
+            <label class="field"><span>Work email</span><input type="email" name="email" autocomplete="email" maxlength="255" required /></label>
+            <label class="field"><span>Company</span><input type="text" name="company" autocomplete="organization" maxlength="150" required /></label>
+            <label class="field"><span>Phone (optional)</span><input type="tel" name="phone" autocomplete="tel" maxlength="30" /></label>
+          </div>
+          <label class="field"><span>What are you most interested in?</span>
+            <select name="interest" required>
+              <option value="">Choose one</option>
+              {INTERESTS.map(o => <option value={o}>{o}</option>)}
+            </select>
+          </label>
+          <label class="field"><span>Your message (optional)</span><textarea name="message" rows="5" maxlength="1000" placeholder="Tell us a little about your team, your event, or where you are right now. The more context, the better."></textarea></label>
+          <button class="btn btn-lime" type="submit">Send message</button>
+          <p class="trust"><span>Reply within one working day</span><span>No sales pressure</span><span>Private &amp; secure</span></p>
+        </form>
+        <p class="small center" style="margin-top:22px">Or email <a href="mailto:ian@artistry-of-humanity.com" style="color:var(--ink);text-decoration:underline;text-underline-offset:3px">ian@artistry-of-humanity.com</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Closing statement -->
+<section class="bg-dark lift-b">
+  <div class="wrap sec center">
+    <p class="closing">Because <span class="mk mk-d">human strategy</span> is the precursor to business strategy.</p>
+  </div>
+</section>
+
+<script>
+  type Ind = { label: string; t: number; a: number; p: number; c: number; salary: number; note: string };
+  const root = document.querySelector<HTMLElement>('[data-calc]');
+  if (root) {
+    const I: Record<string, Ind> = JSON.parse(root.dataset.industries || '{}');
+    const nIn = root.querySelector<HTMLInputElement>('#hs-n')!;
+    const indIn = root.querySelector<HTMLSelectElement>('#hs-ind')!;
+    const salIn = root.querySelector<HTMLInputElement>('#hs-sal')!;
+    let salary = I.other.salary, touched = false;
+
+    // Same model as the frontmatter calc() above.
+    const calc = (n: number, key: string, s: number) => {
+      const ind = I[key] || I.other;
+      const absenceDays = 3.1 * ind.a, turnoverRate = 0.13 * ind.t, presRate = 0.09 * ind.p;
+      const absenteeism = n * (s / 230) * absenceDays, turnover = n * turnoverRate * s * 0.5, presenteeism = n * s * presRate;
+      const visible = absenteeism + turnover, total = visible + presenteeism;
+      const disengaging = Math.round(Math.round(n * 0.85) * 0.6);
+      const burnout = Math.round(disengaging * 0.35 * ind.c);
+      const crisis = Math.round(burnout * 0.04 * ind.c);
+      const claims = crisis * 0.08;
+      return {
+        absenceDays, turnoverRate, presRate, absenteeism, turnover, presenteeism, visible, total,
+        hiddenPct: total > 0 ? Math.round((presenteeism / total) * 100) : 0,
+        disengaging, heading: Math.max(0, burnout - crisis), burnout, crisis, claims,
+        low: claims * 379157 * 0.6, high: claims * 379157 * 1.4,
+        risk: n >= 500 ? 'Significant' : n >= 100 ? 'Material' : 'Emerging', note: ind.note,
+      };
+    };
+    const aud = (v: number) => v >= 1e9 ? `$${(v / 1e9).toFixed(2)}B` : v >= 1e6 ? `$${(v / 1e6).toFixed(2)}M` : v >= 1e3 ? `$${Math.round(v / 1e3)}k` : `$${Math.round(v)}`;
+    const num = (v: number) => new Intl.NumberFormat('en-AU', { maximumFractionDigits: 0 }).format(Math.max(0, Math.round(v)));
+    const pct = (c: number, n: number) => { const x = n > 0 ? (c / n) * 100 : 0; return (x < 0.1 ? '<0.1' : x.toFixed(1)) + '% of team'; };
+    const claimText = (x: number) => x < 1 ? 'less than one expected psychosocial claim a year.' : `${x.toFixed(1)} expected psychosocial claims a year.`;
+    const set = (k: string, v: string) => root.querySelectorAll(`[data-o="${k}"]`).forEach(el => { el.textContent = v; });
+
+    const render = () => {
+      const n = Number(nIn.value), r = calc(n, indIn.value, salary);
+      nIn.style.setProperty('--p', ((n - 10) / 4990) * 100 + '%');
+      set('n', num(n)); set('note', r.note);
+      set('turn', (r.turnoverRate * 100).toFixed(1) + '%'); set('abs', r.absenceDays.toFixed(1) + ' days'); set('pres', Math.round(r.presRate * 100) + '%');
+      set('c1', num(r.disengaging)); set('p1', pct(r.disengaging, n));
+      set('c2', num(r.heading)); set('p2', pct(r.heading, n));
+      set('c3', num(r.burnout)); set('p3', pct(r.burnout, n));
+      set('c4', num(r.crisis)); set('p4', pct(r.crisis, n));
+      set('hid', r.hiddenPct + '%'); set('total', aud(r.total));
+      set('absc', aud(r.absenteeism)); set('turnc', aud(r.turnover)); set('vis', aud(r.visible)); set('presc', aud(r.presenteeism));
+      set('risk', r.risk); set('crisis-n', `${num(r.crisis)} ${r.crisis === 1 ? 'person' : 'people'}`); set('claims', claimText(r.claims));
+      set('low', aud(r.low)); set('high', aud(r.high));
+    };
+
+    nIn.addEventListener('input', render);
+    indIn.addEventListener('change', () => {
+      if (!touched) { salary = (I[indIn.value] || I.other).salary; salIn.value = String(salary); }
+      render();
+    });
+    salIn.addEventListener('focus', () => salIn.select());
+    salIn.addEventListener('input', () => {
+      const raw = salIn.value.replace(/[^\d]/g, '');
+      salIn.value = raw; touched = true;
+      if (raw) { salary = Math.min(500000, Number(raw)); render(); }
+    });
+    salIn.addEventListener('blur', () => {
+      const v = Number(salIn.value);
+      salary = !salIn.value || Number.isNaN(v) ? I.other.salary : Math.min(500000, Math.max(30000, v));
+      salIn.value = String(salary); render();
+    });
+    render();
+  }
+</script>
+
+<style>
+  .hs-pillars .pl-lead{margin:0;font:400 clamp(21px,2vw,25px)/1.32 var(--serif);color:var(--ink);text-wrap:pretty}
+  .hs-pillars ol{list-style:none;margin:22px 0 0;padding:0}
+  .hs-pillars li{display:flex;gap:16px;align-items:baseline;padding:16px 0;border-top:1px solid var(--line)}
+  .hs-pillars li > span{font:400 20px/1 var(--serif);color:var(--olive);min-width:28px}
+  .hs-pillars h3{font-size:21px}
+  .hs-pillars .body{margin-top:4px;font-size:15.5px}
+
+  /* Calculator (dark section) */
+  .calc{--hot:#F2A483;display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:clamp(16px,2vw,22px);margin-top:clamp(44px,5vw,64px);align-items:start}
+  @media (max-width:920px){.calc{grid-template-columns:minmax(0,1fr)}}
+  .calc .tile{box-shadow:inset 0 0 0 1px var(--line-dark),inset 0 1px 0 rgba(255,255,255,.06)}
+  .ins{display:grid;gap:30px}
+  .in-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .in-row label{font:500 14.5px var(--sans);color:var(--on-dark)}
+  .in-row small{font-size:12.5px;color:rgba(201,212,194,.6)}
+  .big{font:400 30px/1 var(--serif);color:#EAF79B;font-variant-numeric:tabular-nums}
+  .range{-webkit-appearance:none;appearance:none;width:100%;height:28px;margin:0;background:transparent;cursor:pointer}
+  .range::-webkit-slider-runnable-track{height:6px;border-radius:99px;background:linear-gradient(90deg,var(--lime) var(--p,50%),rgba(244,242,230,.16) var(--p,50%))}
+  .range::-moz-range-track{height:6px;border-radius:99px;background:rgba(244,242,230,.16)}
+  .range::-moz-range-progress{height:6px;border-radius:99px;background:var(--lime)}
+  .range::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-9px;border-radius:50%;background:var(--lime-2);border:3px solid #0F2015;box-shadow:0 0 0 1px var(--lime)}
+  .range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--lime-2);border:3px solid #0F2015;box-shadow:0 0 0 1px var(--lime)}
+  .in-ends{display:flex;justify-content:space-between;margin-top:6px;font-size:12px;color:rgba(201,212,194,.55)}
+  .calc select,.money input{width:100%;min-height:52px;padding:0 16px;border:1px solid rgba(244,242,230,.18);border-radius:14px 12px 14px 10px / 12px 14px 10px 14px;background-color:rgba(244,242,230,.07);color:var(--on-dark);font:500 16px var(--sans);appearance:none}
+  .calc select{padding-right:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%23DCEC85' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center}
+  .calc option{background:#0F2015;color:#F6F4E9}
+  .calc select:focus,.money input:focus{outline:2px solid var(--lime-3);outline-offset:1px}
+  .money{position:relative}
+  .money span{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:rgba(201,212,194,.6)}
+  .money input{padding-left:32px;font-variant-numeric:tabular-nums}
+  .note{margin:10px 0 0;font-size:13px;line-height:1.5;color:rgba(201,212,194,.65)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
+  .chips span{padding:5px 10px;border-radius:999px;background:rgba(244,242,230,.08);font:600 10.5px/1.2 var(--sans);letter-spacing:1px;text-transform:uppercase;color:rgba(201,212,194,.8)}
+  .chips b{font-weight:600;color:var(--on-dark)}
+  .fine{margin:16px 0 0;padding-top:18px;border-top:1px solid var(--line-dark);font-size:12.5px;line-height:1.55;color:rgba(201,212,194,.55)}
+  .ins .fine{margin-top:0}
+
+  .outs{display:grid;gap:clamp(16px,2vw,22px);min-width:0}
+  .outs .body{font-size:15.5px}
+  .outs b{color:var(--on-dark);font-weight:600}
+  .cells{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:22px}
+  .cell{padding:18px;border-radius:18px 14px 18px 12px / 14px 18px 12px 18px;background:rgba(244,242,230,.04);box-shadow:inset 0 0 0 1px var(--line-dark)}
+  .cell b{display:block;font:400 clamp(32px,3.4vw,42px)/1 var(--serif);color:#EAF79B;font-variant-numeric:tabular-nums}
+  .cell.hot b{color:var(--hot)}
+  .cell small{display:block;margin-top:6px;font:600 10.5px var(--sans);letter-spacing:1px;text-transform:uppercase;color:rgba(201,212,194,.55)}
+  .cell h4{margin-top:12px;font-size:15px;color:var(--on-dark)}
+  .cell span{display:block;margin-top:3px;font-size:13.5px;line-height:1.45;color:rgba(201,212,194,.7)}
+  .hot-t,.outs b.hot-t{color:var(--hot)}
+
+  .cost-hd{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:16px 28px}
+  .cost-hd > div:first-child{flex:1 1 260px;max-width:420px}
+  .cost-total{text-align:right}
+  @media (max-width:560px){.cost-total{text-align:left}}
+  .cost-total b{display:block;font:400 clamp(44px,5vw,60px)/1 var(--serif);color:var(--hot);font-variant-numeric:tabular-nums}
+  .cost-total small{display:block;margin-top:8px;font-size:12.5px;color:rgba(201,212,194,.6)}
+  .buckets{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px;margin-top:24px}
+  .bucket{display:flex;flex-direction:column;padding:18px 20px;border-radius:18px 14px 18px 12px / 14px 18px 12px 18px;background:rgba(244,242,230,.04);box-shadow:inset 0 0 0 1px var(--line-dark)}
+  .bucket.hidden-b{background:rgba(242,164,131,.08);box-shadow:inset 0 0 0 1px rgba(242,164,131,.3)}
+  .b-k{font:600 10.5px var(--sans);letter-spacing:1.6px;text-transform:uppercase;color:rgba(201,212,194,.7)}
+  .hidden-b .b-k{color:var(--hot)}
+  .b-t{margin-top:2px;font-size:13px;color:rgba(201,212,194,.7)}
+  .bucket p{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:12px 0 0;font-size:14px;color:var(--on-dark-muted)}
+  .bucket p b{font:400 17px var(--serif);font-variant-numeric:tabular-nums}
+  .bucket .sub{margin-top:auto;padding-top:14px;border-top:1px solid var(--line-dark);font:600 10.5px var(--sans);letter-spacing:1.4px;text-transform:uppercase;color:rgba(201,212,194,.55)}
+  .bucket p + .sub{margin-top:16px}
+  .bucket .sub b{font:400 26px var(--serif);letter-spacing:0;text-transform:none;color:var(--on-dark)}
+  .hidden-b .sub b{color:var(--hot)}
+
+  .risk{background:rgba(242,164,131,.07);box-shadow:inset 0 0 0 1px rgba(242,164,131,.28)}
+  .risk-hd{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0}
+  .risk .eyebrow{color:var(--hot)}
+  .risk-pill{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;background:rgba(242,164,131,.18);font:600 10.5px var(--sans);letter-spacing:1.4px;text-transform:uppercase;color:var(--hot)}
+  .risk-line{margin:16px 0 0;font:400 clamp(24px,2.5vw,31px)/1.25 var(--serif);color:var(--on-dark);text-wrap:pretty}
+  .range-out{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:18px 0 0}
+  .range-out b{font:400 clamp(32px,3.6vw,42px)/1 var(--serif);color:var(--hot);font-variant-numeric:tabular-nums}
+  .range-out span{color:rgba(201,212,194,.6)}
+
+  .calc-end{margin:clamp(48px,6vw,72px) auto 0;max-width:640px;text-align:center;font:400 clamp(22px,2.4vw,30px)/1.3 var(--serif);color:var(--on-dark)}
+  .calc-end span{color:#DCEC85}
+
+  /* Formats */
+  .fmt{display:flex;flex-direction:column;align-items:flex-start}
+  .fmt .body{flex:1}
+  .fmt .live{align-self:stretch}
+  .norma .live{display:flex;justify-content:space-between;align-items:center;margin:0}
+  .norma .dot{display:inline-flex;align-items:center;gap:8px;font:600 11px var(--sans);letter-spacing:1.6px;text-transform:uppercase;color:rgba(201,212,194,.7)}
+  .norma .dot::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(217,234,110,.18)}
+  .norma-word{display:flex;align-items:center;gap:14px;margin:26px 0 0;font:400 clamp(46px,5vw,60px)/1 var(--serif);letter-spacing:-1px;color:var(--on-dark)}
+  .norma-word img{width:44px;height:44px;border-radius:13px}
+  .norma > *{position:relative}
+  .norma > .glow{position:absolute}
+
+  /* Contact form */
+  .form{display:grid;gap:16px;margin-top:20px}
+  .form select{padding-right:48px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%2314231A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 20px center;background-color:rgba(255,255,255,.6)}
+  .form select:invalid{color:var(--muted-2)}
+  .form option{color:var(--ink)}
+  .form textarea::placeholder{color:var(--muted-2)}
+  .form .btn{width:100%;margin-top:6px}
+  .trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin:4px 0 0;font-size:13px;color:var(--muted-2)}
+  .trust span::before{content:'';display:inline-block;width:6px;height:6px;margin:0 8px 2px 0;border-radius:50%;background:var(--lime-3)}
+
+  .closing{margin:0 auto;max-width:15em;font:400 clamp(38px,5.4vw,72px)/1.08 var(--serif);letter-spacing:-1px;color:var(--on-dark);text-wrap:balance}
+</style>

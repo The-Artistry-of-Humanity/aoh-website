@@ -1,0 +1,111 @@
+---
+/* What we do: the overview of every way to work with AOH, and nørma. Copy
+   from the previous site's Work With Us page, tightened. */
+import Base from '../../layouts/Base.astro';
+import { KEYNOTES } from '../../data/aoh';
+
+const WAYS = [
+  ['/what-we-do/masterclass', 'Free · 60–90 min', 'Masterclass', 'The starting point for most organisations. Ian brings the Five Pillars to your leadership team in a tailored session that shows where your culture sits and what that means for your people. No commitment, and genuinely useful.', 'Book a Masterclass ›'],
+  ['/what-we-do/wellness-accelerator', '6 weeks', 'Wellness Accelerator', 'Our flagship six-week program. A structured, facilitated run through all Five Pillars, with exercises, accountability and measurable progress built in at every stage.', 'See the program ›'],
+  ['/what-we-do/leadership-coaching', '1:1', 'Leadership coaching', 'Coaching grounded in the Five Pillars, for leaders who want to model what they’re asking of their teams. Private, structured, and built around the whole person, not just the professional role.', 'About coaching ›'],
+  ['/what-we-do/culture-consulting', 'Partnership', 'Culture consulting', 'For when the culture itself needs work. We diagnose what is really going on, build the system to shift it, and stay alongside your key people until it holds.', 'How we work ›'],
+];
+---
+<Base title="What we do · Keynotes, programs, coaching and nørma · The Artistry of Humanity" description="One framework, five ways in: keynotes and workshops, a free Masterclass, the six-week Wellness Accelerator, 1:1 leadership coaching and culture consulting, plus nørma. All built on the Five Pillars of Fulfilment." path="/what-we-do" og="/assets/program-delivery.jpg">
+
+  <!-- Hero -->
+  <section style="background:var(--cream);overflow:hidden">
+    <div class="glow" style="right:-12%;top:-20%;width:54%;background:radial-gradient(closest-side,rgba(217,234,110,.32),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap split" style="position:relative;padding-top:clamp(48px,7vw,96px);padding-bottom:clamp(120px,14vw,180px)">
+      <div style="max-width:600px">
+        <span class="eyebrow">Ways to work together</span>
+        <h1>One framework. <span class="mk">Five ways in.</span></h1>
+        <p class="lead">Everything we deliver is grounded in the Five Pillars of Fulfilment. The right way in depends on where your organisation is, and where you want to go. In person or virtual, across Australia and internationally.</p>
+        <div class="btns">
+          <a class="btn btn-lime" href="/what-we-do/masterclass">Book a free Masterclass</a>
+          <a class="btn btn-ghost" href="/contact">Book a call</a>
+        </div>
+      </div>
+      <figure style="margin:0;flex:1 1 440px" data-rv>
+        <div class="photo" style="aspect-ratio:4/3"><img src="/assets/program-delivery.jpg" alt="Ian Williams facilitating a session for a full room" width="1024" height="683" style="object-position:45% 50%" /></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Every way in -->
+  <section id="ways" class="bg-sand lift">
+    <div class="wrap sec">
+      <div class="split" style="align-items:end">
+        <div><span class="eyebrow">Find your entry point</span><h2>The same framework under all of it.</h2></div>
+        <p class="lead" style="margin-top:0">A keynote for a full conference or private coaching for one leader: the same Five Pillars, the same questions and the same honesty sit underneath. The format is just the vehicle.</p>
+      </div>
+
+      <a class="card ww-feat" href="/what-we-do/keynotes-workshops" data-rv style="margin-top:clamp(44px,5vw,64px)">
+        <div class="ww-feat-img"><img src="/assets/ian-speaking.webp" alt="Ian Williams speaking to a room of business leaders" width="632" height="783" loading="lazy" /></div>
+        <div class="ww-feat-body">
+          <span class="pill">Speaking · 45 min to a full day</span>
+          <h3 style="margin-top:16px;font-size:clamp(28px,3vw,38px)">Keynotes &amp; workshops</h3>
+          <p class="body">From a 45-minute keynote to a full-day working session, tailored to your event, your audience and your culture. Ian doesn’t speak at an audience. He brings them in, and leaves them with a framework and one clear action.</p>
+          <ul class="list" style="font-size:15.5px">{KEYNOTES.map(k => <li><b style="font-weight:600">{k.title}</b> · {k.sub}</li>)}</ul>
+          <span class="link">See the keynotes and book Ian ›</span>
+        </div>
+      </a>
+
+      <div class="grid g2x2" style="margin-top:clamp(18px,2.4vw,28px)">
+        {WAYS.map(([href, pill, title, text, cta]) => (
+          <a class="card ww-card" href={href} data-rv>
+            <span class="pill">{pill}</span>
+            <h3 style="margin-top:16px">{title}</h3>
+            <p class="body">{text}</p>
+            <span class="link">{cta}</span>
+          </a>
+        ))}
+      </div>
+
+      <div class="card-dark ww-norma" data-rv style="margin-top:clamp(18px,2.4vw,28px)">
+        <div>
+          <div style="display:flex;align-items:center;gap:14px">
+            <img src="/assets/norma-app-icon.png" alt="" width="224" height="224" style="width:52px;height:52px;border-radius:15px" />
+            <span class="pill">New · The platform</span>
+          </div>
+          <h3 style="margin-top:18px;font-size:clamp(28px,3vw,38px)"><span class="it">nørma</span> keeps it going, every month.</h3>
+          <p class="body">An app for your people and a dashboard for leaders, built on the Five Pillars. They see where their life is at. You see where your culture is at, and what to do about it.</p>
+          <div class="btns" style="margin-top:26px"><a class="btn btn-lime" href="https://joinnorma.com/">Explore nørma ↗</a><a class="btn btn-ghost" href="/what-we-do/norma">How it fits our work</a></div>
+        </div>
+        <div class="photo" style="border-radius:20px 14px 22px 12px / 14px 22px 12px 20px;background:#F6F5EE"><img src="/assets/dash-hero.webp" alt="The nørma leader dashboard: nørma Score, Fulfilment, Culture and every department" width="1120" height="816" loading="lazy" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Not sure where to start? -->
+  <section class="bg-dark lift-b">
+    <div class="glow" style="left:-16%;bottom:-40%;width:60%;background:radial-gradient(closest-side,rgba(217,234,110,.12),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap sec narrow center" style="position:relative">
+      <span class="eyebrow">Start here</span>
+      <h2>Not sure <span class="mk mk-d">where to start</span>?</h2>
+      <p class="lead" style="margin-left:auto;margin-right:auto">Start with the free Masterclass. It’s the fastest way to experience the framework first-hand, and the clearest way to work out where to go from there. Most organisations find the answer in the room. Or book a call and tell us what you’re seeing.</p>
+      <div class="btns"><a class="btn btn-lime" href="/what-we-do/masterclass">Book a free Masterclass</a><a class="btn btn-ghost" href="/contact">Book a call</a></div>
+      <a class="link" href="/framework">Understand the Five Pillars ›</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* aoh.css: .sec resets the side padding that .wrap gives; keep the gutters. */
+  .wrap.sec { padding-left: var(--gut); padding-right: var(--gut); }
+  .ww-feat { display: grid; grid-template-columns: 1fr; padding: 0; overflow: hidden; }
+  .ww-feat-img { position: relative; aspect-ratio: 4 / 3; }
+  .ww-feat-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; }
+  .ww-feat-body { padding: clamp(26px, 3.4vw, 48px); }
+  @media (min-width: 860px) {
+    .ww-feat { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+    .ww-feat-img { aspect-ratio: auto; min-height: 380px; }
+  }
+  .ww-card { display: flex; flex-direction: column; }
+  .ww-card .pill { align-self: flex-start; }
+  .ww-card .link, .ww-feat .link { margin-top: auto; padding-top: 22px; }
+  .ww-card .body { margin-bottom: 0; }
+  .ww-feat .list { margin-bottom: 6px; }
+  .ww-norma { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
+  @media (min-width: 900px) { .ww-norma { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); } }
+</style>

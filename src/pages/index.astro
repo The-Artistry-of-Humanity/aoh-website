@@ -1,0 +1,195 @@
+---
+import Base from '../layouts/Base.astro';
+import { KEYNOTES, PILLARS, CLIENTS, TESTIMONIALS, VIDEO } from '../data/aoh';
+---
+<Base title="The Artistry of Humanity · Keynotes, culture & leadership, and nørma" description="Keynotes, leadership work and nørma, the wellbeing operating system. The Artistry of Humanity helps organisations build cultures where people are at their best, through the Five Pillars of Fulfilment." path="/">
+
+  <!-- Hero: Ian in the room. Speaking and the diagnostic call are the two doors in. -->
+  <section class="bg-dark" style="overflow:hidden">
+    <div class="glow" style="right:-18%;top:-30%;width:70%;background:radial-gradient(closest-side,rgba(217,234,110,.14),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap split" style="padding-top:clamp(48px,7vw,96px);padding-bottom:clamp(120px,14vw,190px)">
+      <div style="max-width:600px">
+        <span class="eyebrow">Culture &amp; leadership consultancy</span>
+        <h1 style="color:var(--on-dark)">Most wellbeing programs treat the symptom. We help organisations <span class="mk mk-d">connect</span>.</h1>
+        <p class="lead">Keynotes that move a room, leadership work that changes how teams run, and nørma, the platform that keeps it going. All built on the Five Pillars of Fulfilment.</p>
+        <div class="btns">
+          <a class="btn btn-lime" href="/what-we-do/keynotes-workshops#enquire">Book Ian to speak</a>
+          <a class="btn btn-ghost" href="/contact">Free 30-minute diagnostic call</a>
+        </div>
+      </div>
+      <figure style="margin:0;flex:0 1 440px">
+        <div class="arch" style="aspect-ratio:440/540;box-shadow:0 50px 90px -40px rgba(0,0,0,.7)"><img src="/assets/ian-speaking.webp" alt="Ian Williams speaking to a room of business leaders" width="632" height="783" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%" /></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Who we've worked with -->
+  <section class="lift" style="background:var(--cream)">
+    <div class="wrap sec-tight center">
+      <span class="eyebrow">Trusted by</span>
+      <p class="names" style="margin:22px 0 0">{CLIENTS.map(c => <span>{c}</span>)}</p>
+    </div>
+  </section>
+
+  <!-- Keynotes first: the fastest way to work with us. -->
+  <section style="background:var(--cream)">
+    <div class="wrap" style="padding-bottom:clamp(110px,12vw,170px)">
+      <div class="split" style="align-items:end">
+        <div>
+          <span class="eyebrow">Keynotes &amp; workshops</span>
+          <h2>He doesn’t speak at an audience. <span class="mk">He brings them in.</span></h2>
+        </div>
+        <p class="lead" style="margin-top:0">Ian draws on all of it: leadership, pressure, success and personal struggle. His sessions are interactive, deeply human, and leave people thinking, feeling and acting differently. In person or virtual, across Australia and internationally.</p>
+      </div>
+      <div class="grid g3" style="margin-top:clamp(44px,5vw,64px)">
+        {KEYNOTES.map(k => (
+          <a class="card" href="/what-we-do/keynotes-workshops#keynotes" data-rv style="padding:0;overflow:hidden;display:flex;flex-direction:column">
+            <img src={k.img} alt="" width="432" height="196" loading="lazy" style="width:100%;aspect-ratio:432/220;object-fit:cover" />
+            <div style="padding:clamp(22px,2.6vw,30px)">
+              <span class="pill">{k.tag}</span>
+              <h3 style="margin-top:14px">{k.title}</h3>
+              <p class="body" style="margin-top:10px">{k.hook}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="split" style="margin-top:clamp(56px,6vw,80px)">
+        <div class="video" data-rv>
+          <img src="/assets/keynote.jpg" alt="" width="1024" height="683" loading="lazy" />
+          <button type="button" data-yt={VIDEO} aria-label="Watch Ian live"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5 18 12 8 18.5Z" /></svg></span>Watch Ian live</button>
+        </div>
+        <div>
+          <h3>Most keynotes are forgotten by Monday.</h3>
+          <p class="body">Ian goes first with his own story, hard parts included, and that gives people permission to be honest too. Audiences score themselves live against the Five Pillars, and leave with a framework and one clear action to take into their life.</p>
+          <div class="btns"><a class="btn btn-dark" href="/what-we-do/keynotes-workshops">See the keynotes</a><a class="btn btn-ghost" href="/what-we-do/keynotes-workshops#enquire">Check a date</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- nørma: the new thing. -->
+  <section class="bg-dark lift-b">
+    <div class="glow" style="left:-16%;bottom:-30%;width:60%;background:radial-gradient(closest-side,rgba(217,234,110,.12),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap sec split">
+      <div style="max-width:540px">
+        <span class="eyebrow">New from Artistry of Humanity</span>
+        <h2>Meet <span class="it">nørma</span>, the wellbeing operating system.</h2>
+        <p class="lead">An app for your people and a dashboard for you, built on the Five Pillars. They see where their life is at. You see where your culture is at, and what to do about it. The work we do in the room, every month, for everyone.</p>
+        <div class="btns"><a class="btn btn-lime" href="https://joinnorma.com/">Explore nørma ↗</a><a class="btn btn-ghost" href="/what-we-do/norma">How it fits our work</a></div>
+      </div>
+      <div style="position:relative;max-width:620px" data-rv>
+        <div class="photo" style="border-radius:22px 16px 24px 14px / 16px 24px 14px 22px;background:#F6F5EE"><img src="/assets/dash-hero.webp" alt="The nørma leader dashboard: nørma Score, Fulfilment, Culture and every department" width="1120" height="816" loading="lazy" /></div>
+        <div style="position:absolute;right:-4%;bottom:-12%;width:30%;padding:6px;border-radius:30px;background:#0B140E;box-shadow:0 30px 60px -20px rgba(0,0,0,.7)"><div style="border-radius:25px;overflow:hidden;aspect-ratio:390/844"><img src="/assets/app-where-you-stand.webp" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top" /></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The framework, and the free check-in that has been shared everywhere. -->
+  <section class="bg-sand lift">
+    <div class="wrap sec">
+      <div class="narrow center">
+        <span class="eyebrow">The Five Pillars of Fulfilment</span>
+        <h2>Fulfilment isn’t one thing. It’s <span class="mk">five</span>.</h2>
+        <p class="lead" style="margin-left:auto;margin-right:auto">Our framework looks at the whole person, not just the job. Strengthen one pillar and the rest follow. Neglect one and the others feel it.</p>
+      </div>
+      <div class="grid g4" style="margin-top:clamp(44px,5vw,64px);grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))">
+        {PILLARS.map((p, i) => (
+          <div class="card" data-rv style="padding:26px 24px">
+            <span class="small" style="font-weight:600;letter-spacing:1px">0{i + 1}</span>
+            <h3 style="margin-top:10px;font-size:23px">{p.name}</h3>
+            <p class="body" style="font-size:15.5px;margin-top:8px">{p.short}</p>
+          </div>
+        ))}
+      </div>
+      <div class="card-dark" style="margin-top:clamp(36px,4vw,52px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 36px">
+        <div style="max-width:620px">
+          <span class="eyebrow">Free · about four minutes</span>
+          <h3 style="margin-top:10px;font-size:clamp(26px,2.8vw,34px)">Where are you right now?</h3>
+          <p class="body" style="color:var(--on-dark-muted)">Take the Fulfilment check-in and see your own picture across the Five Pillars, with the pillar that has the most room to grow.</p>
+        </div>
+        <div class="btns" style="margin-top:0"><a class="btn btn-lime" href="/fulfilment-check-in">Take the check-in</a><a class="btn btn-ghost" href="/framework">The framework</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ways to work together -->
+  <section class="lift-b" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="split" style="align-items:end">
+        <div><span class="eyebrow">Ways to work together</span><h2>One framework. <span class="mk">Five ways in.</span></h2></div>
+        <p class="lead" style="margin-top:0">Every format is built on the Five Pillars, in person or virtual, across Australia and internationally. Most organisations start with a free Masterclass.</p>
+      </div>
+      <div class="grid g2x2" style="margin-top:clamp(44px,5vw,64px)">
+        <a class="card-dark" href="/what-we-do/masterclass" data-rv><span class="pill">Free · 60–90 min</span><h3 style="margin-top:16px">Masterclass</h3><p class="body">A working session for your leadership team. You leave with a clear picture of where your culture sits across the Five Pillars, and what it means for your people.</p><span class="link">Book a Masterclass ›</span></a>
+        <a class="card" href="/what-we-do/wellness-accelerator" data-rv><span class="pill">6 weeks</span><h3 style="margin-top:16px">Wellness Accelerator</h3><p class="body">A facilitated program that takes your team through each pillar, with structured exercises, accountability and measurable progress.</p><span class="link">See the program ›</span></a>
+        <a class="card" href="/what-we-do/leadership-coaching" data-rv><span class="pill">1:1</span><h3 style="margin-top:16px">Leadership coaching</h3><p class="body">For leaders who want to model what they’re asking of their teams. Private, structured and built around the whole person.</p><span class="link">About coaching ›</span></a>
+        <a class="card" href="/what-we-do/culture-consulting" data-rv><span class="pill">Partnership</span><h3 style="margin-top:16px">Culture consulting</h3><p class="body">When the culture itself needs work: we diagnose what’s really going on, build the system to shift it, and stay alongside your people until it holds.</p><span class="link">How we work ›</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proof: Sherpany by Datasite -->
+  <section class="bg-dark lift">
+    <div class="wrap sec">
+      <div class="split">
+        <div>
+          <img src="/assets/sherpany-logo.png" alt="Sherpany by Datasite" width="230" height="112" style="width:170px;filter:brightness(0) invert(1);opacity:.9" />
+          <h2 style="margin-top:22px">Six weeks. One leadership team. A culture that finally had <span class="mk mk-d">a name</span> for what it was missing.</h2>
+          <p class="lead">We ran the Wellness Accelerator with Sherpany’s core leadership team. The weakest pillar, Internal Work, surfaced the most honest conversations the team had ever had. By week six they had a shared framework, new accountability rituals and measurable shifts across all Five Pillars.</p>
+          <div class="stats">
+            <div><div class="stat">+29%</div><p class="small" style="color:var(--on-dark-muted);margin-top:8px">team fulfilment score</p></div>
+            <div><div class="stat">9.2<span style="font-size:.5em">/10</span></div><p class="small" style="color:var(--on-dark-muted);margin-top:8px">participant impact rating</p></div>
+            <div><div class="stat">6</div><p class="small" style="color:var(--on-dark-muted);margin-top:8px">weeks, start to finish</p></div>
+          </div>
+        </div>
+        <div data-rv>
+          <div class="photo"><img src="/assets/sherpany-scores.png" alt="Sherpany's leadership team on a video call, each with their Five Pillars score" width="946" height="582" loading="lazy" /></div>
+          <figure style="margin:32px 0 0">
+            <blockquote class="quote">“This wasn’t another wellbeing workshop. It was a genuine shift in how our leadership team thinks about culture, people, and performance.”</blockquote>
+            <figcaption class="who">Sorin Popa · VP of Engineering, Datasite</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- More voices, and Ian -->
+  <section class="lift-b" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="grid g2">
+        {TESTIMONIALS.filter(t => !t.org.includes('Datasite')).map(t => (
+          <figure class="card" style="margin:0" data-rv>
+            <blockquote class="quote">“{t.quote}”</blockquote>
+            <figcaption class="who">{t.name} · {t.org}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="split" style="margin-top:clamp(72px,8vw,112px)">
+        <figure style="margin:0;flex:0 1 380px">
+          <div class="arch" style="aspect-ratio:420/520;background:radial-gradient(64% 42% at 50% 22%,rgba(217,234,110,.6),rgba(217,234,110,.16) 55%,rgba(217,234,110,0) 82%),linear-gradient(180deg,#E8EACB,#ECE8D7 52%,#E4DFCA);position:relative">
+            <img src="/assets/ian-portrait.webp" alt="Ian Williams" width="900" height="802" loading="lazy" style="position:absolute;left:50%;bottom:0;width:128%;max-width:none;transform:translateX(-50%)" />
+          </div>
+        </figure>
+        <div>
+          <span class="eyebrow">Meet Ian</span>
+          <h2><span class="mk">Leading people</span> since he was eighteen.</h2>
+          <p class="lead">Ian Williams has spent more than thirty years leading teams, turning around underperforming businesses and building high-performing cultures across three continents, including at DHL and some of the world’s largest organisations.</p>
+          <p class="body">He founded The Artistry of Humanity to give organisations a better tool: one that starts with the whole human, creates accountability on both sides, and treats culture as the operating system everything else runs on.</p>
+          <a class="link" href="/about">Ian’s story ›</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Close -->
+  <section class="bg-sand lift">
+    <div class="wrap sec">
+      <div class="card-dark center" style="max-width:860px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(24px,5vw,64px)">
+        <span class="eyebrow">Let’s start a conversation</span>
+        <h2 style="margin-left:auto;margin-right:auto;max-width:14em">Thirty minutes. No pitch. A clearer picture of your culture.</h2>
+        <p class="lead" style="margin-left:auto;margin-right:auto">Tell us what you’re seeing in your organisation, and we’ll show you where the Five Pillars, a keynote or nørma could help.</p>
+        <div class="btns"><a class="btn btn-lime" href="/contact">Book a call</a><a class="btn btn-ghost" href="/what-we-do/keynotes-workshops#enquire">Book Ian to speak</a></div>
+      </div>
+    </div>
+  </section>
+</Base>

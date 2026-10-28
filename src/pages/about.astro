@@ -1,0 +1,206 @@
+---
+import Base from '../layouts/Base.astro';
+import { PILLARS } from '../data/aoh';
+
+const BELIEFS = [
+  ['Culture is the operating system, not a benefit', 'How people feel inside an organisation shapes every decision they make, every conversation they have and every result they produce. Getting culture right isn’t a nice-to-have. It’s the foundation everything else is built on.'],
+  ['Work is one part of a whole human life', 'Performance, focus and resilience are shaped by everything that happens outside the office too. A tool or program that ignores the rest of a person’s life is working with half the picture.'],
+  ['If you can see it, you can manage it', 'Most organisations are navigating in the dark because they don’t have a clear, honest view of how their people are actually doing. Visibility creates accountability. Accountability creates change.'],
+  ['You can always find the positive', 'This isn’t toxic positivity or ignoring what’s hard. It’s the belief that there is always a next step, always a controllable, always a direction to move in. That orientation changes everything.'],
+];
+
+const WAYS = [
+  { href: '/what-we-do/keynotes-workshops', tag: 'Speaking', title: 'Keynotes & workshops', text: 'From a conference keynote to a full-day session, tailored to your audience and the conversation you want to start.', cta: 'See the keynotes', dark: true },
+  { href: '/what-we-do/masterclass', tag: 'Free · 60–90 min', title: 'Masterclass', text: 'A working session for your leadership team, and the best place to start.', cta: 'Book a Masterclass' },
+  { href: '/what-we-do/wellness-accelerator', tag: '6 weeks', title: 'Wellness Accelerator', text: 'A six-week program through all Five Pillars. Structured, facilitated and measurable.', cta: 'See the program' },
+  { href: '/what-we-do/leadership-coaching', tag: '1:1', title: 'Leadership coaching', text: 'For leaders who want to model what they ask of their teams.', cta: 'About coaching' },
+];
+
+const PODCAST = [
+  ['Spotify', 'https://open.spotify.com/show/6C9jBcH8FHdlAdaQL9lfEQ'],
+  ['Apple Podcasts', 'https://podcasts.apple.com/ca/podcast/the-artistry-of-humanity/id1775703355'],
+  ['YouTube', 'https://www.youtube.com/@alignwithwillo'],
+];
+---
+<Base title="About Ian Williams · The Artistry of Humanity" description="The Artistry of Humanity was founded by Ian Williams, who has spent more than thirty years leading teams and building high-performing cultures across three continents. The story behind the Five Pillars of Fulfilment." path="/about">
+
+  <!-- Hero -->
+  <section style="background:var(--cream);overflow:hidden">
+    <div class="wrap split" style="padding-top:clamp(40px,6vw,88px);padding-bottom:clamp(120px,13vw,180px)">
+      <div style="max-width:600px">
+        <span class="eyebrow">Our story</span>
+        <h1>Built from the <span class="mk">inside out</span>.</h1>
+        <p class="lead">The Artistry of Humanity didn’t start with a business plan. It started with a pattern, one that Ian Williams had been watching for more than thirty years inside some of the world’s largest organisations.</p>
+        <div class="btns">
+          <a class="btn btn-lime" href="/what-we-do/keynotes-workshops#enquire">Book Ian to speak</a>
+          <a class="btn btn-ghost" href="/contact">Book a call</a>
+        </div>
+      </div>
+      <figure style="margin:0;flex:0 1 400px">
+        <div class="arch" style="aspect-ratio:420/520;background:radial-gradient(64% 42% at 50% 22%,rgba(217,234,110,.6),rgba(217,234,110,.16) 55%,rgba(217,234,110,0) 82%),linear-gradient(180deg,#E8EACB,#ECE8D7 52%,#E4DFCA);position:relative">
+          <img src="/assets/ian-portrait.webp" alt="Ian Williams" width="900" height="802" style="position:absolute;left:50%;bottom:0;width:128%;max-width:none;transform:translateX(-50%)" />
+        </div>
+        <figcaption class="who" style="text-align:center;margin-top:18px">Ian Williams · Founder &amp; CEO</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Ian's story -->
+  <section class="bg-sand lift">
+    <div class="wrap sec">
+      <div class="story">
+        <p class="lead first">Ian was eighteen when he stepped into his first leadership role. Growing up in Liverpool, he didn’t have a theory about management or a framework for culture. He just noticed something: when people felt seen, trusted and supported, they worked differently. They cared more. They gave more. And the results followed.</p>
+        <p class="body">That observation never left him.</p>
+        <p class="body">Over the next three decades Ian led teams across three continents, at DHL and some of the world’s largest organisations: managing hundreds of people, running complex operations across multiple countries, turning around underperforming businesses and building high-performing cultures from the ground up. Every context was different. The pattern was always the same.</p>
+
+        <figure class="pull" data-rv>
+          <blockquote class="quote">“The biggest asset of every company I ever worked in was the people. Not the strategy. Not the systems. The people.”</blockquote>
+          <figcaption class="who">Ian Williams</figcaption>
+        </figure>
+
+        <p class="body">The organisations that outperformed didn’t do it through pressure or process alone. They did it because someone had taken the time to build a culture where people felt they belonged, understood why their work mattered, and trusted that the person leading them actually gave a damn.</p>
+        <p class="body">And the ones that struggled? It was rarely about talent or intention. It was about disconnection: between the work people were doing and the lives they were actually living, and between what leaders said they valued and how the place actually felt.</p>
+        <p class="body">Ian kept seeing the same things surface. The high performer running on empty. The manager who couldn’t delegate because they’d never been taught to trust. The employee who looked fine from the outside but was quietly falling apart. The warning signs were always there. Nobody had the language, or the structure, to act on them.</p>
+      </div>
+
+      <figure class="photo story-photo" data-rv>
+        <img src="/assets/ian-presenting.jpg" alt="Ian Williams at the front of a workshop room, beside notes from the session pinned to a brick wall" width="1024" height="683" loading="lazy" />
+      </figure>
+
+      <div class="story">
+        <figure class="pull" data-rv style="margin-top:0">
+          <blockquote class="quote">“If you can see it, you can manage it. The problem is that most organisations can’t see what’s actually going on.”</blockquote>
+          <figcaption class="who">Ian Williams</figcaption>
+        </figure>
+        <p class="body">After years of watching this play out across boardrooms, warehouses and leadership teams on three continents, Ian came to one clear conclusion: the tools organisations used to support their people were built on an incomplete picture of what a human being actually is.</p>
+        <p class="body">Work is one part of life. One pillar of five. And when the other four are under pressure, when someone’s relationships are strained, their health is declining, their sense of purpose is missing or their connections are thin, it shows up at work whether anyone acknowledges it or not.</p>
+        <p class="body">That insight became the Five Pillars of Fulfilment. Not a theory borrowed from a textbook, but a framework built from the patterns of real people, across real organisations, over a very long time.</p>
+
+        <figure class="pull" data-rv>
+          <blockquote class="quote">“You can only control the controllables. But first, you have to be honest about what’s actually happening.”</blockquote>
+          <figcaption class="who">Ian Williams</figcaption>
+        </figure>
+
+        <p class="body">The Artistry of Humanity is Ian’s attempt to give organisations, and the people inside them, a better tool. One that starts with the whole human, creates accountability on both sides, and treats culture not as a nice-to-have but as the operating system everything else runs on.</p>
+        <p class="body">Today Ian is its founder and CEO, and works with leadership teams as a consultant, facilitator and keynote speaker.</p>
+        <p class="sign"><b>Ian Williams</b><span>Founder &amp; CEO, The Artistry of Humanity</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beliefs -->
+  <section class="lift-b" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="split" style="align-items:end">
+        <div><span class="eyebrow">What we believe</span><h2>What drives <span class="mk">everything we do</span>.</h2></div>
+        <p class="lead" style="margin-top:0">Four beliefs sit underneath every keynote, program and conversation we have with a leadership team.</p>
+      </div>
+      <div class="grid g2x2" style="margin-top:clamp(44px,5vw,64px)">
+        {BELIEFS.map(([t, d], i) => (
+          <div class="card" data-rv>
+            <span class="small" style="font-weight:600;letter-spacing:1px">0{i + 1}</span>
+            <h3 style="margin-top:10px">{t}</h3>
+            <p class="body">{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Where the pillars came from -->
+  <section class="bg-dark lift">
+    <div class="glow" style="right:-16%;top:-26%;width:56%;background:radial-gradient(closest-side,rgba(217,234,110,.12),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap sec split" style="align-items:start">
+      <div style="max-width:520px">
+        <span class="eyebrow">The framework</span>
+        <h2>Where the Five Pillars <span class="mk mk-d">came from</span>.</h2>
+        <p class="lead">The Five Pillars of Fulfilment weren’t designed in a workshop or borrowed from academic research. They were built from observation: more than thirty years of watching what actually makes people thrive, and what quietly destroys them.</p>
+        <p class="body">Five dimensions of a human life that are always connected, whether we acknowledge them or not.</p>
+        <div class="btns"><a class="btn btn-lime" href="/framework">Explore the framework</a><a class="btn btn-ghost" href="/fulfilment-check-in">Take the check-in</a></div>
+      </div>
+      <ol class="pillars">
+        {PILLARS.map((p, i) => (
+          <li class="tile" data-rv><span>0{i + 1}</span><div><h3>{p.name}</h3><p class="body">{p.short}</p></div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Beyond the boardroom -->
+  <section class="bg-sand lift-b">
+    <div class="wrap sec">
+      <div class="narrow center">
+        <span class="eyebrow">Ian’s other work</span>
+        <h2>The work <span class="mk">beyond the boardroom</span>.</h2>
+      </div>
+      <div class="split" style="margin-top:clamp(44px,5vw,64px)">
+        <figure class="photo" style="margin:0;flex:0 1 420px;aspect-ratio:1" data-rv>
+          <img src="/assets/podcast-cover.webp" alt="Cover art for The Artistry of Humanity podcast: Be the author of your story, with Ian Williams" width="900" height="900" loading="lazy" />
+        </figure>
+        <div>
+          <span class="eyebrow">The podcast</span>
+          <h3 style="margin-top:12px;font-size:clamp(28px,3vw,38px)">The Artistry of Humanity podcast</h3>
+          <p class="lead">The best way to understand what Ian thinks, and how he thinks, is to hear him talk.</p>
+          <p class="body">The podcast goes deep on leadership, culture, human connection and what it actually means to live a fulfilled life. No scripts, no corporate polish. Just honest conversation.</p>
+          <div class="btns">{PODCAST.map(([l, u], i) => <a class={i === 0 ? 'btn btn-dark' : 'btn btn-ghost'} href={u} rel="noopener">{l} ↗</a>)}</div>
+        </div>
+      </div>
+      <div class="card-dark gm" data-rv>
+        <div style="max-width:640px">
+          <span class="eyebrow">Good Men Helping Good Men</span>
+          <h3 style="margin-top:12px">Male disconnection and loneliness are at crisis levels.</h3>
+          <p class="body">It’s something Ian has felt personally and seen professionally for years. Good Men Helping Good Men (GMHGM) is the focused initiative within The Artistry of Humanity that addresses it directly, through workshops, peer circles, coaching and a community app built for the challenges men face today.</p>
+        </div>
+        <a class="btn btn-lime" href="https://gmhgm.com/" rel="noopener">Visit GMHGM ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work with us -->
+  <section class="lift" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="split" style="align-items:end">
+        <div><span class="eyebrow">Work with us</span><h2>Grounded in the pillars. <span class="mk">Shaped around you.</span></h2></div>
+        <p class="lead" style="margin-top:0">Every engagement is built on the Five Pillars of Fulfilment. The format depends on where you are and what you need, and <a href="/what-we-do/norma" style="color:var(--ink);text-decoration:underline;text-underline-offset:3px">nørma</a> keeps the work going after we leave the room.</p>
+      </div>
+      <div class="grid g2x2" style="margin-top:clamp(44px,5vw,64px)">
+        {WAYS.map(w => (
+          <a class={w.dark ? 'card-dark' : 'card'} href={w.href} data-rv><span class="pill">{w.tag}</span><h3 style="margin-top:16px">{w.title}</h3><p class="body">{w.text}</p><span class="link">{w.cta} ›</span></a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Close -->
+  <section class="bg-sand lift-b">
+    <div class="wrap sec">
+      <div class="card-dark center" style="max-width:860px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(24px,5vw,64px)">
+        <span class="eyebrow">Let’s start a conversation</span>
+        <h2 style="margin-left:auto;margin-right:auto;max-width:14em">Ready to bring this into your organisation?</h2>
+        <p class="lead" style="margin-left:auto;margin-right:auto">Start with a conversation, or apply for a free Masterclass with your leadership team.</p>
+        <div class="btns"><a class="btn btn-lime" href="/contact">Book a call</a><a class="btn btn-ghost" href="/what-we-do/masterclass">Apply for a free Masterclass</a></div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .story{max-width:720px;margin:0 auto}
+  .story .first{margin-top:0;max-width:none;font-size:clamp(19px,1.7vw,22px);color:var(--ink)}
+  .story .first::first-letter{float:left;margin:6px 12px 0 0;font:400 4.1em/.8 var(--serif);color:var(--olive)}
+  .story .body{font-size:17.5px}
+  .pull{margin:clamp(40px,5vw,56px) 0;padding-left:22px;border-left:3px solid var(--lime-3)}
+  blockquote.quote{margin-inline:0}
+  .story-photo{max-width:980px;margin:clamp(48px,6vw,72px) auto;aspect-ratio:3/2}
+  .sign{display:flex;flex-direction:column;gap:4px;margin:36px 0 0;padding-top:22px;border-top:1px solid var(--line)}
+  .sign b{font:400 26px/1.1 var(--serif)}
+  .sign span{font-size:14px;color:var(--muted-2)}
+
+  .pillars{list-style:none;margin:0;padding:0;display:grid;gap:12px;flex:1 1 420px}
+  .pillars li{display:flex;gap:18px;align-items:baseline;padding:20px 24px}
+  .pillars li > span{font:400 22px/1 var(--serif);color:#DCEC85;min-width:30px}
+  .pillars h3{font-size:22px}
+  .pillars .body{margin-top:6px;font-size:15.5px}
+
+  .gm{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px;margin-top:clamp(56px,6vw,80px)}
+</style>

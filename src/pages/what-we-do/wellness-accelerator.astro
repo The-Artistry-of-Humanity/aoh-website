@@ -1,0 +1,213 @@
+---
+import Base from '../../layouts/Base.astro';
+import { TESTIMONIALS, VIDEO } from '../../data/aoh';
+
+// The Wellness Accelerator: six facilitated weeks through the Five Pillars.
+// Copy and the Sherpany by Datasite results from the previous site's Wellness
+// Accelerator page. The enquiry form keeps the old contact form's fields, with
+// the interest fixed to the Accelerator.
+
+const sorin = TESTIMONIALS.find(t => t.name === 'Sorin Popa')!;
+
+const WEEKS = [
+  ['Foundations, and Health & Fitness', 'We set up the framework: what the Five Pillars are, how they work as a system and why this approach is different. Then the first pillar, physical vitality. Teams assess where they are, name the habits that serve them and set a practical direction for the weeks ahead.'],
+  ['Internal Work', 'The hardest week, and often the most powerful. Self-awareness, values, purpose and the internal narratives that shape how people show up. This is where the most honest conversations happen.'],
+  ['Love & Relationships', 'The connections closest to us. Almost never addressed in workplace wellbeing, which is exactly why it has such an impact when it is. Teams explore how their closest relationships affect their capacity, energy and presence at work.'],
+  ['Social Connection', 'Belonging, friendship and community, at work and beyond. The social fabric of the team and of people’s wider lives, and the often invisible cost of loneliness in a world that has never been more connected online.'],
+  ['Work & Life Flow', 'Not balance: integration. How professional ambition and personal fulfilment can reinforce each other rather than compete. Purpose, boundaries and the design of a working life that lasts.'],
+  ['Integration & Accountability', 'Teams revisit their Fulfilment Scores, name the shifts that have already happened and build an accountability structure that carries the work forward after the program ends.'],
+];
+
+const FOR = [
+  ['Leadership teams who know something is off', 'Engagement is dropping, turnover is higher than it should be, and the culture feels strained without anyone being able to say why. You’re ready to give the team a real framework, not another awareness session.'],
+  ['Organisations ahead of the legislative curve', 'Psychosocial safety obligations are tightening across Australia and beyond. The Accelerator gives you what the legislation is asking for: a structured, documented and evidenced approach.'],
+  ['Leaders who want to model what they ask', 'You can’t build a culture of openness and accountability if the people at the top won’t do the work. The program is experienced by leaders first, so they know what they’re asking of their people.'],
+];
+
+const INCLUDES = [
+  'Six weekly facilitated sessions, in person or virtual',
+  'The Fulfilment Score assessment, before and after',
+  'Weekly structured reflection for every participant',
+  'Practical tools for each of the Five Pillars',
+  'An accountability partner system within the team',
+  'Full facilitation by an AOH practitioner',
+  'A shared team Fulfilment baseline and progress report',
+  'A post-program debrief and recommendations session',
+  'A program summary for internal reporting',
+  'Optional integration with nørma for ongoing tracking',
+];
+---
+<Base title="The Wellness Accelerator · The Artistry of Humanity" description="A six-week facilitated program that takes your leadership team through the Five Pillars of Fulfilment, one pillar a week. With Sherpany by Datasite: +29% team fulfilment score and a 9.2/10 impact rating." path="/what-we-do/wellness-accelerator">
+
+  <!-- Hero -->
+  <section class="bg-dark" style="overflow:hidden">
+    <div class="glow" style="right:-18%;top:-30%;width:70%;background:radial-gradient(closest-side,rgba(217,234,110,.14),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap split" style="padding-top:clamp(48px,7vw,96px);padding-bottom:clamp(120px,14vw,190px)">
+      <div style="max-width:600px">
+        <span class="eyebrow">The Wellness Accelerator</span>
+        <h1 style="color:var(--on-dark)">Six weeks. Five pillars. A culture that <span class="mk mk-d">actually changes</span>.</h1>
+        <p class="lead">Our flagship program: six facilitated weeks through the Five Pillars of Fulfilment, for leadership teams who are ready to move beyond good intentions.</p>
+        <div class="btns">
+          <a class="btn btn-lime" href="#enquire">Enquire about the program</a>
+          <a class="btn btn-ghost" href="#program">See the six weeks</a>
+        </div>
+        <div class="stats">
+          <div><div class="stat">+29%</div><p class="small" style="color:var(--on-dark-muted);margin-top:8px">team fulfilment score</p></div>
+          <div><div class="stat">9.2<span style="font-size:.5em">/10</span></div><p class="small" style="color:var(--on-dark-muted);margin-top:8px">participant impact rating</p></div>
+          <div><div class="stat">6</div><p class="small" style="color:var(--on-dark-muted);margin-top:8px">weeks, start to finish</p></div>
+        </div>
+        <p class="small" style="margin-top:14px;color:rgba(201,212,194,.7)">Results with Sherpany by Datasite.</p>
+      </div>
+      <figure style="margin:0;flex:0 1 480px">
+        <div class="photo" style="aspect-ratio:480/560;box-shadow:0 50px 90px -40px rgba(0,0,0,.7)"><img src="/assets/program-delivery.jpg" alt="A Wellness Accelerator session in progress, with Ian at the front of the room" width="1024" height="683" style="object-position:58% 50%" /></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Not a workshop, and who it is for -->
+  <section class="lift" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="split">
+        <div>
+          <span class="eyebrow">Why it works</span>
+          <h2>Not a workshop. <span class="mk">A system.</span></h2>
+          <p class="lead">Most wellbeing programs are events. A speaker comes in, people feel inspired, Monday arrives and nothing changes.</p>
+          <p class="body">The Accelerator takes a leadership team through all Five Pillars, not as a series of inspiring ideas but as a working framework they apply to themselves, their teams and the way the organisation runs. Each week combines education, structured reflection and practical tools people use between sessions. Accountability is built in, as structure rather than pressure.</p>
+          <p class="body">By week six the team has a shared language, accountability rituals of its own and a measurable baseline to track progress against. Leaders who go through it say they’re better equipped for the conversations they’d been avoiding: how people are actually doing, not just how the project is tracking.</p>
+        </div>
+        <div class="video" data-rv>
+          <img src="/assets/happy-participants.jpg" alt="" width="1024" height="683" loading="lazy" />
+          <button type="button" data-yt={VIDEO} aria-label="Watch Ian live"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5 18 12 8 18.5Z" /></svg></span>Watch Ian live</button>
+        </div>
+      </div>
+      <h3 style="margin-top:clamp(64px,7vw,96px)">Is this the right program for your organisation?</h3>
+      <div class="grid g3" style="margin-top:28px">
+        {FOR.map(([t, d]) => (
+          <div class="card" data-rv><h3 style="font-size:clamp(21px,1.9vw,24px)">{t}</h3><p class="body">{d}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- The six weeks -->
+  <section id="program" class="bg-dark lift-b">
+    <div class="glow" style="left:-16%;bottom:-20%;width:56%;background:radial-gradient(closest-side,rgba(217,234,110,.1),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap sec">
+      <div class="split" style="align-items:end">
+        <div><span class="eyebrow">The program</span><h2>Six weeks. <span class="mk mk-d">One pillar at a time.</span></h2></div>
+        <p class="lead" style="margin-top:0">Each week builds on the last. By week six the team has worked through every dimension of what drives human fulfilment, with practical tools for each one.</p>
+      </div>
+      <div class="grid g3" style="margin-top:clamp(44px,5vw,64px)">
+        {WEEKS.map(([t, d], i) => (
+          <div class="tile" data-rv><span class="pill">Week 0{i + 1}</span><h3 style="margin-top:16px">{t}</h3><p class="body">{d}</p></div>
+        ))}
+      </div>
+      <p class="small" style="margin-top:32px;color:var(--on-dark-muted);max-width:52em">Every week includes a facilitated session, structured individual reflection, a practical tool or exercise to use between sessions, and a shared team accountability moment.</p>
+    </div>
+  </section>
+
+  <!-- Case study: Sherpany by Datasite -->
+  <section class="bg-sand lift">
+    <div class="wrap sec split">
+      <div>
+        <img src="/assets/sherpany-logo.png" alt="Sherpany by Datasite" width="230" height="112" style="width:160px" />
+        <span class="eyebrow" style="margin-top:26px">Case study</span>
+        <h2>When people can see their fulfilment, <span class="mk">things shift fast</span>.</h2>
+        <p class="lead">In six weeks, Sherpany’s leadership team went from quiet disconnection to a shared language for how their people were actually doing.</p>
+        <p class="body">The weakest pillar, Internal Work, triggered the most honest conversations the team had ever had. Leaders who had been working around certain dynamics for months finally had a structure that made the conversation possible. By week six they had measurable shifts across all Five Pillars, accountability rituals they’d built themselves, and a culture that finally had a name for what it had been missing.</p>
+        <div class="stats">
+          <div><div class="stat">+29%</div><p class="small" style="margin-top:8px">team fulfilment score</p></div>
+          <div><div class="stat">9.2<span style="font-size:.5em">/10</span></div><p class="small" style="margin-top:8px">participant impact rating</p></div>
+          <div><div class="stat">6</div><p class="small" style="margin-top:8px">weeks, full program</p></div>
+        </div>
+      </div>
+      <div data-rv>
+        <div class="photo"><img src="/assets/sherpany-scores.png" alt="Sherpany’s leadership team on a video call, each with their Five Pillars score" width="946" height="582" loading="lazy" /></div>
+        <figure class="card" style="margin:28px 0 0">
+          <blockquote class="quote">“{sorin.quote}”</blockquote>
+          <figcaption class="who">{sorin.name} · {sorin.org}</figcaption>
+        </figure>
+        <p class="small" style="margin-top:18px">Also delivered with Cisco and Boston Scientific.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What is included, and what keeps it going -->
+  <section class="lift-b" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="split" style="align-items:flex-start">
+        <div style="flex:0 1 400px">
+          <span class="eyebrow">What’s included</span>
+          <h2>Everything your team needs for <span class="mk">six weeks</span>.</h2>
+          <p class="lead">Delivered in person or virtually, across Australia and internationally.</p>
+          <div class="facts">
+            <div><b>6</b><span>participants minimum</span></div>
+            <div><b>8–20</b><span>recommended team size</span></div>
+          </div>
+        </div>
+        <ul class="list incl">{INCLUDES.map(x => <li>{x}</li>)}</ul>
+      </div>
+      <div class="grid g2" style="margin-top:clamp(56px,6vw,80px)">
+        <a class="card-dark" href="/what-we-do/norma" data-rv>
+          <img src="/assets/norma-app-icon.png" alt="" width="52" height="52" style="width:52px;border-radius:14px" />
+          <h3 style="margin-top:18px">After week six, nørma keeps it going.</h3>
+          <p class="body">nørma is our wellbeing platform, built on the same Five Pillars: an app for your people and a dashboard for you. The baseline from the program becomes a picture you can keep watching, every month.</p>
+          <span class="link">How nørma fits ›</span>
+        </a>
+        <a class="card" href="/what-we-do/keynotes-workshops" data-rv>
+          <span class="pill">Keynotes</span>
+          <h3 style="margin-top:18px">Want the whole organisation to hear it?</h3>
+          <p class="body">The Accelerator works with your leaders. A keynote from Ian brings the same framework to everyone else, in one room, in person or virtual.</p>
+          <span class="link">See the keynotes ›</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enquire -->
+  <section id="enquire" class="bg-sand lift">
+    <div class="wrap sec split" style="align-items:flex-start">
+      <div>
+        <span class="eyebrow">Get in touch</span>
+        <h2>Ready to bring this to <span class="mk">your team</span>?</h2>
+        <p class="lead">Tell us about your leadership team and we’ll explore whether the Wellness Accelerator is the right fit for your organisation.</p>
+        <div class="card-dark" style="margin-top:32px">
+          <span class="eyebrow">Not ready to commit?</span>
+          <h3 style="margin-top:10px">Start with a free Masterclass.</h3>
+          <p class="body">A 60–90 minute session that gives your leadership team a direct experience of the framework before you commit to anything.</p>
+          <a class="link" href="/what-we-do/masterclass">About the Masterclass ›</a>
+        </div>
+      </div>
+      <form class="card form" name="accelerator-enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks" data-rv>
+        <input type="hidden" name="form-name" value="accelerator-enquiry" />
+        <input type="hidden" name="interest" value="Wellness Accelerator" />
+        <p hidden><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+        <h3>Enquire about the Accelerator</h3>
+        <p class="body" style="margin-top:8px">We’ll reply within one business day.</p>
+        <div class="fields" style="margin-top:24px">
+          <label class="field"><span>Your name</span><input type="text" name="name" autocomplete="name" maxlength="100" required /></label>
+          <label class="field"><span>Work email</span><input type="email" name="email" autocomplete="email" maxlength="255" required /></label>
+          <label class="field"><span>Company</span><input type="text" name="company" autocomplete="organization" maxlength="150" required /></label>
+          <label class="field"><span>Phone (optional)</span><input type="tel" name="phone" autocomplete="tel" maxlength="30" /></label>
+          <label class="field wide"><span>Tell us about your team (optional)</span><textarea name="message" rows="4" maxlength="1000" placeholder="Team size, where things are right now, any timing you have in mind."></textarea></label>
+        </div>
+        <div class="btns" style="margin-top:24px"><button class="btn btn-lime" type="submit">Send enquiry</button></div>
+        <p class="small" style="margin-top:16px">One business day reply · No sales pressure · Private and secure</p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* .sec resets .wrap's side padding when both sit on one element; keep the gutter. */
+  .wrap.sec{padding-left:var(--gut);padding-right:var(--gut)}
+  .incl{flex:1.4 1 460px;margin-top:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));column-gap:32px}
+  .incl li{padding:14px 0 14px 28px}
+  .incl li::before{top:23px}
+  .facts{display:flex;flex-wrap:wrap;gap:20px 40px;margin-top:30px;padding-top:26px;border-top:1px solid var(--line)}
+  .facts b{display:block;font:400 clamp(36px,3.6vw,46px)/1 var(--serif);letter-spacing:-.6px;color:var(--olive)}
+  .facts span{display:block;margin-top:8px;font-size:14px;color:var(--muted-2)}
+  .form{flex:1 1 400px}
+  .form .wide{grid-column:1 / -1}
+  .form textarea::placeholder{color:var(--muted-2)}
+</style>

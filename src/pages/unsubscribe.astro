@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Unsubscribed · The Artistry of Humanity" description="You have been unsubscribed from emails from The Artistry of Humanity." path="/unsubscribe" noindex>
+  <section class="bg-sand">
+    <div class="wrap sec">
+      <div class="card center" style="max-width:620px;margin:0 auto;padding:clamp(40px,6vw,64px) clamp(24px,5vw,56px)">
+        <div class="ico" style="margin:0 auto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg></div>
+        <h1 style="font-size:clamp(36px,4.4vw,52px);margin-top:22px">You’re <span class="mk">unsubscribed</span>.</h1>
+        <p class="lead" style="margin-left:auto;margin-right:auto">You won’t receive further emails from us. Thanks for having us in your inbox.</p>
+        <p class="small" style="margin:18px auto 0;max-width:30em">Still hearing from us, or changed your mind? Write to <a href="mailto:ian@artistry-of-humanity.com" style="color:var(--ink);text-decoration:underline;text-underline-offset:3px">ian@artistry-of-humanity.com</a> and we’ll sort it out.</p>
+        <div class="btns"><a class="btn btn-dark" href="/">Return to home</a></div>
+      </div>
+    </div>
+
+    <!-- Netlify reads this static copy at deploy time; the script below fills and sends it. -->
+    <form name="unsubscribe" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks" hidden>
+      <input type="hidden" name="form-name" value="unsubscribe" />
+      <input type="hidden" name="token" value="" />
+      <input type="hidden" name="bot-field" value="" />
+    </form>
+  </section>
+
+  <script is:inline>(() => {
+    const token = new URLSearchParams(location.search).get('token');
+    const form = document.forms.namedItem('unsubscribe');
+    if (!token || !form) return;
+    form.elements.namedItem('token').value = token;
+    // Send it once per token, even if the page is reloaded.
+    const key = 'unsub:' + token;
+    try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, '1'); } catch (e) {}
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ 'form-name': 'unsubscribe', token }).toString(),
+    }).catch(() => {});
+  })();</script>
+</Base>

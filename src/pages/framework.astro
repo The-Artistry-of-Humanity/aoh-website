@@ -1,0 +1,298 @@
+---
+import Base from '../layouts/Base.astro';
+import { PILLARS } from '../data/aoh';
+
+/* The depth for each pillar, in the same order as PILLARS. Copy from the
+   previous framework page. */
+const DEPTH = [
+  {
+    intro: 'The foundation everything else is built on.',
+    body: [
+      'Physical vitality is not vanity, it is infrastructure. The quality of someone’s sleep, their movement habits, their relationship with food and alcohol, their physical energy levels: these are not lifestyle choices that sit outside the conversation about performance. They are the conversation.',
+      'When this pillar is under strain, everything else suffers. Concentration drops. Emotional regulation becomes harder. Relationships feel more difficult. Work feels heavier. Restoring physical vitality doesn’t just improve health metrics, it creates the conditions for every other pillar to function.',
+      'In our work with organisations, Health & Fitness is often the pillar people find easiest to engage with first. It’s concrete. It’s measurable. And the wins here, even small ones, create momentum that carries into the others.',
+    ],
+    practices: ['Movement habits and exercise consistency', 'Sleep quality and recovery', 'Nutrition and energy management', 'Relationship with alcohol and substances', 'Physical presence and body–mind connection'],
+  },
+  {
+    intro: 'The pillar most people skip, and the one with the biggest upstream influence.',
+    body: [
+      'Internal Work is the hardest pillar to talk about and the most important one to address. It covers self-awareness, emotional intelligence, values clarity, identity, and the internal narratives people carry about who they are and what they’re capable of.',
+      'Most people arrive at adulthood with a set of beliefs about themselves that were formed in childhood and never examined. Those beliefs shape how they respond to pressure, how they relate to others, whether they ask for help, and whether they feel they deserve a fulfilling life. In the workplace they show up as patterns: the manager who can’t delegate, the high performer who can’t switch off, the leader who avoids difficult conversations.',
+      'This is not therapy. It is structured self-inquiry, the kind that gives people language for what they’re experiencing and tools to shift what isn’t serving them.',
+    ],
+    practices: ['Values identification and alignment', 'Emotional awareness and regulation', 'Recognising limiting beliefs', 'Purpose and identity work', 'Mindset and self-talk patterns'],
+  },
+  {
+    intro: 'The quality of our closest connections shapes everything.',
+    body: [
+      'The quality of a person’s intimate relationships is one of the strongest predictors of their overall wellbeing, mental health and even physical longevity. And yet it is almost never addressed in workplace wellbeing programs, as if the most important relationship in someone’s life stops mattering from nine to five.',
+      'It doesn’t. A marriage in crisis affects concentration, emotional stability and capacity for patience. A relationship built on genuine support and security creates a stability that makes everything else more possible. This pillar is not about prying into personal lives. It is about acknowledging that the whole person shows up to work, and that supporting the whole person means taking this seriously.',
+      'For single people, this pillar addresses relationship readiness, attachment patterns, and the quality of connection being sought and experienced.',
+    ],
+    practices: ['Communication and conflict resolution', 'Emotional intimacy and vulnerability', 'Attachment awareness', 'Relationship values and expectations', 'Support systems within partnerships'],
+  },
+  {
+    intro: 'Loneliness is one of the strongest predictors of declining health and performance. It’s also one of the least discussed.',
+    body: [
+      'Beyond our intimate relationships sits a broader layer of connection: friendships, community, belonging and the social fabric of everyday life. This is the pillar that has eroded most dramatically in the modern world. People have more digital contacts and fewer genuine friendships than at any point in recent history.',
+      'In men specifically, this pillar is in crisis. Research consistently shows that men’s social networks shrink dramatically after their mid-twenties, and that the absence of meaningful male friendship is a significant driver of the mental health challenges that eventually surface as crisis.',
+      'In organisations, this pillar shows up in how psychologically safe people feel, how connected they feel to their colleagues, and whether they experience their workplace as a genuine community or simply a transaction.',
+    ],
+    practices: ['Depth and quality of friendships', 'Sense of belonging and community', 'Ability to ask for help', 'Social confidence and connection rituals', 'Workplace belonging and psychological safety'],
+  },
+  {
+    intro: 'Not balance. Integration.',
+    body: [
+      'Work–life balance implies a scale, as if work and life were two opposing forces to be managed against each other. That framing is both inaccurate and demoralising. The question is not how to do less of one and more of the other. It is how to design a life where professional contribution and personal fulfilment reinforce each other rather than compete.',
+      'This pillar covers purpose in work, the experience of meaning and flow, boundary-setting, career alignment with values, and the quality of life outside work: whether there are enough things beyond the job that matter, replenish and sustain.',
+      'For many people this is the pillar they arrive at last, because it needs the other four to be stable enough to examine clearly. But it is also the pillar that connects most directly to what organisations call engagement, discretionary effort and retention.',
+    ],
+    practices: ['Purpose and meaning in work', 'Work–life integration rather than conflict', 'Boundary-setting and recovery', 'Career alignment with personal values', 'Fulfilment and engagement outside work'],
+  },
+];
+const pillars = PILLARS.map((p, i) => ({ ...p, ...DEPTH[i] }));
+const P = PILLARS.map(p => p.name);
+
+const EXAMPLES = [
+  {
+    says: '“I’m too busy to exercise right now.”',
+    body: 'When Work & Life Flow is under pressure, Health & Fitness is usually the first thing sacrificed. Less movement leads to lower energy, which makes the workload feel heavier, which leads to longer hours, and the cycle compounds. This is not a discipline problem. It is a systems problem.',
+    chain: [P[4], P[0], P[1]],
+  },
+  {
+    says: '“I can’t concentrate today.”',
+    body: 'A difficult conversation at home the night before doesn’t stay at home. Emotional residue from conflict consumes cognitive bandwidth, reduces patience with colleagues and makes even routine decisions feel harder. Supporting Love & Relationships isn’t a personal indulgence. It directly affects professional output.',
+    chain: [P[2], P[1], P[4]],
+  },
+  {
+    says: '“He seems fine, just a bit checked out.”',
+    body: 'Someone who has gradually lost their social connections outside work, friends drifted, social life contracted, may appear functional but is running on empty. Work becomes both their only source of social contact and the place they feel most disconnected. Engagement scores drop. The cause is invisible.',
+    chain: [P[3], P[1], P[4]],
+  },
+];
+
+const PROGRAMS = [
+  { href: '/what-we-do/masterclass', tag: 'Free · 60–90 min', title: 'Masterclass', text: 'Your team’s first experience of the framework, in 60 to 90 minutes. You leave with a shared language and a clear read on where your culture sits.' },
+  { href: '/what-we-do/wellness-accelerator', tag: '6 weeks', title: 'Wellness Accelerator', text: 'Six weeks through all five pillars, with structure, accountability and measurable outcomes.' },
+  { href: '/what-we-do/leadership-coaching', tag: '1:1', title: 'Leadership coaching', text: 'The framework applied one to one, for leaders who want to model what they ask of their teams.' },
+  { href: '/what-we-do/culture-consulting', tag: 'Partnership', title: 'Culture consulting', text: 'When the culture itself needs work: we diagnose what’s really going on, build the system to shift it, and stay alongside your people until it holds.' },
+];
+---
+<Base title="The Five Pillars of Fulfilment · The Artistry of Humanity" description="The Five Pillars of Fulfilment is The Artistry of Humanity’s framework for human wellbeing: Health & Fitness, Internal Work, Love & Relationships, Social Connection, and Work & Life Flow." path="/framework">
+
+  <!-- Hero -->
+  <section class="bg-dark" style="overflow:hidden">
+    <div class="glow" style="left:-20%;top:-35%;width:70%;background:radial-gradient(closest-side,rgba(217,234,110,.13),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap split" style="padding-top:clamp(48px,7vw,96px);padding-bottom:clamp(120px,14vw,190px)">
+      <div style="max-width:600px">
+        <span class="eyebrow">The framework</span>
+        <h1 style="color:var(--on-dark)">The Five Pillars of <span class="mk mk-d">Fulfilment</span>.</h1>
+        <p class="lead">Built on one insight: human wellbeing is not one idea. It is made up of five distinct, connected dimensions of life. Strengthen them all, and everything changes.</p>
+        <div class="btns">
+          <a class="btn btn-lime" href="/what-we-do/masterclass">Apply for a free Masterclass</a>
+          <a class="btn btn-ghost" href="/fulfilment-check-in">Take the check-in</a>
+        </div>
+      </div>
+      <figure style="margin:0;flex:1 1 420px;max-width:560px">
+        <div class="photo" style="aspect-ratio:5/4;box-shadow:0 50px 90px -40px rgba(0,0,0,.7)"><img src="/assets/happy-participants.jpg" alt="A large group of workshop participants celebrating together outdoors" width="1024" height="683" style="object-position:50% 60%" /></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Why the framework exists -->
+  <section class="lift" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="split" style="align-items:start">
+        <div style="flex:1 1 360px">
+          <span class="eyebrow">Why it exists</span>
+          <h2>Most wellbeing thinking starts in <span class="mk">the wrong place</span>.</h2>
+          <figure class="pull" data-rv>
+            <blockquote class="quote">“Crisis rarely appears out of nowhere. It sits downstream from prolonged disconnection: from self, from others, from a meaningful way of living.”</blockquote>
+          </figure>
+        </div>
+        <div style="flex:1 1 440px">
+          <p class="lead" style="margin-top:0">The standard approach to employee wellbeing focuses on work. Stress at work. Performance at work. Engagement at work. The assumption is that if you fix the workplace, you fix the person. But people don’t work that way.</p>
+          <p class="body">What happens at home shapes how someone shows up in the morning. The quality of their closest relationships decides their emotional bandwidth. Their sense of purpose, or the absence of it, affects every decision they make. Their physical energy either fuels or drains everything else they attempt. None of this stops at the door.</p>
+          <p class="body">A framework that only looks at the workplace is working with half the picture. That’s why most wellbeing programs produce limited results: not because the people behind them don’t care, but because the model they’re using is incomplete.</p>
+          <p class="body">The Five Pillars of Fulfilment is a different kind of model. It starts with the whole human, not just the employee, and gives people a structured, practical way to see where their life is under pressure and what to do about it. It was never designed as a clinical or diagnostic tool. It was designed to be honest, accessible and actionable, so people feel seen rather than assessed.</p>
+          <p class="body">Change has moved faster than people have adapted to it. AI is reshaping work. Remote and hybrid work have dissolved the line between professional and personal life. Digital communication has made us more reachable and, oddly, more alone. The Five Pillars were built for exactly this moment.</p>
+          <a class="link" href="/what-we-do">See how we deliver it in practice ›</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The five pillars, in depth -->
+  <section class="bg-sand lift-b">
+    <div class="wrap sec">
+      <div class="split" style="align-items:end">
+        <div><span class="eyebrow">The Five Pillars</span><h2>Five dimensions of <span class="mk">a whole life</span>.</h2></div>
+        <p class="lead" style="margin-top:0">Each pillar is a part of life that shows up at work whether anyone talks about it or not. Open one to see what it covers and what it looks like in practice.</p>
+      </div>
+      <div class="pls">
+        {pillars.map((p, i) => (
+          <details class="card pl" open={i === 0} data-rv>
+            <summary>
+              <span class="pl-n">0{i + 1}</span>
+              <span class="pl-t">
+                <h3>{p.name}</h3>
+                <span class="body">{p.short}</span>
+              </span>
+              <span class="pl-x" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg></span>
+            </summary>
+            <div class="pl-b">
+              <div>
+                <p class="pl-i it">{p.intro}</p>
+                {p.body.map(t => <p class="body">{t}</p>)}
+              </div>
+              <div>
+                <span class="eyebrow">What this looks like in practice</span>
+                <ul class="list">{p.practices.map(t => <li>{t}</li>)}</ul>
+              </div>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- One system -->
+  <section class="lift" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="narrow center">
+        <span class="eyebrow">How they connect</span>
+        <h2>Five pillars. <span class="mk">One system.</span></h2>
+        <p class="lead" style="margin-left:auto;margin-right:auto">The pillars don’t work on their own. Each one shapes the others, often in ways that stay invisible until you know what to look for. Here is what that looks like in real life.</p>
+      </div>
+      <div class="grid g3" style="margin-top:clamp(44px,5vw,64px)">
+        {EXAMPLES.map(e => (
+          <div class="card" data-rv style="display:flex;flex-direction:column">
+            <h3>{e.says}</h3>
+            <p class="body" style="flex:1">{e.body}</p>
+            <p class="chain">{e.chain.map((c, j) => <><span>{c}</span>{j < e.chain.length - 1 && <i aria-hidden="true">→</i>}</>)}</p>
+          </div>
+        ))}
+      </div>
+      <figure class="center" style="margin:clamp(56px,6vw,80px) auto 0;max-width:720px">
+        <blockquote class="quote">“Strengthen one pillar, and you strengthen the others. Neglect one, and the rest start to crack.”</blockquote>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Where are you right now? -->
+  <section class="bg-dark lift-b">
+    <div class="glow" style="right:-14%;bottom:-30%;width:56%;background:radial-gradient(closest-side,rgba(217,234,110,.12),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap sec split">
+      <div style="max-width:580px">
+        <span class="eyebrow">The Fulfilment Score</span>
+        <h2>Where are you <span class="mk mk-d">right now</span>?</h2>
+        <p class="lead">Every engagement with us begins with the Fulfilment Score: twenty honest questions across all Five Pillars. Not a personality quiz. Not a clinical diagnostic. A structured pulse check that gives people and teams a clear picture of where they are.</p>
+        <p class="body">The score creates a shared language. When a leadership team completes it together, they get a common reference point for conversations that are often too uncomfortable to start without one. It also creates a baseline, so progress becomes visible and change becomes measurable.</p>
+        <div class="stats">
+          <div><div class="stat">20</div><p class="small" style="color:var(--on-dark-muted);margin-top:8px">questions</p></div>
+          <div><div class="stat">5</div><p class="small" style="color:var(--on-dark-muted);margin-top:8px">pillars</p></div>
+          <div><div class="stat">1</div><p class="small" style="color:var(--on-dark-muted);margin-top:8px">clear starting point</p></div>
+        </div>
+        <div class="btns"><a class="btn btn-lime" href="/fulfilment-check-in">Take the free check-in</a><a class="btn btn-ghost" href="https://joinnorma.com/">Track it with nørma ↗</a></div>
+      </div>
+      <div class="phone-wrap" data-rv>
+        <div class="phone"><img src="/assets/app-where-you-stand.webp" alt="The nørma app showing a Fulfilment Score of 64 across the Five Pillars" width="780" height="1688" loading="lazy" /></div>
+        <p class="small" style="color:var(--on-dark-muted);margin-top:22px;max-width:300px">Over time, through nørma, the score becomes a living metric that people track privately and leaders see in aggregate across their teams.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The framework in action -->
+  <section class="bg-sand lift">
+    <div class="wrap sec">
+      <div class="split" style="align-items:end">
+        <div><span class="eyebrow">The framework in action</span><h2>The backbone of <span class="mk">everything we deliver</span>.</h2></div>
+        <p class="lead" style="margin-top:0">From a keynote to a six-week program to an always-on platform, every format works from the same Five Pillars.</p>
+      </div>
+
+      <div class="card feat" data-rv style="margin-top:clamp(44px,5vw,64px)">
+        <div class="feat-img"><img src="/assets/keynote.jpg" alt="Ian Williams speaking to a workshop room" width="1024" height="683" loading="lazy" /></div>
+        <div class="feat-tx">
+          <span class="pill">Keynotes &amp; workshops</span>
+          <h3 style="margin-top:16px">The framework, live in the room.</h3>
+          <p class="body">Ian’s keynotes put the Five Pillars in front of a whole audience at once. People score themselves live, hear Ian’s own story, and leave with a framework and one clear action. In person or virtual, across Australia and internationally.</p>
+          <div class="btns" style="margin-top:26px"><a class="btn btn-dark" href="/what-we-do/keynotes-workshops">See the keynotes</a><a class="btn btn-ghost" href="/what-we-do/keynotes-workshops#enquire">Book Ian to speak</a></div>
+        </div>
+      </div>
+
+      <div class="grid g2x2" style="margin-top:clamp(18px,2.4vw,28px)">
+        {PROGRAMS.map(p => (
+          <a class="card" href={p.href} data-rv><span class="pill">{p.tag}</span><h3 style="margin-top:16px">{p.title}</h3><p class="body">{p.text}</p><span class="link">Find out more ›</span></a>
+        ))}
+      </div>
+
+      <a class="card-dark norma-card" href="/what-we-do/norma" data-rv style="margin-top:clamp(18px,2.4vw,28px)">
+        <div style="max-width:520px">
+          <span class="eyebrow">nørma</span>
+          <h3 style="margin-top:12px">The five pillars, every month, for everyone.</h3>
+          <p class="body">nørma is the framework made digital: a private app for your people and a dashboard for you, tracking fulfilment and surfacing what’s happening at team level.</p>
+          <span class="link">How nørma fits our work ›</span>
+        </div>
+        <div class="photo norma-shot"><img src="/assets/dash-hero.webp" alt="The nørma leader dashboard" width="1120" height="816" loading="lazy" /></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Close -->
+  <section class="lift-b" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="card-dark center" style="max-width:860px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(24px,5vw,64px)">
+        <span class="eyebrow">Bring it to your organisation</span>
+        <h2 style="margin-left:auto;margin-right:auto;max-width:14em">Ready to put the framework to work?</h2>
+        <p class="lead" style="margin-left:auto;margin-right:auto">Start with a free Masterclass for your leadership team, or get in touch and we’ll work out the right place to begin.</p>
+        <div class="btns"><a class="btn btn-lime" href="/what-we-do/masterclass">Apply for a free Masterclass</a><a class="btn btn-ghost" href="/contact">Get in touch</a></div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pull{margin:clamp(32px,4vw,48px) 0 0;padding-left:22px;border-left:3px solid var(--lime-3);max-width:28em}
+  blockquote.quote{margin-inline:0}
+
+  .pls{display:grid;gap:14px;margin-top:clamp(44px,5vw,64px)}
+  .pl{padding:0}
+  .pl summary{list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:start;gap:6px clamp(16px,2.4vw,28px);padding:clamp(22px,2.6vw,32px) clamp(22px,3vw,38px);cursor:pointer}
+  .pl summary::-webkit-details-marker{display:none}
+  .pl-n{font:400 clamp(26px,2.6vw,34px)/1 var(--serif);color:var(--olive);padding-top:2px}
+  .pl-t h3{font-size:clamp(24px,2.4vw,30px)}
+  .pl-t .body{display:block;margin-top:6px;font-size:15.5px}
+  .pl-x{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(217,234,110,.3);color:var(--ink);transition:transform .3s var(--ease)}
+  .pl[open] .pl-x{transform:rotate(45deg)}
+  .pl summary:hover .pl-x{background:rgba(217,234,110,.55)}
+  .pl-b{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);padding:0 clamp(22px,3vw,38px) clamp(26px,3vw,38px) calc(clamp(22px,3vw,38px) + clamp(26px,2.6vw,34px) + clamp(16px,2.4vw,28px))}
+  .pl-b .eyebrow{margin-top:6px}
+  .pl-i{margin:0;font:italic 400 clamp(20px,1.9vw,24px)/1.35 var(--serif)}
+  @media (max-width:820px){
+    .pl-b{grid-template-columns:1fr;padding-left:clamp(22px,3vw,38px)}
+  }
+  @media (max-width:520px){
+    .pl summary{grid-template-columns:minmax(0,1fr) auto}
+    .pl-n{grid-column:1 / -1;font-size:22px}
+    .pl-t{grid-row:2}
+    .pl-x{grid-row:2;grid-column:2}
+  }
+
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:22px 0 0;font:600 12.5px/1.3 var(--sans);color:var(--olive)}
+  .chain span{padding:6px 11px;border-radius:999px;background:rgba(217,234,110,.28)}
+  .chain i{font-style:normal;color:var(--muted-2)}
+
+  .phone-wrap{flex:0 1 340px;display:flex;flex-direction:column;align-items:center}
+  .phone{width:min(100%,290px);padding:7px;border-radius:40px;background:#0B140E;box-shadow:0 40px 80px -24px rgba(0,0,0,.75),inset 0 0 0 1px rgba(255,255,255,.08)}
+  .phone img{width:100%;aspect-ratio:390/760;object-fit:cover;object-position:top;border-radius:33px}
+  .phone-wrap .small{text-align:center}
+
+  .feat{display:flex;flex-wrap:wrap;padding:0;overflow:hidden}
+  .feat-img{flex:1 1 380px;min-height:260px}
+  .feat-img img{width:100%;height:100%;object-fit:cover}
+  .feat-tx{flex:1 1 420px;padding:clamp(26px,3.4vw,48px)}
+
+  .norma-card{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:28px clamp(28px,4vw,56px)}
+  .norma-shot{flex:1 1 340px;max-width:520px;border-radius:18px 14px 20px 12px / 14px 20px 12px 18px;background:#F6F5EE}
+</style>

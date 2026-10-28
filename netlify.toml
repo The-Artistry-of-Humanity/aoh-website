@@ -1,0 +1,68 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Not-found pages are served from src/pages/404.astro (dist/404.html), which
+# Netlify picks up automatically. This is a static site: no SPA catch-all.
+
+# ---- Old Lovable routes ----
+
+# The nørma demo, pilot and ROI pages now live on joinnorma.com.
+[[redirects]]
+  from = "/norma-demo"
+  to = "https://joinnorma.com/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/norma-demo/*"
+  to = "https://joinnorma.com/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pilot"
+  to = "https://joinnorma.com/book-a-demo/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/norma-us-pilot"
+  to = "https://joinnorma.com/book-a-demo/"
+  status = 301
+  force = true
+
+# Includes /demo/salesforce, which the old site sent to /norma-demo.
+[[redirects]]
+  from = "/demo"
+  to = "https://joinnorma.com/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/demo/*"
+  to = "https://joinnorma.com/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cost-of-status-quo"
+  to = "https://joinnorma.com/roi/"
+  status = 301
+  force = true
+
+# Route alias from the old App.tsx (both addresses showed the same page).
+[[redirects]]
+  from = "/build-a-human-strategy"
+  to = "/human-strategy"
+  status = 301
+  force = true
+
+# ---- Headers ----
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"

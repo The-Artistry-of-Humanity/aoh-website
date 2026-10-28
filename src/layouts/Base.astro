@@ -1,0 +1,108 @@
+---
+/* Every AOH page: head, header, footer, and the two small scripts (scroll
+   reveals and the highlighter). */
+import '../styles/aoh.css';
+interface Props {
+  title: string;
+  description: string;
+  /** Path for the canonical link, e.g. "/framework". */
+  path: string;
+  /** Social preview image path under /assets/. */
+  og?: string;
+  noindex?: boolean;
+}
+const { title, description, path, og = '/assets/og-home.jpg', noindex = false } = Astro.props;
+const SITE = 'https://artistry-of-humanity.com';
+const canonical = SITE + (path === '/' ? '/' : path);
+const here = Astro.url.pathname.replace(/\/$/, '') || '/';
+const NAV = [
+  ['/what-we-do/keynotes-workshops', 'Keynotes'],
+  ['/what-we-do', 'Ways to work'],
+  ['/framework', 'Framework'],
+  ['/about', 'About'],
+];
+const cur = (href: string) => (here === href ? 'page' : undefined);
+const org = { '@context': 'https://schema.org', '@type': 'Organization', name: 'The Artistry of Humanity', url: SITE + '/', logo: SITE + '/assets/aoh-logo-new.png', founder: { '@type': 'Person', name: 'Ian Williams' }, sameAs: ['https://www.linkedin.com/company/artistry-of-humanity'] };
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="only light" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" href="/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Artistry of Humanity" />
+    <meta property="og:image" content={SITE + og} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(org)} />
+    <script is:inline>if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <header class="hd">
+      <div class="wrap hd-bar">
+        <a class="brand" href="/" aria-label="The Artistry of Humanity, home">
+          <img src="/assets/aoh-logo-new.png" alt="" width="34" height="34" />
+          <span><b>Artistry of Humanity</b><small>Culture &amp; leadership</small></span>
+        </a>
+        <nav class="nav" aria-label="Main">
+          {NAV.map(([href, label]) => <a href={href} aria-current={cur(href)}>{label}</a>)}
+          <a class="norma" href="/what-we-do/norma" aria-current={cur('/what-we-do/norma')}><img src="/assets/norma-app-icon.png" alt="" width="24" height="24" />nørma</a>
+        </nav>
+        <div style="display:flex;align-items:center;gap:10px">
+          <a class="btn btn-lime" href="/contact">Book a call</a>
+          <details class="menu">
+            <summary aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8h16M4 16h16" /></svg></summary>
+            <nav aria-label="Menu">
+              {NAV.map(([href, label]) => <a href={href}>{label}</a>)}
+              <a href="/what-we-do/norma">nørma</a>
+              <a href="/fulfilment-check-in">Fulfilment check-in</a>
+              <a href="/contact">Book a call</a>
+            </nav>
+          </details>
+        </div>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="ft">
+      <div class="wrap">
+        <div class="ft-top">
+          <div style="max-width:320px">
+            <a class="brand" href="/"><img src="/assets/aoh-logo-new.png" alt="" width="34" height="34" /><span><b>Artistry of Humanity</b><small>Culture &amp; leadership consultancy</small></span></a>
+            <p class="small" style="margin-top:18px;color:rgba(201,212,194,.7)">Keynotes, leadership work and nørma, for organisations that want their people at their best.</p>
+          </div>
+          <div class="ft-cols">
+            <div><b>Work with us</b><a href="/what-we-do/keynotes-workshops">Keynotes &amp; workshops</a><a href="/what-we-do/masterclass">Masterclass</a><a href="/what-we-do/leadership-coaching">Leadership coaching</a><a href="/what-we-do/wellness-accelerator">Wellness Accelerator</a><a href="/what-we-do/culture-consulting">Culture consulting</a></div>
+            <div><b>Explore</b><a href="/framework">The Five Pillars</a><a href="/fulfilment-check-in">Fulfilment check-in</a><a href="/human-strategy">Human strategy</a><a href="/what-we-do/norma">nørma</a><a href="https://joinnorma.com/">joinnorma.com ↗</a></div>
+            <div><b>Company</b><a href="/about">About</a><a href="/contact">Contact</a><a href="https://www.linkedin.com/company/artistry-of-humanity">LinkedIn ↗</a></div>
+          </div>
+        </div>
+        <div class="ft-bot"><span>© 2026 The Artistry of Humanity Pty Ltd</span><span><a href="/privacy">Privacy policy</a></span></div>
+      </div>
+    </footer>
+    <script is:inline>(() => {
+      if (!document.documentElement.classList.contains('js')) return;
+      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .15 });
+      document.querySelectorAll('.mk, [data-rv]').forEach(el => io.observe(el));
+      // Video facades: load the YouTube player only when someone presses play.
+      document.querySelectorAll('[data-yt]').forEach(b => b.addEventListener('click', () => {
+        const f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + b.dataset.yt + '?autoplay=1&rel=0';
+        f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true; f.title = b.getAttribute('aria-label') || 'Video';
+        b.parentElement.replaceChildren(f);
+      }));
+    })();</script>
+  </body>
+</html>

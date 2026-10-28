@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+
+const LINKS = [
+  ['/', 'Home', 'Start from the beginning.'],
+  ['/what-we-do/keynotes-workshops', 'Keynotes & workshops', 'Book Ian to speak at your event.'],
+  ['/what-we-do', 'Ways to work together', 'Masterclass, programs, coaching and consulting.'],
+  ['/framework', 'The Five Pillars', 'The framework behind everything we do.'],
+  ['/fulfilment-check-in', 'Fulfilment check-in', 'See where you are across the Five Pillars.'],
+  ['/what-we-do/norma', 'nørma', 'The wellbeing operating system.'],
+  ['/about', 'About Ian', 'The story behind The Artistry of Humanity.'],
+  ['/contact', 'Contact', 'Book a call or send us a message.'],
+];
+---
+<Base title="Page not found · The Artistry of Humanity" description="We couldn’t find that page. Here are some good places to pick up from." path="/404" noindex>
+  <section style="background:var(--cream)">
+    <div class="wrap center" style="padding-top:clamp(56px,8vw,112px);padding-bottom:clamp(110px,12vw,160px)">
+      <span class="eyebrow">404 · Page not found</span>
+      <h1>This page has <span class="mk">wandered off</span>.</h1>
+      <p class="lead" style="margin-left:auto;margin-right:auto">The link may be old, or the page may have moved when we rebuilt the site. These are good places to pick up from.</p>
+      <div class="btns"><a class="btn btn-lime" href="/">Back to home</a><a class="btn btn-ghost" href="/contact">Get in touch</a></div>
+    </div>
+  </section>
+  <section class="bg-sand lift">
+    <div class="wrap sec">
+      <div class="grid g4">
+        {LINKS.map(([href, title, text]) => (
+          <a class="card" href={href} style="padding:26px 24px">
+            <h3 style="font-size:23px">{title}</h3>
+            <p class="body" style="font-size:15.5px;margin-top:8px">{text}</p>
+            <span class="link" style="margin-top:14px">Go ›</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

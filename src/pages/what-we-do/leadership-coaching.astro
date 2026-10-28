@@ -1,0 +1,188 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// 1:1 leadership coaching, grounded in the Five Pillars. Copy from the previous
+// site's Leadership Coaching page; the enquiry form keeps the old contact
+// form's fields, with the interest fixed to coaching.
+
+const SIGNS = [
+  'Your best people keep leaving, and you’re not sure why',
+  'You’ve invested in culture initiatives. Nothing seems to stick.',
+  'The team respects you, but they’re not really with you',
+  'Engagement scores aren’t moving despite everything you’ve tried',
+  'You’re carrying more than anyone around you realises',
+  'You know the culture needs to change, but not where to start',
+];
+
+const FOR_YOU = [
+  ['You’re performing well on paper, but something feels off', 'From the outside everything looks fine. The results are there and the team respects you. Underneath, you’re running on empty, working from habit rather than intention. You need a space to be honest about that, with someone who can handle it.'],
+  ['You’re asking your team to grow in ways you haven’t yourself', 'You’re investing in culture, wellbeing and leadership development across the organisation. If you’re honest, you’re not modelling what you’re asking for, and you want to change that because you know it matters.'],
+  ['Your culture initiatives aren’t landing', 'You’ve tried the programs, the workshops and the values statements. People nod in the room and go back to the same patterns. The missing piece isn’t another initiative. It’s the leader modelling something different every day.'],
+];
+
+const HOW = [
+  ['It starts with the Fulfilment Score', 'Every engagement begins with an honest assessment across all Five Pillars. That gives you a clear baseline: where you are right now, across every part of your life that affects how you lead.'],
+  ['Structured, but not rigid', 'Sessions are typically 60–90 minutes, held regularly over an agreed period. The framework gives structure, and the conversation goes where it needs to go. There’s no fixed curriculum.'],
+  ['Accountability is built in', 'Between sessions you hold a few commitments: small, specific and honest. Not a to-do list, but intentions that keep the work moving. Progress is tracked against your Fulfilment Score over time.'],
+  ['Private and confidential', 'What’s discussed in coaching stays in coaching. No reporting back to the organisation, no summary for HR, no performance framing. This is your space to think, be honest and do the work.'],
+];
+---
+<Base title="Leadership coaching · The Artistry of Humanity" description="1:1 leadership coaching with Ian Williams, grounded in the Five Pillars of Fulfilment. Private, structured and honest, for leaders who want to model what they ask of their teams. In person or virtual." path="/what-we-do/leadership-coaching">
+
+  <!-- Hero -->
+  <section class="bg-dark" style="overflow:hidden">
+    <div class="glow" style="right:-18%;top:-30%;width:70%;background:radial-gradient(closest-side,rgba(217,234,110,.14),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap split" style="padding-top:clamp(48px,7vw,96px);padding-bottom:clamp(120px,14vw,190px)">
+      <div style="max-width:610px">
+        <span class="eyebrow">Leadership coaching · 1:1</span>
+        <h1 style="color:var(--on-dark)">You can’t ask your people to do work <span class="mk mk-d">you haven’t done yourself</span>.</h1>
+        <p class="lead">One-to-one coaching grounded in the Five Pillars of Fulfilment. A structured, honest process for leaders who want to show up differently, for themselves and for the people they lead.</p>
+        <div class="tags">
+          <span class="pill">3–6 months</span><span class="pill">60–90 minute sessions</span><span class="pill">Private</span>
+        </div>
+        <div class="btns">
+          <a class="btn btn-lime" href="#enquire">Enquire about coaching</a>
+          <a class="btn btn-ghost" href="/what-we-do/masterclass">Book a free Masterclass first</a>
+        </div>
+      </div>
+      <figure style="margin:0;flex:0 1 400px">
+        <div class="arch" style="aspect-ratio:420/520;position:relative;background:radial-gradient(64% 42% at 50% 22%,rgba(217,234,110,.6),rgba(217,234,110,.16) 55%,rgba(217,234,110,0) 82%),linear-gradient(180deg,#E8EACB,#ECE8D7 52%,#E4DFCA);box-shadow:0 50px 90px -40px rgba(0,0,0,.7)">
+          <img src="/assets/ian-portrait.webp" alt="Ian Williams" width="900" height="802" style="position:absolute;left:50%;bottom:0;width:128%;max-width:none;transform:translateX(-50%)" />
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Inside out -->
+  <section class="lift" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="split" style="align-items:flex-start">
+        <div>
+          <span class="eyebrow">Why coaching</span>
+          <h2>Leadership starts from <span class="mk">the inside out</span>.</h2>
+          <p class="lead">The pattern Ian sees most often in senior leaders: they are deeply invested in the performance and wellbeing of their teams, and far less invested in their own.</p>
+        </div>
+        <div>
+          <p class="body" style="margin-top:0">They commission programs and champion culture initiatives. They ask their people to be more open, more self-aware and more accountable. Then they return to the same patterns and blind spots, because nobody has ever made space for them to do anything different.</p>
+          <p class="body">That gap, between what leaders ask of others and what they’re willing to do themselves, is one of the most consistent sources of cultural dysfunction in organisations. People feel it even when they can’t name it.</p>
+          <p class="body">Coaching with AOH uses the Five Pillars not as a framework for your team, but as a lens for you. Where are you actually at, across all five dimensions of your life? What is that costing you, and the people around you? It isn’t generic executive coaching. It looks at the whole person, not just the role.</p>
+          <a class="link" href="/framework">The Five Pillars framework ›</a>
+        </div>
+      </div>
+      <p class="quote center" data-rv style="max-width:760px;margin:clamp(56px,6vw,84px) auto 0">“The leaders who create the most impact aren’t the ones who have it all figured out. They’re the ones willing to keep looking honestly at themselves.”</p>
+    </div>
+  </section>
+
+  <!-- Is this you -->
+  <section class="bg-sand lift-b">
+    <div class="wrap sec">
+      <span class="eyebrow">Who it’s for</span>
+      <h2>This coaching is <span class="mk">for you</span> if…</h2>
+      <div class="split" style="align-items:flex-start;margin-top:clamp(40px,5vw,60px)">
+        <div class="rows">
+          {FOR_YOU.map(([t, d]) => (
+            <div class="row" data-rv><h3>{t}</h3><p class="body">{d}</p></div>
+          ))}
+        </div>
+        <div class="card-dark" data-rv style="flex:0 1 440px">
+          <span class="eyebrow">Sound familiar?</span>
+          <ul class="list" style="margin-top:18px">{SIGNS.map(s => <li>{s}</li>)}</ul>
+          <p class="body" style="margin-top:22px">These are organisational symptoms. The most effective place to address them is closer to home.</p>
+          <div class="btns" style="margin-top:26px"><a class="btn btn-lime" href="#enquire">Enquire about coaching</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="bg-dark lift">
+    <div class="glow" style="right:-14%;top:-10%;width:52%;background:radial-gradient(closest-side,rgba(217,234,110,.1),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap sec">
+      <div class="split" style="align-items:end">
+        <div><span class="eyebrow">How the coaching works</span><h2>Every leader is different. <span class="mk mk-d">The approach isn’t.</span></h2></div>
+        <p class="lead" style="margin-top:0">Each engagement is shaped around the leader in front of us, but the way we work stays consistent.</p>
+      </div>
+      <div class="grid g2x2" style="margin-top:clamp(44px,5vw,64px)">
+        {HOW.map(([t, d], i) => (
+          <div class="tile" data-rv><span class="num">0{i + 1}</span><h3 style="margin-top:18px">{t}</h3><p class="body">{d}</p></div>
+        ))}
+      </div>
+      <div class="facts">
+        <div><b>1:1</b><span>In person or virtual, across Australia and internationally</span></div>
+        <div><b>60–90 min</b><span>Per session, held regularly</span></div>
+        <div><b>3–6 months</b><span>A typical engagement</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- When leaders grow -->
+  <section class="lift-b" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="split">
+        <div class="photo" data-rv style="aspect-ratio:5/4"><img src="/assets/keynote.jpg" alt="Ian Williams working with a room of leaders" width="1024" height="683" loading="lazy" style="object-position:62% 40%" /></div>
+        <div>
+          <span class="eyebrow">The ripple effect</span>
+          <h2>When leaders grow, <span class="mk">cultures shift</span>.</h2>
+          <p class="lead">There is a direct line between the inner state of a leader and the culture of the team around them. Leadership behaviour shapes team culture more than values statements, HR programs or any initiative launched from the top.</p>
+          <p class="body">So the most powerful investment an organisation can make in its culture is in the people leading it. Leaders who go through coaching often become the most credible champions of culture change in their organisations. Not because they’ve been trained to talk about it, but because they’ve done the work themselves.</p>
+        </div>
+      </div>
+      <div class="grid g3" style="margin-top:clamp(56px,6vw,80px)">
+        <a class="card" href="/what-we-do/wellness-accelerator" data-rv><span class="pill">For the team</span><h3 style="margin-top:16px">Wellness Accelerator</h3><p class="body">Six weeks through the Five Pillars with your whole leadership team, one pillar at a time.</p><span class="link">See the program ›</span></a>
+        <a class="card" href="/what-we-do/keynotes-workshops" data-rv><span class="pill">For everyone</span><h3 style="margin-top:16px">Keynotes</h3><p class="body">Take the conversation to the wider organisation with Ian on stage, in person or virtual.</p><span class="link">See the keynotes ›</span></a>
+        <a class="card-dark" href="/what-we-do/norma" data-rv><span class="pill">Every month</span><h3 style="margin-top:16px">nørma</h3><p class="body">Keep it going: a monthly check-in for your people across the Five Pillars, and a clear picture of your culture for you.</p><span class="link">How nørma fits ›</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enquire -->
+  <section id="enquire" class="bg-sand lift">
+    <div class="wrap sec split" style="align-items:flex-start">
+      <div>
+        <span class="eyebrow">Start a conversation</span>
+        <h2>Ready to <span class="mk">do the work</span>?</h2>
+        <p class="lead">The first call is a no-commitment chat about where you are and whether coaching is the right fit. That’s it.</p>
+        <ul class="list" style="margin-top:28px;max-width:30em">
+          <li>Starts with your Fulfilment Score across the Five Pillars</li>
+          <li>Regular 60–90 minute sessions, usually over three to six months</li>
+          <li>Fully private: nothing is reported back to your organisation</li>
+        </ul>
+        <p class="body" style="margin-top:28px">Not sure yet? A <a class="link" style="margin-top:0" href="/what-we-do/masterclass">free Masterclass</a> lets your leadership team experience the framework first.</p>
+      </div>
+      <form class="card form" name="coaching-enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks" data-rv>
+        <input type="hidden" name="form-name" value="coaching-enquiry" />
+        <input type="hidden" name="interest" value="Leadership Coaching" />
+        <p hidden><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+        <h3>Enquire about coaching</h3>
+        <p class="body" style="margin-top:8px">We’ll reply within one business day.</p>
+        <div class="fields" style="margin-top:24px">
+          <label class="field"><span>Your name</span><input type="text" name="name" autocomplete="name" maxlength="100" required /></label>
+          <label class="field"><span>Work email</span><input type="email" name="email" autocomplete="email" maxlength="255" required /></label>
+          <label class="field"><span>Company</span><input type="text" name="company" autocomplete="organization" maxlength="150" required /></label>
+          <label class="field"><span>Phone (optional)</span><input type="tel" name="phone" autocomplete="tel" maxlength="30" /></label>
+          <label class="field wide"><span>Where are you right now? (optional)</span><textarea name="message" rows="4" maxlength="1000" placeholder="Your role, your team, what’s on your mind. Whatever helps."></textarea></label>
+        </div>
+        <div class="btns" style="margin-top:24px"><button class="btn btn-lime" type="submit">Send enquiry</button></div>
+        <p class="small" style="margin-top:16px">One business day reply · No sales pressure · Private and secure</p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* .sec resets .wrap's side padding when both sit on one element; keep the gutter. */
+  .wrap.sec{padding-left:var(--gut);padding-right:var(--gut)}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+  .rows{flex:1.3 1 420px}
+  .row{padding:26px 0;border-top:1px solid var(--line)}
+  .row:first-child{border-top:0;padding-top:0}
+  .row h3{font-size:clamp(22px,2vw,26px)}
+  .row .body{margin-top:10px}
+  .num{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:16px 12px 16px 10px / 12px 16px 10px 16px;background:rgba(217,234,110,.14);color:#EAF79B;font:600 13px var(--sans);letter-spacing:.5px}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:20px 28px;margin-top:clamp(40px,4.5vw,56px);padding-top:32px;border-top:1px solid var(--line-dark)}
+  .facts b{display:block;font:400 clamp(32px,3.2vw,40px)/1 var(--serif);letter-spacing:-.5px;color:#EAF79B}
+  .facts span{display:block;margin-top:10px;font-size:14.5px;color:var(--on-dark-muted)}
+  .form{flex:1 1 400px}
+  .form .wide{grid-column:1 / -1}
+  .form textarea::placeholder{color:var(--muted-2)}
+</style>

@@ -1,0 +1,25 @@
+---
+// The free Fulfilment check-in. This address has been shared widely: keep it at
+// /fulfilment-check-in. The check-in itself is a React island.
+import Base from '../layouts/Base.astro';
+import FulfilmentCheckIn from '../islands/FulfilmentCheckIn.tsx';
+---
+<Base title="Fulfilment check-in · The Artistry of Humanity" description="Twenty honest questions across the Five Pillars of Fulfilment. About four minutes, no sign-up, and a clear picture of where to put your attention next." path="/fulfilment-check-in">
+  <section style="background:var(--cream);overflow:hidden">
+    <div class="glow" style="left:-22%;top:-28%;width:60%;background:radial-gradient(closest-side,rgba(217,234,110,.28),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap fc-page">
+      <div class="narrow center">
+        <span class="eyebrow">Fulfilment check-in · Free</span>
+        <h1>A clear look at the <span class="mk">five pillars</span> holding up your life.</h1>
+        <p class="lead">Twenty honest questions. About four minutes. A picture of where you are right now, and where to put your attention next.</p>
+      </div>
+      <FulfilmentCheckIn client:load />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .fc-page{position:relative;padding-top:clamp(40px,6vw,84px);padding-bottom:clamp(80px,9vw,128px)}
+  .fc-page h1{font-size:clamp(36px,4.6vw,60px)}
+  .fc-page .lead{margin-left:auto;margin-right:auto}
+</style>
