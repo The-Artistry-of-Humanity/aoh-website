@@ -1,0 +1,45 @@
+---
+/* What people say: one quote at a time, large and in the sans, with the people
+   beside it as photo tabs. It moves on by itself while it is on screen, until
+   someone picks a person. Without JavaScript every quote is shown in turn. */
+import { TESTIMONIALS } from '../data/aoh';
+interface Props {
+  /** Names to show, in order. Defaults to everyone (the short second lines left out). */
+  names?: string[];
+  /** On a dark section. */
+  dark?: boolean;
+  label?: string;
+}
+const { names, dark = false, label = 'What people say' } = Astro.props;
+const list = names
+  ? names.map(n => TESTIMONIALS.find(t => t.name === n && !t.short)!).filter(Boolean)
+  : TESTIMONIALS.filter(t => !t.short);
+const id = 'v' + Math.random().toString(36).slice(2, 7);
+const split = (q: string, hl?: string) => {
+  const i = hl ? q.indexOf(hl) : -1;
+  return i < 0 ? [q, '', ''] : [q.slice(0, i), hl!, q.slice(i + hl!.length)];
+};
+---
+<div class:list={['voices', { 'voices-dark': dark }]} data-tabs data-auto="7000">
+  <div class="v-stage">
+    <svg class="v-mark" width="46" height="34" viewBox="0 0 64 48" aria-hidden="true"><path d="M0 48V28C0 12 8 3 24 0l3 6C17 9 13 15 12.5 22H26v26zm36 0V28c0-16 8-25 24-28l3 6c-10 3-14 9-14.5 16H62v26z" /></svg>
+    {list.map((t, i) => {
+      const [a, h, b] = split(t.quote, t.hl);
+      return (
+        <figure class="v-panel" role="tabpanel" id={`${id}-p${i}`} aria-labelledby={`${id}-t${i}`}>
+          <blockquote>{a}{h && <span class={dark ? 'mk mk-d' : 'mk'}>{h}</span>}{b}</blockquote>
+          <figcaption><b>{t.name}</b> · {t.org}</figcaption>
+        </figure>
+      );
+    })}
+  </div>
+  <div class="v-list" role="tablist" aria-label={label}>
+    {list.map((t, i) => (
+      <button type="button" class="v-tab" role="tab" id={`${id}-t${i}`} aria-controls={`${id}-p${i}`}>
+        <img src={t.img} alt="" width="160" height="160" loading="lazy" />
+        <span><b>{t.name}</b><span>{t.org.split(', ').pop()}</span></span>
+        <i class="v-bar" aria-hidden="true"></i>
+      </button>
+    ))}
+  </div>
+</div>

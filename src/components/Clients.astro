@@ -1,0 +1,16 @@
+---
+/* "Trusted by": the client names in one slowly moving row, which pauses on
+   hover and sits still, wrapped and centred, for reduced motion. */
+import { CLIENTS } from '../data/aoh';
+interface Props { dark?: boolean; label?: string }
+const { dark = false, label = 'Trusted by' } = Astro.props;
+---
+<div class:list={['clients', { 'clients-dark': dark }]}>
+  <span class="eyebrow">{label}</span>
+  <div class="clients-row">
+    <div class="clients-track">
+      <p>{CLIENTS.map(c => <span>{c}</span>)}</p>
+      <p aria-hidden="true">{CLIENTS.map(c => <span>{c}</span>)}</p>
+    </div>
+  </div>
+</div>

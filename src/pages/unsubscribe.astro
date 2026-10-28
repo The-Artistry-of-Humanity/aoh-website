@@ -1,11 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
 ---
 <Base title="Unsubscribed · The Artistry of Humanity" description="You have been unsubscribed from emails from The Artistry of Humanity." path="/unsubscribe" noindex>
   <section class="bg-sand">
     <div class="wrap sec">
       <div class="card center" style="max-width:620px;margin:0 auto;padding:clamp(40px,6vw,64px) clamp(24px,5vw,56px)">
-        <div class="ico" style="margin:0 auto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg></div>
+        <div class="ico" style="margin:0 auto;width:64px;height:64px;background:var(--lime);color:#152213"><Icon name="mail" size={28} /></div>
         <h1 style="font-size:clamp(36px,4.4vw,52px);margin-top:22px">You’re <span class="mk">unsubscribed</span>.</h1>
         <p class="lead" style="margin-left:auto;margin-right:auto">You won’t receive further emails from us. Thanks for having us in your inbox.</p>
         <p class="small" style="margin:18px auto 0;max-width:30em">Still hearing from us, or changed your mind? Write to <a href="mailto:ian@artistry-of-humanity.com" style="color:var(--ink);text-decoration:underline;text-underline-offset:3px">ian@artistry-of-humanity.com</a> and we’ll sort it out.</p>

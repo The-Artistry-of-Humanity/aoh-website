@@ -3,10 +3,10 @@
    "what you get" list, testimonials and clients come from Ian's speaker profile
    (src/data/aoh.ts); workshops and the booking steps from the previous site. */
 import Base from '../../layouts/Base.astro';
-import { KEYNOTES, BOOK_IAN, TESTIMONIALS, CLIENTS, VIDEO } from '../../data/aoh';
-
-const featured = TESTIMONIALS.find(t => t.org.includes('DHL')) ?? TESTIMONIALS[0];
-const others = TESTIMONIALS.filter(t => t !== featured);
+import Icon from '../../components/Icon.astro';
+import Voices from '../../components/Voices.astro';
+import Clients from '../../components/Clients.astro';
+import { KEYNOTES, BOOK_IAN, VIDEO } from '../../data/aoh';
 
 const FLOW = [
   ['Where are we now?', 'The session opens with the Fulfilment Score, a structured self-assessment across all Five Pillars that gives the team a shared, honest starting point. People stop performing for each other and start being real.'],
@@ -15,25 +15,34 @@ const FLOW = [
 ];
 
 const FORMATS = [
-  ['45–60 min', 'Keynote', 'One of the three signature keynotes, or a session shaped around your theme. For conferences, all-hands, industry events and strategy days.'],
-  ['Half day', 'Half-day workshop', 'A focused working session for one team, with enough depth to create real movement. It fits into an offsite or a leadership day.'],
-  ['Full day', 'Full-day workshop', 'The immersive version, with time for the honest conversations and for the team to build its own next steps.'],
-  ['Leaders', 'Leadership sessions', 'For a leadership team: the culture they are creating, and the part they play in it.'],
+  { pill: '45–60 min', icon: 'mic', span: 22, title: 'Keynote', text: 'One of Ian’s keynotes, or a session shaped around your theme. For conferences, all-hands, industry events and strategy days.' },
+  { pill: 'Half day', icon: 'clock', span: 55, title: 'Half-day workshop', text: 'A focused working session for one team, with enough depth to create real movement. It fits into an offsite or a leadership day.' },
+  { pill: 'Full day', icon: 'calendar', span: 100, title: 'Full-day workshop', text: 'The immersive version, with time for the honest conversations and for the team to build its own next steps.' },
+  { pill: 'Leaders', icon: 'users', span: 70, title: 'Leadership sessions', text: 'For a leadership team: the culture they are creating, and the part they play in it.' },
+] as const;
+
+const FAQ = [
+  ['Can Ian speak virtually?', 'Yes. Ian speaks and facilitates in person or virtually, across Australia and internationally.'],
+  ['What does a keynote cost?', 'Fees are on request. Every engagement is tailored, so they depend on the format, your audience and the location. Tell us about your event and we’ll come back to you.'],
+  ['Can the keynote be about our theme?', 'Yes. The three keynotes above are the ones Ian delivers most often, not a fixed menu. Every session is tailored to your audience and context, and more themes are available.'],
+  ['How long is a keynote?', 'Usually 45 to 60 minutes. Workshops run for a half or a full day, and leadership sessions are shaped around your team.'],
+  ['What happens after the day?', 'Often, a keynote is the beginning. Teams go deeper with the six-week Wellness Accelerator or a Masterclass for the leadership team, and nørma keeps the work going every month.'],
+  ['How quickly will we hear back?', 'Within one business day. A few details about your event are enough to start.'],
 ];
 
 const STEPS = [
-  ['Tell us about your event or team', 'Fill in the short form below with a brief description of what you’re looking for. We’ll come back to you within one business day to set up a call.'],
-  ['A scoping conversation', 'We get to know your audience, your culture and what you’re hoping to achieve. This is where the format, content and focus are shaped around your needs, not a generic template.'],
-  ['We deliver', 'Ian delivers the keynote or facilitates the workshop, in the room or virtually, wherever you are. Everything is tailored and prepared to the standard your event deserves.'],
+  ['You tell us about your event or team', 'A few details in the form are enough. We come back to you within one business day to set up a call.'],
+  ['A scoping conversation', 'We get to know your audience, your culture and what you’re hoping to achieve, and shape the format and focus around it.'],
+  ['Ian delivers', 'The keynote or workshop, in the room or virtually, wherever you are.'],
 ];
 
 const NEXT = [
   ['/what-we-do/wellness-accelerator', '6 weeks', 'Wellness Accelerator', 'Takes the framework from a single session to an embedded practice. The most common next step after a workshop.'],
-  ['/what-we-do/masterclass', 'Free', 'Masterclass', 'A 60–90 minute session for your leadership team: the simplest way to experience the framework and work out what your team needs.'],
+  ['/what-we-do/masterclass', '60–90 min', 'Masterclass', 'A 60–90 minute session for your leadership team: the simplest way to experience the framework and work out what your team needs.'],
   ['/what-we-do/norma', 'Platform', 'nørma', 'Keeps the work going after the room empties: a monthly check-in for your people and a dashboard for leaders.'],
 ];
 ---
-<Base title="Book Ian Williams to speak · Keynotes & workshops · The Artistry of Humanity" description="Book Ian Williams, keynote speaker and facilitator. Three signature keynotes and half or full-day workshops built on the Five Pillars of Fulfilment, in person or virtual, across Australia and internationally." path="/what-we-do/keynotes-workshops" og="/assets/keynote.jpg">
+<Base title="Book Ian Williams to speak · Keynotes & workshops · The Artistry of Humanity" description="Book Ian Williams, keynote speaker and facilitator. Keynotes shaped around your event, and half or full-day workshops built on the Five Pillars of Fulfilment, in person or virtual, across Australia and internationally." path="/what-we-do/keynotes-workshops" og="/assets/keynote.jpg">
 
   <!-- Hero: Ian on stage -->
   <section class="bg-dark" style="overflow:hidden">
@@ -41,7 +50,7 @@ const NEXT = [
     <div class="wrap split" style="padding-top:clamp(48px,7vw,96px);padding-bottom:clamp(120px,14vw,190px)">
       <div style="max-width:620px">
         <span class="eyebrow">Keynote speaker · Facilitator</span>
-        <h1 style="color:var(--on-dark)">He doesn’t speak at an audience. <span class="mk mk-d">He brings them in.</span></h1>
+        <h1 class="hq" style="color:var(--on-dark)">“He doesn’t speak at an audience. <span class="mk mk-d">He brings them in.</span>”</h1>
         <p class="lead">Ian Williams draws on all of it: leadership, pressure, success and personal struggle. His sessions are interactive and deeply human, and they leave people thinking, feeling and acting differently.</p>
         <div class="btns">
           <a class="btn btn-lime" href="#enquire">Check a date</a>
@@ -63,89 +72,91 @@ const NEXT = [
   <!-- What you get when you book Ian -->
   <section class="lift" style="background:var(--cream)">
     <div class="wrap sec">
-      <div class="split" style="align-items:end">
-        <div>
+      <div class="split" style="align-items:start">
+        <div class="why-side">
           <span class="eyebrow">Why organisations book Ian</span>
           <h2>What you get when you <span class="mk">book Ian</span>.</h2>
+          <p class="lead">Liverpool-raised, leading people since he was seventeen, and more than thirty years of turning businesses around across three continents. Now he brings that to the stage.</p>
+          <figure class="photo why-pic" data-rv><img src="/assets/ian-presenting.jpg" alt="Ian Williams presenting to a room" width="1024" height="683" loading="lazy" /></figure>
         </div>
-        <p class="lead" style="margin-top:0">Ian grew up in Liverpool and took his first leadership role at seventeen. He has since spent more than thirty years leading teams, turning around underperforming businesses and building high-performing cultures across three continents, including at DHL and some of the world’s largest organisations. Now he brings that to the stage.</p>
-      </div>
-      <div class="grid g2x2" style="margin-top:clamp(44px,5vw,64px)">
-        {BOOK_IAN.map(([title, text], i) => (
-          <div class="card" data-rv>
-            <span class="small" style="font-weight:600;letter-spacing:1px">0{i + 1}</span>
-            <h3 style="margin-top:10px">{title}</h3>
-            <p class="body">{text}</p>
-          </div>
-        ))}
+        <div class="why-list">
+          {BOOK_IAN.map(b => (
+            <div class="feat why-item" data-rv>
+              <span class="ico why-ico"><Icon name={b.icon} size={30} /></span>
+              <div><h3>{b.title}</h3><p class="body">{b.text}</p></div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- The three signature keynotes -->
+  <!-- Keynotes: a selection, one at a time -->
   <section id="keynotes" class="bg-sand lift-b">
     <div class="wrap sec">
-      <div class="narrow center">
-        <span class="eyebrow">Signature keynotes</span>
-        <h2>Three keynotes, <span class="mk">one framework</span>.</h2>
-        <p class="lead" style="margin-left:auto;margin-right:auto">Each one is interactive, built on the Five Pillars of Fulfilment and tailored to your audience. Choose the one that fits your event, or talk to us about what your people need to hear right now.</p>
+      <div class="split" style="align-items:end">
+        <div>
+          <span class="eyebrow">Keynotes</span>
+          <h2>Three keynotes Ian <span class="mk">delivers often</span>.</h2>
+        </div>
+        <p class="lead" style="margin-top:0">A selection, to give you a feel for what Ian brings. Every session is interactive, built on the Five Pillars and tailored to your audience, and more themes are available.</p>
       </div>
-      <div class="grid three" style="margin-top:clamp(44px,5vw,64px)">
-        {KEYNOTES.map(k => (
-          <article class="card kn" data-rv>
-            <img src={k.img} alt="" width="432" height="196" loading="lazy" />
-            <div class="kn-body">
-              <span class="pill">{k.tag}</span>
-              <h3 style="margin-top:14px">{k.title}</h3>
-              <p class="it kn-sub">{k.sub}</p>
+      <div class="kn-tabs" data-tabs>
+        <div class="tablist" role="tablist" aria-label="Keynotes">
+          {KEYNOTES.map((k, i) => <button type="button" class="tab" role="tab" id={`kn-t${i}`} aria-controls={`kn-p${i}`}>{k.title}</button>)}
+          <button type="button" class="tab" role="tab" id="kn-t3" aria-controls="kn-p3"><Icon name="plus" size={16} width={2} />Your theme</button>
+        </div>
+        {KEYNOTES.map((k, i) => (
+          <article class="kn-panel card" role="tabpanel" id={`kn-p${i}`} aria-labelledby={`kn-t${i}`}>
+            <div class="kn-img"><img src={k.img} alt="" width="864" height="440" loading="lazy" /><span class="pill">{k.tag}</span></div>
+            <div class="kn-copy">
+              <h3>{k.title}</h3>
+              <p class="kn-sub">{k.sub}</p>
               <p class="body">{k.text}</p>
-              <h4 style="margin-top:22px">Audiences leave with</h4>
+              <h4>Audiences leave with</h4>
               <ul class="list">{k.leave.map(l => <li>{l}</li>)}</ul>
-              <a class="link kn-go" href="#enquire" data-keynote={k.title}>Ask about this keynote ›</a>
+              <div class="btns" style="margin-top:26px"><a class="btn btn-dark" href="#enquire" data-keynote={k.title}>Ask about this keynote</a></div>
             </div>
           </article>
         ))}
+        <article class="kn-panel kn-own card" role="tabpanel" id="kn-p3" aria-labelledby="kn-t3">
+          <div class="kn-own-art" aria-hidden="true">
+            <span><Icon name="mic" size={34} /></span><span><Icon name="users" size={34} /></span><span><Icon name="tune" size={34} /></span>
+          </div>
+          <div class="kn-copy">
+            <h3>Your theme</h3>
+            <p class="kn-sub">Shaped around your event</p>
+            <p class="body">Have a different theme in mind? Tell us what your people need to hear right now. Ian builds the keynote around your audience and your moment, on the same Five Pillars, and reads the room live on the day.</p>
+            <div class="btns" style="margin-top:26px"><a class="btn btn-dark" href="#enquire" data-keynote="A theme of our own">Tell us about your event</a></div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- Video -->
+  <!-- Get a feel -->
   <section class="bg-dark lift">
     <div class="glow" style="left:-18%;bottom:-36%;width:60%;background:radial-gradient(closest-side,rgba(217,234,110,.12),rgba(217,234,110,0) 70%)"></div>
     <div class="wrap sec split">
       <div class="video" data-rv style="flex:1.7 1 520px">
-        <img src="/assets/ian-presenting.jpg" alt="" width="1024" height="683" loading="lazy" />
+        <img src="/assets/ian-speaking.webp" alt="" width="632" height="783" loading="lazy" style="object-position:50% 25%" />
         <button type="button" data-yt={VIDEO} aria-label="Watch Ian live"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5 18 12 8 18.5Z" /></svg></span>Watch Ian live</button>
       </div>
       <div style="flex:1 1 320px">
         <span class="eyebrow">Ian on stage</span>
-        <h2>See the room move.</h2>
-        <p class="lead">Every keynote and workshop is grounded in the Five Pillars of Fulfilment. The framework stays the same. The format, depth and focus are built around what your event or team needs.</p>
+        <h2>Get a feel.</h2>
+        <p class="lead">A few minutes of Ian in the room. The framework stays the same; the format, depth and focus are built around your event.</p>
         <a class="link" href="/framework">About the Five Pillars ›</a>
       </div>
     </div>
   </section>
 
-  <!-- Testimonials -->
+  <!-- What people say -->
   <section class="lift-b" style="background:var(--cream)">
     <div class="wrap sec">
-      <figure class="narrow center" style="margin:0 auto;max-width:880px">
-        <span class="eyebrow">What people say</span>
-        <blockquote class="quote big-q">“{featured.quote}”</blockquote>
-        <figcaption class="who" style="margin-top:22px">{featured.name} · {featured.org}</figcaption>
-      </figure>
-      <div class="grid g2" style="margin-top:clamp(44px,5vw,64px)">
-        {others.map(t => (
-          <figure class="card" style="margin:0" data-rv>
-            <blockquote class="quote">“{t.quote}”</blockquote>
-            <figcaption class="who">{t.name} · {t.org}</figcaption>
-          </figure>
-        ))}
-      </div>
-      <div class="center" style="margin-top:clamp(56px,6vw,80px)">
-        <span class="eyebrow">Trusted by</span>
-        <p class="names" style="margin:22px 0 0">{CLIENTS.map(c => <span>{c}</span>)}</p>
-      </div>
+      <span class="eyebrow">What people say</span>
+      <div style="margin-top:28px"><Voices /></div>
+      <div style="margin-top:clamp(64px,7vw,96px)"><Clients /></div>
     </div>
   </section>
 
@@ -156,84 +167,62 @@ const NEXT = [
         <div>
           <span class="eyebrow">Workshops</span>
           <h2>A working session that moves the team, <span class="mk mk-d">not just the needle</span>.</h2>
-          <p class="lead">A workshop is more than a keynote with exercises. Your team works through something together, reflects honestly, has the conversations it has been avoiding, and leaves with a shared framework and next steps it built itself.</p>
-          <p class="body">Every workshop starts with a scoping conversation: your team, your culture, the dynamics in the room and what you want to walk away with. What gets delivered is built around that brief, not pulled from a template.</p>
-          <div class="grid days">
-            <div class="tile" style="padding:22px 24px"><span class="pill">Half day</span><p class="body" style="margin-top:12px;font-size:15.5px">A focused session, contained enough for an offsite, a leadership day or a team retreat.</p></div>
-            <div class="tile" style="padding:22px 24px"><span class="pill">Full day</span><p class="body" style="margin-top:12px;font-size:15.5px">An immersive day, with more room for the honest conversations and the plan that follows.</p></div>
+          <p class="lead">More than a keynote with exercises. Your team works through something together, has the conversations it has been avoiding, and leaves with next steps it built itself.</p>
+          <div class="days">
+            <div class="day"><Icon name="clock" size={22} /><span><b>Half day</b>For an offsite, a leadership day or a team retreat.</span></div>
+            <div class="day"><Icon name="calendar" size={22} /><span><b>Full day</b>More room for the honest conversations and the plan that follows.</span></div>
           </div>
         </div>
         <figure style="margin:0" data-rv>
           <div class="photo" style="aspect-ratio:4/3"><img src="/assets/happy-participants.jpg" alt="A large group of workshop participants celebrating together outdoors" width="1024" height="683" loading="lazy" /></div>
         </figure>
       </div>
-      <h3 style="margin-top:clamp(56px,6vw,80px)">What a workshop looks like</h3>
-      <div class="grid three" style="margin-top:24px">
+      <h3 style="margin-top:clamp(64px,7vw,96px)">What a workshop looks like</h3>
+      <div class="qs">
         {FLOW.map(([title, text], i) => (
-          <div class="tile" data-rv>
-            <span class="small" style="font-weight:600;letter-spacing:1px;color:#DCEC85">0{i + 1}</span>
-            <h3 style="margin-top:10px;font-size:24px">{title}</h3>
-            <p class="body" style="font-size:15.5px">{text}</p>
+          <div class="q-card" data-rv>
+            <span class="q-ico"><Icon name={(['search', 'users', 'compass'] as const)[i]} size={26} /></span>
+            <span class="q-when">{['To open', 'In the room', 'To close'][i]}</span>
+            <h3>{title}</h3>
+            <p class="body">{text}</p>
           </div>
         ))}
       </div>
-      <a class="link" href="#enquire" data-keynote="A workshop or leadership session" style="margin-top:30px">Enquire about a workshop ›</a>
+      <p class="body" style="margin-top:36px;max-width:40em">Every workshop starts with a scoping conversation: your team, your culture, the dynamics in the room and what you want to walk away with. What gets delivered is built around that brief, not pulled from a template.</p>
+      <a class="link" href="#enquire" data-keynote="A workshop or leadership session">Enquire about a workshop ›</a>
     </div>
   </section>
 
-  <!-- Formats and fees -->
+  <!-- Formats, and the practical questions -->
   <section class="lift-b" style="background:var(--cream)">
     <div class="wrap sec">
       <div class="split" style="align-items:end">
         <div>
-          <span class="eyebrow">Formats &amp; fees</span>
+          <span class="eyebrow">Formats</span>
           <h2>The conversation your team needs, in the format that fits.</h2>
         </div>
-        <p class="lead" style="margin-top:0">Every session is tailored to the event, the audience and the theme, whether it’s a leadership conference, a company all-hands, an industry event or an internal strategy day.</p>
+        <p class="lead" style="margin-top:0">A leadership conference, a company all-hands, an industry event or an internal strategy day. In person or virtual, across Australia and internationally.</p>
       </div>
-      <div class="grid four" style="margin-top:clamp(44px,5vw,64px)">
-        {FORMATS.map(([pill, title, text]) => (
-          <div class="card" data-rv style="padding:28px 26px">
-            <span class="pill">{pill}</span>
-            <h3 style="margin-top:16px;font-size:24px">{title}</h3>
-            <p class="body" style="font-size:15.5px;margin-top:10px">{text}</p>
+      <div class="grid fmt" style="margin-top:clamp(44px,5vw,64px)">
+        {FORMATS.map(f => (
+          <div class="card fmt-card" data-rv>
+            <div class="fmt-top"><span class="ico"><Icon name={f.icon} /></span><span class="pill">{f.pill}</span></div>
+            <h3>{f.title}</h3>
+            <p class="body">{f.text}</p>
+            <div class="fmt-bar" aria-hidden="true"><i style={`width:${f.span}%`}></i></div>
           </div>
         ))}
       </div>
-      <div class="grid g2" style="margin-top:clamp(18px,2.4vw,28px)">
-        <div class="card" data-rv>
-          <span class="eyebrow">Where</span>
-          <h3 style="margin-top:12px">In person or virtual.</h3>
-          <p class="body">Ian speaks and facilitates across Australia and internationally. Enquiries are welcome for single events and for ongoing partnerships.</p>
-          <a class="link" href="#enquire">Check a date ›</a>
+      <div class="split" style="margin-top:clamp(64px,7vw,96px);align-items:start">
+        <div style="flex:0 1 340px">
+          <span class="eyebrow">Good to know</span>
+          <h3 style="margin-top:12px">Before you book.</h3>
+          <p class="body">The questions event organisers ask us most. Anything else, ask us directly.</p>
         </div>
-        <div class="card-dark" data-rv>
-          <span class="eyebrow">Fees</span>
-          <h3 style="margin-top:12px">Fees on request.</h3>
-          <p class="body">Every engagement is tailored, so fees depend on the format, your audience and the location. Tell us about your event and we’ll come back to you.</p>
-          <a class="link" href="#enquire">Ask about fees ›</a>
+        <div class="accs" style="flex:1.6 1 460px">
+          {FAQ.map(([q, a]) => <details class="acc"><summary>{q}</summary><div class="acc-body"><p>{a}</p></div></details>)}
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- How booking works -->
-  <section class="bg-sand lift">
-    <div class="wrap sec">
-      <div class="narrow center">
-        <span class="eyebrow">How it works</span>
-        <h2>Simple from the first conversation.</h2>
-      </div>
-      <div class="grid three" style="margin-top:clamp(44px,5vw,64px)">
-        {STEPS.map(([title, text], i) => (
-          <div class="card" data-rv>
-            <span class="step">0{i + 1}</span>
-            <h3 style="margin-top:20px;font-size:24px">{title}</h3>
-            <p class="body" style="font-size:15.5px">{text}</p>
-          </div>
-        ))}
-      </div>
-      <p class="small center" style="margin:32px auto 0;max-width:40em">Available in person or virtually, across Australia and internationally.</p>
     </div>
   </section>
 
@@ -245,11 +234,12 @@ const NEXT = [
         <h2>Check a date with Ian.</h2>
         <p class="lead">Tell us a little about your event. A few details are enough to start, and we’ll come back to you within one business day.</p>
         <p class="body">Prefer email? Write to <a class="link" style="margin:0" href="mailto:ian@artistry-of-humanity.com">ian@artistry-of-humanity.com</a></p>
-        <figure class="enq-ian">
-          <div class="arch" style="aspect-ratio:420/460;background:radial-gradient(64% 42% at 50% 22%,rgba(217,234,110,.6),rgba(217,234,110,.16) 55%,rgba(217,234,110,0) 82%),linear-gradient(180deg,#E8EACB,#ECE8D7 52%,#E4DFCA);position:relative">
-            <img src="/assets/ian-portrait.webp" alt="Ian Williams" width="900" height="802" loading="lazy" style="position:absolute;left:50%;bottom:0;width:128%;max-width:none;transform:translateX(-50%)" />
-          </div>
-        </figure>
+        <div class="enq-next">
+          <h3>What happens next</h3>
+          <ol>
+            {STEPS.map(([title, text]) => <li><b>{title}</b><span>{text}</span></li>)}
+          </ol>
+        </div>
       </div>
       <div id="enquire" class="card enq-card">
         <form name="speaker-enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks">
@@ -266,6 +256,7 @@ const NEXT = [
             <label class="field"><span>Which keynote?</span>
               <select name="keynote" id="keynote-pick">
                 {KEYNOTES.map(k => <option value={k.title}>{k.title}</option>)}
+                <option value="A theme of our own">A theme of our own</option>
                 <option value="A workshop or leadership session">A workshop or leadership session</option>
                 <option value="Not sure yet" selected>Not sure yet</option>
               </select>
@@ -315,35 +306,82 @@ const NEXT = [
 </Base>
 
 <style>
-  /* aoh.css: .sec resets the side padding that .wrap gives; keep the gutters. */
-  .wrap.sec { padding-left: var(--gut); padding-right: var(--gut); }
   #keynotes, #enquire { scroll-margin-top: 90px; }
-  .days { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 14px; margin-top: 28px; }
+  .hq { text-indent: -.4em; }
   .hero-fig { position: relative; margin: 0; flex: 0 1 420px; }
   .hero-cap { position: absolute; left: 16px; right: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 2px; padding: 14px 18px; border-radius: 18px 14px 18px 12px / 14px 18px 12px 18px; background: rgba(10, 20, 13, .72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: var(--on-dark); }
   .hero-cap b { font: 400 20px/1.2 var(--serif); }
   .hero-cap span { font-size: 13.5px; color: var(--on-dark-muted); }
-  .three { grid-template-columns: 1fr; }
-  @media (min-width: 960px) { .three { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .four { grid-template-columns: 1fr; }
-  @media (min-width: 620px) { .four { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 1080px) { .four { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  .kn { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
-  .kn img { width: 100%; aspect-ratio: 432 / 220; object-fit: cover; }
-  .kn-body { display: flex; flex-direction: column; flex: 1; padding: clamp(22px, 2.6vw, 30px); }
-  .kn-body .pill { align-self: flex-start; }
-  .kn-sub { margin: 6px 0 0; font: italic 400 18px/1.3 var(--serif); }
-  .kn-body .body { font-size: 15.5px; }
-  .kn-body .list { font-size: 15px; }
-  .kn-go { margin-top: auto; padding-top: 22px; }
-  .big-q { margin-top: 20px; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.25; }
-  .step { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--dark); color: var(--lime); font: 600 14px var(--sans); letter-spacing: .5px; }
+
+  /* What you get: four points, each with its own icon. */
+  .why-side { flex: 1 1 380px; }
+  .why-pic { margin: 36px 0 0; aspect-ratio: 3 / 2; }
+  .why-list { flex: 1.1 1 420px; display: grid; gap: 14px; }
+  .why-item { padding: 24px 26px; border-radius: var(--r-b); background: linear-gradient(150deg, rgba(250,248,240,.85), rgba(244,242,230,.6)); box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 24px 50px -34px rgba(20,35,26,.3); }
+  .why-ico { width: 60px; height: 60px; background: linear-gradient(160deg, #E9F693, #D3E45F); color: #152213; }
+
+  /* Keynotes as tabs */
+  .kn-tabs { margin-top: clamp(40px, 5vw, 56px); }
+  .kn-tabs .tablist { margin-bottom: 22px; }
+  .kn-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 0; padding: 0; overflow: hidden; }
+  .kn-panel + .kn-panel { margin-top: 22px; }
+  :global(.tabs-on) .kn-panel + .kn-panel { margin-top: 0; }
+  .kn-img { position: relative; min-height: 280px; }
+  .kn-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .kn-img .pill { position: absolute; left: 18px; top: 18px; background: rgba(250,248,240,.92); }
+  .kn-copy { padding: clamp(26px, 3.4vw, 46px); }
+  .kn-copy h3 { font-size: clamp(28px, 3vw, 38px); }
+  .kn-sub { margin: 8px 0 0; font: 600 12px var(--sans); letter-spacing: 2px; text-transform: uppercase; color: var(--olive); }
+  .kn-copy .body { margin-top: 16px; }
+  .kn-copy h4 { margin-top: 24px; }
+  .kn-copy .list { font-size: 15.5px; }
+  .kn-own-art { display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 280px; background: radial-gradient(60% 60% at 50% 50%, rgba(217,234,110,.35), rgba(217,234,110,0) 70%), var(--dark); }
+  .kn-own-art span { display: flex; align-items: center; justify-content: center; width: 76px; height: 76px; border-radius: 26px 20px 26px 18px / 20px 26px 18px 26px; border: 1.5px dashed rgba(217,234,110,.55); color: var(--lime); }
+  .kn-own-art span:nth-child(2) { transform: translateY(-16px); }
+  @media (max-width: 760px) { .kn-panel { grid-template-columns: 1fr; } .kn-img, .kn-own-art { min-height: 0; aspect-ratio: 16 / 9; } }
+
+  /* Workshops */
+  .days { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px; margin-top: 28px; }
+  .day { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: var(--r-a); background: rgba(228,240,214,.06); color: var(--lime); }
+  .day svg { flex: none; margin-top: 2px; }
+  .day span { color: var(--on-dark-muted); font-size: 15px; line-height: 1.5; }
+  .day b { display: block; margin-bottom: 2px; font: 600 15.5px var(--sans); color: var(--on-dark); }
+
+  /* Formats: the bar shows roughly how much of the day each one takes. */
+  .fmt { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+  .fmt-card { display: flex; flex-direction: column; padding: 26px 24px; }
+  .fmt-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .fmt-card h3 { margin-top: 20px; font-size: 24px; }
+  .fmt-card .body { font-size: 15.5px; margin-top: 10px; }
+  .fmt-bar { margin-top: auto; padding-top: 22px; }
+  .fmt-bar::before { content: ''; display: block; height: 6px; border-radius: 6px; background: rgba(20,35,26,.08); }
+  .fmt-bar i { display: block; height: 6px; margin-top: -6px; border-radius: 6px; background: linear-gradient(90deg, var(--lime-3), var(--olive)); }
+
+  /* Workshop flow: three questions, opening to close. */
+  .qs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; margin-top: 28px; counter-reset: q; }
+  .q-card { position: relative; padding: 28px 26px 30px; border-radius: var(--r-a); background: rgba(228,240,214,.06); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+  .q-card:not(:last-child)::after { content: ''; position: absolute; top: 50px; right: -13px; width: 10px; height: 10px; border-top: 2px solid rgba(217,234,110,.55); border-right: 2px solid rgba(217,234,110,.55); transform: rotate(45deg); }
+  @media (max-width: 860px) { .q-card:not(:last-child)::after { display: none; } }
+  .q-ico { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid rgba(217,234,110,.5); color: var(--lime); }
+  .q-when { display: block; margin-top: 22px; font: 600 11px var(--sans); letter-spacing: 2px; text-transform: uppercase; color: #DCEC85; }
+  .q-card h3 { margin-top: 8px; font-size: clamp(24px, 2.4vw, 30px); }
+  .q-card .body { font-size: 15.5px; }
+
+  /* Enquiry */
+  .enq-next { margin-top: 36px; padding: 24px 26px; border-radius: var(--r-a); background: var(--sand); }
+  .enq-next h3 { font-size: 22px; }
+  .enq-next ol { list-style: none; margin: 16px 0 0; padding: 0; counter-reset: n; }
+  .enq-next li { position: relative; padding: 0 0 16px 44px; counter-increment: n; }
+  .enq-next li:last-child { padding-bottom: 0; }
+  .enq-next li::before { content: counter(n); position: absolute; left: 0; top: -2px; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--dark); color: var(--lime); font: 600 13px var(--sans); }
+  .enq-next li:not(:last-child)::after { content: ''; position: absolute; left: 13px; top: 30px; bottom: 4px; width: 2px; background: rgba(74,107,58,.25); }
+  .enq-next b { display: block; font: 600 15px/1.35 var(--sans); }
+  .enq-next span { display: block; margin-top: 2px; font-size: 14.5px; line-height: 1.5; color: var(--muted); }
   .enq-side { flex: 0 1 400px; }
   .enq-card { flex: 1.4 1 480px; }
-  .enq-ian { margin: 36px 0 0; max-width: 300px; }
-  @media (max-width: 860px) { .enq-ian { display: none; } }
-  .field select { padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2314231A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; }
   .field input::placeholder, .field textarea::placeholder { color: rgba(20, 35, 26, .4); }
+
+  /* Close: what comes next */
   .next { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
   .next-item { display: grid; grid-template-columns: 104px 1fr auto; align-items: start; gap: 16px; padding: 20px 22px; transition: background .2s ease; }
   .next-item:hover { background: rgba(228, 240, 214, .1); }

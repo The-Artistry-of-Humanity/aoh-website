@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
 const STAR = 'M12 3.2l2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.6l6-.9Z';
 ---
 <Base title="Session feedback · The Artistry of Humanity" description="You recently joined one of our sessions. Tell us how it landed: it takes two minutes and it holds us accountable." path="/feedback" noindex>
@@ -23,6 +24,7 @@ const STAR = 'M12 3.2l2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.6l6-.9Z
         <p hidden><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
 
         <div class="part">
+          <span class="ico"><Icon name="person" /></span>
           <h2 class="h3">First, who are we hearing from?</h2>
           <p class="body">So we can thank you properly and come back to you if you want us to.</p>
         </div>
@@ -34,6 +36,7 @@ const STAR = 'M12 3.2l2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.6l6-.9Z
         </div>
 
         <div class="part rule">
+          <span class="ico"><Icon name="talk" /></span>
           <h2 class="h3">Now the session itself</h2>
           <p class="body">Say it plainly. Praise helps, honesty helps more.</p>
         </div>
@@ -79,6 +82,9 @@ const STAR = 'M12 3.2l2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.6l6-.9Z
 <style>
   .fb{max-width:760px;margin:0 auto;display:grid;gap:20px}
   .part .body{margin-top:8px}
+  .part{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:16px;align-items:center}
+  .part .ico{grid-row:span 2}
+  .part .body{grid-column:2}
   .rule{margin-top:14px;padding-top:30px;border-top:1px solid var(--line)}
   .q{margin:10px 0 0;padding:0;border:0;min-width:0}
   .q legend,.qt{padding:0;margin-bottom:14px;font:400 clamp(20px,1.9vw,23px)/1.25 var(--serif);color:var(--ink)}

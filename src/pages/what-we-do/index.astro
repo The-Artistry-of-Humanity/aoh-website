@@ -1,111 +1,332 @@
 ---
-/* What we do: the overview of every way to work with AOH, and nørma. Copy
-   from the previous site's Work With Us page, tightened. */
+/* What we do: every way to work with AOH, as a chooser. Visitors pick what
+   they need and see the format that fits, then how the formats connect and
+   where nørma keeps the work going. Copy from the previous site's Work With Us
+   page and the service pages, tightened. */
 import Base from '../../layouts/Base.astro';
-import { KEYNOTES } from '../../data/aoh';
+import Icon from '../../components/Icon.astro';
+import { SERVICES, PILLARS, KEYNOTES } from '../../data/aoh';
 
-const WAYS = [
-  ['/what-we-do/masterclass', 'Free · 60–90 min', 'Masterclass', 'The starting point for most organisations. Ian brings the Five Pillars to your leadership team in a tailored session that shows where your culture sits and what that means for your people. No commitment, and genuinely useful.', 'Book a Masterclass ›'],
-  ['/what-we-do/wellness-accelerator', '6 weeks', 'Wellness Accelerator', 'Our flagship six-week program. A structured, facilitated run through all Five Pillars, with exercises, accountability and measurable progress built in at every stage.', 'See the program ›'],
-  ['/what-we-do/leadership-coaching', '1:1', 'Leadership coaching', 'Coaching grounded in the Five Pillars, for leaders who want to model what they’re asking of their teams. Private, structured, and built around the whole person, not just the professional role.', 'About coaching ›'],
-  ['/what-we-do/culture-consulting', 'Partnership', 'Culture consulting', 'For when the culture itself needs work. We diagnose what is really going on, build the system to shift it, and stay alongside your key people until it holds.', 'How we work ›'],
+const [KN, MC, WA, LC, CC] = SERVICES;
+
+/** The chooser: one need per tab, the format that fits it in the panel. */
+const CHOOSE = [
+  {
+    need: 'Bring everyone into the conversation', svc: KN, tag: '45 min to a full day',
+    img: '/assets/ian-speaking.webp', alt: 'Ian Williams speaking to a room of business leaders', pos: '50% 22%',
+    text: 'A keynote for your conference or all-hands, or a half or full-day workshop for one team. Audiences score themselves live against the Five Pillars and leave with one clear action.',
+    note: `Three keynotes Ian delivers often: ${KEYNOTES.map(k => k.title).join(', ').replace(/, ([^,]*)$/, ' and $1')}. A selection; every session is tailored, and more themes are available.`,
+    cta: 'See the keynotes',
+  },
+  {
+    need: 'Get your leadership team on the same page', svc: MC, tag: '60–90 min · Leadership team',
+    img: '/assets/ian-presenting.jpg', alt: 'Ian Williams facilitating a session with a leadership team', pos: '55% 40%',
+    text: 'A working session with Ian, shaped around what you’re dealing with right now. Each leader gets their own Fulfilment Score, and the team leaves with a shared language and a clear picture of where your culture sits.',
+    note: 'The starting point for most organisations.',
+    cta: 'About the Masterclass',
+  },
+  {
+    need: 'Make a measurable shift as a team', svc: WA, tag: '6 weeks',
+    img: '/assets/workshop.jpg', alt: 'A team working through a session with Ian', pos: '50% 50%',
+    text: 'Our flagship program. A facilitated run through all Five Pillars, one pillar at a time, with exercises, accountability and measurable progress at every stage.',
+    stat: ['+29%', 'team fulfilment score for Sherpany by Datasite’s leadership team'],
+    cta: 'See the program',
+  },
+  {
+    need: 'Grow as a leader yourself', svc: LC, tag: '1:1 · 3–6 months',
+    img: '/assets/ian-portrait.webp', alt: 'Ian Williams', portrait: true,
+    text: 'Private coaching grounded in the Five Pillars, for leaders who want to model what they ask of their teams. It starts with your own Fulfilment Score, and nothing is reported back to your organisation.',
+    cta: 'About coaching',
+  },
+  {
+    need: 'Shift the culture itself', svc: CC, tag: 'Partnership',
+    img: '/assets/happy-participants.jpg', alt: 'A large group of workshop participants outdoors, arms raised', pos: '50% 60%',
+    text: 'For when the culture itself needs work. We diagnose what is really going on, build the system to shift it, and stay alongside your key people until it holds.',
+    note: 'A partnership, not a program.',
+    cta: 'How we work',
+  },
+  {
+    need: 'Reach every person, every month', norma: true, tag: 'New · Wellbeing at scale',
+    img: '/assets/dash-hero.webp', alt: 'The nørma leader dashboard: nørma Score, Fulfilment, Culture and every department', pos: '0 0',
+    text: 'Wellbeing at scale. Our other formats work with one leader or one team at a time. nørma reaches every person and every team, every month: a private check-in for each person, and a live read on your culture for you.',
+    note: 'Leaders see groups of five or more, never individuals.',
+    cta: 'How nørma fits our work',
+  },
+];
+
+/** How the formats connect: start in the room, go deeper, keep it going. */
+const FLOW = [
+  { title: 'Start in the room', text: 'Most organisations begin with a keynote or a Masterclass. People meet the Five Pillars, score themselves honestly and leave with a shared language.', links: [KN, MC] },
+  { title: 'Go deeper', text: 'The Wellness Accelerator takes one team through all five pillars. Coaching works with one leader. Consulting works on the culture itself.', links: [WA, LC, CC] },
+  { title: 'Take it to everyone', text: 'nørma brings the same Five Pillars to every person and every team, every month, and shows you where your culture is moving.', links: [] },
 ];
 ---
-<Base title="What we do · Keynotes, programs, coaching and nørma · The Artistry of Humanity" description="One framework, five ways in: keynotes and workshops, a free Masterclass, the six-week Wellness Accelerator, 1:1 leadership coaching and culture consulting, plus nørma. All built on the Five Pillars of Fulfilment." path="/what-we-do" og="/assets/program-delivery.jpg">
+<Base title="Ways to work with us · Keynotes, programs, coaching and nørma · The Artistry of Humanity" description="One framework, five ways in: keynotes and workshops, a Masterclass for your leadership team, the six-week Wellness Accelerator, 1:1 leadership coaching and culture consulting, plus nørma. All built on the Five Pillars of Fulfilment." path="/what-we-do" og="/assets/program-delivery.jpg">
 
-  <!-- Hero -->
+  <!-- Hero: the room, with the five ways in laid over it. -->
   <section style="background:var(--cream);overflow:hidden">
     <div class="glow" style="right:-12%;top:-20%;width:54%;background:radial-gradient(closest-side,rgba(217,234,110,.32),rgba(217,234,110,0) 70%)"></div>
     <div class="wrap split" style="position:relative;padding-top:clamp(48px,7vw,96px);padding-bottom:clamp(120px,14vw,180px)">
-      <div style="max-width:600px">
+      <div style="max-width:560px">
         <span class="eyebrow">Ways to work together</span>
         <h1>One framework. <span class="mk">Five ways in.</span></h1>
-        <p class="lead">Everything we deliver is grounded in the Five Pillars of Fulfilment. The right way in depends on where your organisation is, and where you want to go. In person or virtual, across Australia and internationally.</p>
+        <p class="lead">Everything we do is built on the Five Pillars of Fulfilment. The right way in depends on where your organisation is today. In person or virtual, across Australia and internationally.</p>
         <div class="btns">
-          <a class="btn btn-lime" href="/what-we-do/masterclass">Book a free Masterclass</a>
+          <a class="btn btn-lime" href="#choose">Find your way in</a>
           <a class="btn btn-ghost" href="/contact">Book a call</a>
         </div>
       </div>
-      <figure style="margin:0;flex:1 1 440px" data-rv>
-        <div class="photo" style="aspect-ratio:4/3"><img src="/assets/program-delivery.jpg" alt="Ian Williams facilitating a session for a full room" width="1024" height="683" style="object-position:45% 50%" /></div>
+      <figure class="hero-fig">
+        <div class="photo" style="aspect-ratio:5/4"><img src="/assets/program-delivery.jpg" alt="Ian Williams facilitating a session for a full room" width="1024" height="683" style="object-position:45% 50%" /></div>
+        <nav class="hero-ways" aria-label="The five ways in">
+          <span class="eyebrow">Five ways in, one framework</span>
+          <div>
+            {SERVICES.map(s => <a href={s.href} title={s.title}><span class="ico"><Icon name={s.icon} size={22} /></span><span class="sr">{s.title}</span></a>)}
+            <a href="/what-we-do/norma" title="nørma" class="hw-norma"><img src="/assets/norma-app-icon.png" alt="" width="44" height="44" /><span class="sr">nørma</span></a>
+          </div>
+        </nav>
       </figure>
     </div>
   </section>
 
-  <!-- Every way in -->
-  <section id="ways" class="bg-sand lift">
+  <!-- The chooser: pick a need, see the format. -->
+  <section id="choose" class="bg-sand lift">
     <div class="wrap sec">
       <div class="split" style="align-items:end">
-        <div><span class="eyebrow">Find your entry point</span><h2>The same framework under all of it.</h2></div>
-        <p class="lead" style="margin-top:0">A keynote for a full conference or private coaching for one leader: the same Five Pillars, the same questions and the same honesty sit underneath. The format is just the vehicle.</p>
+        <div><span class="eyebrow">Find your way in</span><h2>What do you need <span class="mk">right now</span>?</h2></div>
+        <p class="lead" style="margin-top:0">Pick the closest fit. Every format can lead to the next, so there’s no wrong place to start.</p>
       </div>
 
-      <a class="card ww-feat" href="/what-we-do/keynotes-workshops" data-rv style="margin-top:clamp(44px,5vw,64px)">
-        <div class="ww-feat-img"><img src="/assets/ian-speaking.webp" alt="Ian Williams speaking to a room of business leaders" width="632" height="783" loading="lazy" /></div>
-        <div class="ww-feat-body">
-          <span class="pill">Speaking · 45 min to a full day</span>
-          <h3 style="margin-top:16px;font-size:clamp(28px,3vw,38px)">Keynotes &amp; workshops</h3>
-          <p class="body">From a 45-minute keynote to a full-day working session, tailored to your event, your audience and your culture. Ian doesn’t speak at an audience. He brings them in, and leaves them with a framework and one clear action.</p>
-          <ul class="list" style="font-size:15.5px">{KEYNOTES.map(k => <li><b style="font-weight:600">{k.title}</b> · {k.sub}</li>)}</ul>
-          <span class="link">See the keynotes and book Ian ›</span>
+      <div class="ch" data-tabs>
+        <div class="ch-list" role="tablist" aria-label="What you need">
+          {CHOOSE.map((c, i) => (
+            <button type="button" class="ch-tab" role="tab" id={`ch-t${i}`} aria-controls={`ch-p${i}`}>
+              {c.norma ? <img src="/assets/norma-app-icon.png" alt="" width="40" height="40" class="ch-nicon" /> : <span class="ico"><Icon name={c.svc!.icon} size={22} /></span>}
+              <span><b>{c.need}</b><small>{c.norma ? 'nørma' : c.svc!.title}</small></span>
+            </button>
+          ))}
         </div>
-      </a>
-
-      <div class="grid g2x2" style="margin-top:clamp(18px,2.4vw,28px)">
-        {WAYS.map(([href, pill, title, text, cta]) => (
-          <a class="card ww-card" href={href} data-rv>
-            <span class="pill">{pill}</span>
-            <h3 style="margin-top:16px">{title}</h3>
-            <p class="body">{text}</p>
-            <span class="link">{cta}</span>
-          </a>
-        ))}
-      </div>
-
-      <div class="card-dark ww-norma" data-rv style="margin-top:clamp(18px,2.4vw,28px)">
-        <div>
-          <div style="display:flex;align-items:center;gap:14px">
-            <img src="/assets/norma-app-icon.png" alt="" width="224" height="224" style="width:52px;height:52px;border-radius:15px" />
-            <span class="pill">New · The platform</span>
-          </div>
-          <h3 style="margin-top:18px;font-size:clamp(28px,3vw,38px)"><span class="it">nørma</span> keeps it going, every month.</h3>
-          <p class="body">An app for your people and a dashboard for leaders, built on the Five Pillars. They see where their life is at. You see where your culture is at, and what to do about it.</p>
-          <div class="btns" style="margin-top:26px"><a class="btn btn-lime" href="https://joinnorma.com/">Explore nørma ↗</a><a class="btn btn-ghost" href="/what-we-do/norma">How it fits our work</a></div>
+        <div class="ch-stage">
+          {CHOOSE.map((c, i) => (
+            <article class:list={['ch-panel', { 'ch-dark': c.norma }]} role="tabpanel" id={`ch-p${i}`} aria-labelledby={`ch-t${i}`}>
+              <div class:list={['ch-img', { 'ch-portrait': c.portrait }]}>
+                <img src={c.img} alt={c.alt} loading="lazy" style={c.pos ? `object-position:${c.pos}` : undefined} />
+                {c.stat && <div class="ch-stat"><b>{c.stat[0]}</b><span>{c.stat[1]}</span></div>}
+              </div>
+              <div class="ch-body">
+                <span class="pill">{c.tag}</span>
+                <h3>{c.norma ? <><span class="it">nørma</span></> : c.svc!.title}</h3>
+                <p class="body">{c.text}</p>
+                {c.note && <p class="ch-note">{c.note}</p>}
+                <div class="ch-cta">
+                  {c.norma
+                    ? <><a class="btn btn-lime" href="https://joinnorma.com/">Explore nørma ↗</a><a class="link" href="/what-we-do/norma">{c.cta} ›</a></>
+                    : <a class="btn btn-dark" href={c.svc!.href}>{c.cta}</a>}
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
-        <div class="photo" style="border-radius:20px 14px 22px 12px / 14px 22px 12px 20px;background:#F6F5EE"><img src="/assets/dash-hero.webp" alt="The nørma leader dashboard: nørma Score, Fulfilment, Culture and every department" width="1120" height="816" loading="lazy" /></div>
       </div>
     </div>
   </section>
 
-  <!-- Not sure where to start? -->
+  <!-- How the ways connect, and where nørma comes in. -->
   <section class="bg-dark lift-b">
-    <div class="glow" style="left:-16%;bottom:-40%;width:60%;background:radial-gradient(closest-side,rgba(217,234,110,.12),rgba(217,234,110,0) 70%)"></div>
-    <div class="wrap sec narrow center" style="position:relative">
-      <span class="eyebrow">Start here</span>
-      <h2>Not sure <span class="mk mk-d">where to start</span>?</h2>
-      <p class="lead" style="margin-left:auto;margin-right:auto">Start with the free Masterclass. It’s the fastest way to experience the framework first-hand, and the clearest way to work out where to go from there. Most organisations find the answer in the room. Or book a call and tell us what you’re seeing.</p>
-      <div class="btns"><a class="btn btn-lime" href="/what-we-do/masterclass">Book a free Masterclass</a><a class="btn btn-ghost" href="/contact">Book a call</a></div>
-      <a class="link" href="/framework">Understand the Five Pillars ›</a>
+    <div class="glow" style="left:-16%;bottom:-30%;width:60%;background:radial-gradient(closest-side,rgba(217,234,110,.12),rgba(217,234,110,0) 70%)"></div>
+    <div class="wrap sec" style="position:relative">
+      <div class="narrow center">
+        <span class="eyebrow">How it fits together</span>
+        <h2>Start in the room. <span class="mk mk-d">Take it to everyone.</span></h2>
+        <p class="lead" style="margin-left:auto;margin-right:auto">A session is one day, with one room. The formats build on each other, and nørma carries the work to every person, every month.</p>
+      </div>
+      <ol class="steps flow" style="--n:3;margin-top:clamp(48px,6vw,80px)">
+        {FLOW.map((f, i) => (
+          <li data-rv>
+            <h3>{f.title}</h3>
+            <p class="body">{f.text}</p>
+            <div class="fl-links">
+              {f.links.map(s => <a href={s.href}><Icon name={s.icon} size={18} />{s.title}</a>)}
+              {i === 2 && <a href="/what-we-do/norma" class="fl-norma"><img src="/assets/norma-app-icon.png" alt="" width="20" height="20" />nørma</a>}
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div class="fl-loop" data-rv>
+        <Icon name="loop" size={20} />
+        <span>Next month shows whether it moved, and where to go next.</span>
+      </div>
+
+      <div class="nm" data-rv>
+        <div class="nm-copy">
+          <div style="display:flex;align-items:center;gap:14px">
+            <img src="/assets/norma-app-icon.png" alt="" width="224" height="224" style="width:52px;height:52px;border-radius:15px" />
+            <span class="pill">New · The platform</span>
+          </div>
+          <h3><span class="it">nørma</span>: wellbeing at scale.</h3>
+          <p class="body">Coaching works with one leader, a program with one team. nørma reaches every person and every team, every month. Your people see where their life is at, privately. You see where your culture is at, and what to do about it.</p>
+          <div class="btns" style="margin-top:26px"><a class="btn btn-lime" href="https://joinnorma.com/">Explore nørma ↗</a><a class="btn btn-ghost" href="/what-we-do/norma">How it fits our work</a></div>
+        </div>
+        <div class="nm-shot">
+          <div class="photo" style="border-radius:20px 14px 22px 12px / 14px 22px 12px 20px;background:#F6F5EE"><img src="/assets/dash-hero.webp" alt="The nørma leader dashboard: nørma Score, Fulfilment, Culture and every department" width="1120" height="816" loading="lazy" /></div>
+          <div class="nm-phone"><div><img src="/assets/app-where-you-stand.webp" alt="" loading="lazy" /></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The framework under every format. -->
+  <section class="lift" style="background:var(--cream)">
+    <div class="wrap sec">
+      <div class="split" style="align-items:end">
+        <div><span class="eyebrow">Under all of it</span><h2>The format is just <span class="mk">the vehicle</span>.</h2></div>
+        <p class="lead" style="margin-top:0">A keynote for a full conference or private coaching for one leader: the same Five Pillars, the same questions and the same honesty sit underneath.</p>
+      </div>
+      <ul class="pl" aria-label="The Five Pillars of Fulfilment">
+        {PILLARS.map((p, i) => (
+          <li data-rv style={`--t:${p.tint};--d:${i * 0.08}s`}>
+            <span class="pl-dot"><Icon paths={p.paths} size={26} stroke="#14231A" width={1.5} /></span>
+            <h3>{p.name}</h3><p class="body">{p.short}</p>
+          </li>
+        ))}
+      </ul>
+      <a class="link" href="/framework">The Five Pillars in full ›</a>
+    </div>
+  </section>
+
+  <!-- Not sure? -->
+  <section class="bg-sand lift-b">
+    <div class="wrap sec">
+      <div class="card-dark close">
+        <div>
+          <span class="eyebrow">Not sure where to start?</span>
+          <h2>Most organisations find the answer <span class="mk mk-d">in the room</span>.</h2>
+          <p class="lead">A Masterclass is the fastest way to experience the framework first-hand, and the clearest way to work out where to go from there. Or book a free 30-minute call and tell us what you’re seeing.</p>
+          <div class="btns"><a class="btn btn-lime" href="/what-we-do/masterclass">Ask about a Masterclass</a><a class="btn btn-ghost" href="/contact">Book a call</a></div>
+        </div>
+        <a class="ci-link" href="/fulfilment-check-in">
+          <span class="eyebrow">Free · about four minutes</span>
+          <b>Start with yourself</b>
+          <span>Take the Fulfilment check-in and see your own picture across the Five Pillars.</span>
+          <span class="ci-icons" aria-hidden="true">{PILLARS.map(p => <i style={`background:${p.tint}`}><Icon paths={p.paths} size={16} stroke="#14231A" width={1.6} /></i>)}</span>
+          <span class="link" style="margin-top:16px">Take the check-in ›</span>
+        </a>
+      </div>
     </div>
   </section>
 </Base>
 
 <style>
-  /* aoh.css: .sec resets the side padding that .wrap gives; keep the gutters. */
-  .wrap.sec { padding-left: var(--gut); padding-right: var(--gut); }
-  .ww-feat { display: grid; grid-template-columns: 1fr; padding: 0; overflow: hidden; }
-  .ww-feat-img { position: relative; aspect-ratio: 4 / 3; }
-  .ww-feat-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; }
-  .ww-feat-body { padding: clamp(26px, 3.4vw, 48px); }
-  @media (min-width: 860px) {
-    .ww-feat { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
-    .ww-feat-img { aspect-ratio: auto; min-height: 380px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* Hero: the five ways as a glass strip over the photo. */
+  .hero-fig { position: relative; margin: 0; flex: 1 1 440px; padding-bottom: 46px; }
+  .hero-ways { position: absolute; left: clamp(-28px, -2vw, 0px); bottom: 0; max-width: calc(100% + 28px); padding: 16px 18px 18px; border-radius: 24px 18px 24px 16px / 18px 24px 16px 24px; background: rgba(250, 248, 240, .88); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 30px 60px -30px rgba(20, 35, 26, .45); }
+  .hero-ways > div { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+  .hero-ways a { display: block; border-radius: 16px; transition: transform .2s var(--ease); }
+  .hero-ways a:hover { transform: translateY(-3px); }
+  .hero-ways .ico { width: 48px; height: 48px; }
+  .hw-norma img { width: 48px; height: 48px; border-radius: 15px; }
+  @media (max-width: 520px) { .hero-ways { left: 0; right: 0; padding: 14px; } .hero-ways > div { gap: 8px; } .hero-ways .ico, .hw-norma img { width: 44px; height: 44px; } }
+
+  /* The chooser */
+  .ch { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: clamp(24px, 3vw, 44px); margin-top: clamp(40px, 5vw, 64px); align-items: start; }
+  .ch-list { display: flex; flex-direction: column; gap: 8px; }
+  .ch-tab { display: flex; align-items: center; gap: 14px; width: 100%; padding: 12px 16px 12px 12px; border: 1px solid transparent; border-radius: 22px 16px 22px 14px / 16px 22px 14px 22px; background: rgba(250, 248, 240, .4); text-align: left; font: inherit; color: var(--ink); cursor: pointer; transition: background .2s ease, box-shadow .25s ease, border-color .2s ease; }
+  .ch-tab:hover { background: rgba(250, 248, 240, .8); border-color: rgba(20, 35, 26, .1); }
+  .ch-tab .ico { flex: none; width: 44px; height: 44px; border-radius: 14px 11px 14px 10px / 11px 14px 10px 14px; transition: background .2s ease, color .2s ease; }
+  .ch-nicon { flex: none; width: 44px; height: 44px; border-radius: 13px; }
+  .ch-tab b { display: block; font: 600 15.5px/1.3 var(--sans); }
+  .ch-tab small { display: block; margin-top: 3px; font: 500 13px/1.3 var(--sans); color: var(--muted-2); }
+  .ch-tab[aria-selected=true] { background: var(--dark); border-color: var(--dark); color: var(--on-dark); box-shadow: 0 20px 40px -24px rgba(20, 35, 26, .6); }
+  .ch-tab[aria-selected=true] small { color: #DCEC85; }
+  .ch-tab[aria-selected=true] .ico { background: var(--lime); color: #152213; }
+  .ch-stage { min-width: 0; }
+  .ch-stage > .ch-panel + .ch-panel { margin-top: 24px; }
+  /* On wide screens every panel shares one cell, so switching never moves the page. */
+  .tabs-on .ch-stage > .ch-panel { margin-top: 0; }
+  @media (min-width: 901px) {
+    .tabs-on .ch-stage { display: grid; }
+    .tabs-on .ch-stage > .ch-panel { grid-area: 1 / 1; }
+    .tabs-on .ch-stage > .ch-panel[hidden] { display: grid !important; visibility: hidden; }
   }
-  .ww-card { display: flex; flex-direction: column; }
-  .ww-card .pill { align-self: flex-start; }
-  .ww-card .link, .ww-feat .link { margin-top: auto; padding-top: 22px; }
-  .ww-card .body { margin-bottom: 0; }
-  .ww-feat .list { margin-bottom: 6px; }
-  .ww-norma { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
-  @media (min-width: 900px) { .ww-norma { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); } }
+  .ch-panel { display: grid; grid-template-rows: auto 1fr; border-radius: var(--r-b); overflow: hidden; background: linear-gradient(150deg, rgba(250, 248, 240, .92), rgba(244, 242, 230, .75)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .75), 0 30px 60px -36px rgba(20, 35, 26, .35); }
+  .ch-img { position: relative; aspect-ratio: 16 / 8; background: #E4DFCA; }
+  .ch-img > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ch-portrait { background: radial-gradient(50% 70% at 50% 30%, rgba(217, 234, 110, .6), rgba(217, 234, 110, .14) 60%, rgba(217, 234, 110, 0) 85%), linear-gradient(180deg, #E8EACB, #ECE8D7 52%, #E4DFCA); }
+  .ch-portrait > img { object-fit: contain; object-position: 50% 100%; top: 8%; height: 92%; }
+  .ch-dark .ch-img { background: #F6F5EE; }
+  .ch-stat { position: absolute; left: 16px; bottom: 16px; display: flex; align-items: center; gap: 12px; max-width: min(340px, calc(100% - 32px)); padding: 10px 16px 10px 14px; border-radius: 18px 14px 18px 12px / 14px 18px 12px 18px; background: rgba(15, 32, 21, .9); color: var(--on-dark); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .ch-stat b { font: 400 34px/1 var(--serif); color: #EAF79B; }
+  .ch-stat span { font-size: 13px; line-height: 1.35; color: var(--on-dark-muted); }
+  .ch-body { display: flex; flex-direction: column; align-items: flex-start; padding: clamp(24px, 3vw, 36px); }
+  .ch-body h3 { margin-top: 14px; font-size: clamp(28px, 2.8vw, 36px); }
+  .ch-body .body { margin-top: 12px; }
+  .ch-note { margin: 14px 0 0; padding-left: 14px; border-left: 2px solid var(--lime-3); font: 500 14.5px/1.5 var(--sans); color: var(--ink); }
+  .ch-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: auto; padding-top: 24px; }
+  .ch-cta .link { margin-top: 0; }
+  .ch-dark { background: linear-gradient(150deg, rgba(11, 24, 16, .97), rgba(15, 32, 21, .94)); color: var(--on-dark); }
+  .ch-dark h3 { color: var(--on-dark); }
+  .ch-dark .body { color: var(--on-dark-muted); }
+  .ch-dark .ch-note { color: var(--on-dark); border-color: var(--lime); }
+  .ch-dark .pill { background: rgba(217, 234, 110, .14); color: #DCEC85; }
+  .ch-dark .it { color: #DCEC85; }
+  .ch-dark .link { color: #EAF79B; }
+  @media (max-width: 900px) {
+    .ch { grid-template-columns: 1fr; }
+    .ch-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .ch-tab { flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px; }
+    .ch-tab b { font-size: 14px; }
+    .ch-tab small { font-size: 12px; }
+    .ch-tab .ico, .ch-nicon { width: 38px; height: 38px; }
+    .ch-img { aspect-ratio: 16 / 9; }
+  }
+  @media (max-width: 520px) { .ch-cta .btn { width: 100%; } }
+
+  /* How it fits: steps with the formats as links, then nørma. */
+  .flow > li { padding-bottom: 4px; }
+  .fl-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .fl-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 14px 0 10px; border-radius: 999px; background: rgba(228, 240, 214, .07); box-shadow: inset 0 0 0 1px rgba(228, 240, 214, .14); font: 600 13.5px var(--sans); color: var(--on-dark); transition: background .2s ease; }
+  .fl-links a:hover { background: rgba(217, 234, 110, .16); }
+  .fl-links :global(svg) { color: var(--lime); }
+  .fl-norma img { width: 22px; height: 22px; border-radius: 7px; }
+  .fl-loop { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: clamp(36px, 4vw, 52px); padding: 14px 20px; border-radius: 999px; border: 1.5px dashed rgba(217, 234, 110, .35); color: #EAF79B; font: 500 15px/1.4 var(--sans); text-align: left; max-width: 640px; margin-left: auto; margin-right: auto; }
+  .fl-loop :global(svg) { flex: none; animation: spin 6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .fl-loop :global(svg) { animation: none; } }
+  @media (max-width: 520px) { .fl-loop { border-radius: 22px; } }
+  .nm { display: grid; grid-template-columns: 1fr; gap: clamp(36px, 5vw, 64px); align-items: center; margin-top: clamp(64px, 7vw, 96px); padding-top: clamp(48px, 6vw, 72px); border-top: 1px solid var(--line-dark); }
+  @media (min-width: 900px) { .nm { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); } }
+  .nm h3 { margin-top: 20px; font-size: clamp(30px, 3.2vw, 42px); }
+  .nm-shot { position: relative; padding-bottom: 6%; }
+  .nm-phone { position: absolute; right: -3%; bottom: -4%; width: 27%; padding: 5px; border-radius: 26px; background: #0B140E; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .7); }
+  .nm-phone div { border-radius: 21px; overflow: hidden; aspect-ratio: 390 / 760; }
+  .nm-phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+  /* The Five Pillars, as tinted tiles. */
+  .pl { list-style: none; margin: clamp(44px, 5vw, 64px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  .pl li { position: relative; display: flex; flex-direction: column; padding: 22px 20px 24px; border-radius: var(--r-a); background: linear-gradient(165deg, color-mix(in srgb, var(--t) 55%, #FAF8F0), color-mix(in srgb, var(--t) 22%, #FAF8F0)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6); }
+  .pl li:nth-child(even) { border-radius: var(--r-b); }
+  .pl-dot { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 50%; background: var(--t); box-shadow: 0 0 0 5px rgba(250, 248, 240, .55); }
+  .pl h3 { margin-top: 20px; font-size: clamp(20px, 1.7vw, 23px); }
+  .pl .body { margin-top: 8px; font-size: 14.5px; color: rgba(20, 35, 26, .72); }
+  :global(.js) .pl li[data-rv] { transition-delay: var(--d); }
+  @media (max-width: 1000px) { .pl { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pl li:last-child { grid-column: 1 / -1; } }
+  @media (max-width: 520px) {
+    .pl { grid-template-columns: 1fr; }
+    .pl li { display: grid; grid-template-columns: 52px minmax(0, 1fr); column-gap: 16px; padding: 18px; }
+    .pl-dot { grid-row: 1 / 3; }
+    .pl h3 { margin-top: 2px; }
+  }
+
+  /* Close: the call and the check-in side by side. */
+  .close { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 4vw, 56px); align-items: center; padding: clamp(36px, 5vw, 72px) clamp(24px, 5vw, 64px); }
+  @media (min-width: 900px) { .close { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); } }
+  .close h2 { font-size: clamp(32px, 3.6vw, 46px); }
+  .ci-link { display: flex; flex-direction: column; padding: clamp(24px, 2.8vw, 32px); border-radius: var(--r-a); background: rgba(228, 240, 214, .06); box-shadow: inset 0 0 0 1px rgba(228, 240, 214, .1); transition: background .2s ease; }
+  .ci-link:hover { background: rgba(228, 240, 214, .1); }
+  .ci-link b { margin-top: 10px; font: 400 clamp(26px, 2.4vw, 30px)/1.15 var(--serif); color: var(--on-dark); }
+  .ci-link > span:not(.eyebrow):not(.ci-icons):not(.link) { margin-top: 8px; font-size: 15.5px; color: var(--on-dark-muted); }
+  .ci-icons { display: flex; gap: 6px; margin-top: 18px; }
+  .ci-icons i { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; }
 </style>

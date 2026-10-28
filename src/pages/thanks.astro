@@ -1,5 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+
+const NEXT = [
+  { href: '/fulfilment-check-in', icon: 'target', title: 'Take the Fulfilment check-in', text: 'Twenty questions, about four minutes, free.' },
+  { href: '/framework', icon: 'norma', title: 'Explore the Five Pillars', text: 'The framework behind everything we do.' },
+  { href: '/what-we-do/keynotes-workshops', icon: 'mic', title: 'See the keynotes', text: 'A selection of what Ian delivers often. Every session is tailored.' },
+] as const;
 ---
 <Base title="Thank you · The Artistry of Humanity" description="Your message is with us. We’ll reply within one working day." path="/thanks" noindex>
   <section class="bg-sand">
@@ -7,12 +14,33 @@ import Base from '../layouts/Base.astro';
       <div class="card-dark center" style="max-width:860px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(24px,5vw,64px)">
         <div class="glow" style="left:50%;top:-60%;width:90%;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(217,234,110,.14),rgba(217,234,110,0) 70%)"></div>
         <div style="position:relative">
+          <span class="ok"><Icon name="check" size={30} width={2} /></span>
           <span class="eyebrow">Message received</span>
           <h1 style="margin-left:auto;margin-right:auto;max-width:13em;color:var(--on-dark)">Thanks, your message is <span class="mk mk-d">with us</span>.</h1>
           <p class="lead" style="margin-left:auto;margin-right:auto">We’ll reply within one working day, from a person.</p>
-          <div class="btns"><a class="btn btn-lime" href="/">Back to home</a><a class="btn btn-ghost" href="/what-we-do/keynotes-workshops">See the keynotes</a></div>
+          <div class="btns"><a class="btn btn-lime" href="/">Back to home</a><a class="btn btn-ghost" href="/what-we-do/norma">Meet nørma</a></div>
+        </div>
+      </div>
+      <div class="next">
+        <span class="eyebrow center" style="display:block">While you wait</span>
+        <div class="grid g3" style="margin-top:20px">
+          {NEXT.map(n => (
+            <a class="card nx" href={n.href}>
+              <span class="ico"><Icon name={n.icon} /></span>
+              <span><b>{n.title}</b><small>{n.text}</small></span>
+            </a>
+          ))}
         </div>
       </div>
     </div>
   </section>
 </Base>
+
+<style>
+  .ok{display:flex;align-items:center;justify-content:center;width:72px;height:72px;margin:0 auto 26px;border-radius:50%;background:var(--lime);color:#152213;box-shadow:0 0 0 10px rgba(217,234,110,.12)}
+  .next{max-width:1000px;margin:clamp(48px,6vw,72px) auto 0}
+  .nx{display:flex;align-items:flex-start;gap:16px;padding:22px 22px 24px}
+  .nx .ico{flex:none}
+  .nx b{display:block;font:600 16.5px/1.3 var(--sans);color:var(--ink)}
+  .nx small{display:block;margin-top:4px;font-size:14.5px;line-height:1.45;color:var(--muted-2)}
+</style>

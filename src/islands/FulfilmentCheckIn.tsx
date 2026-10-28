@@ -527,8 +527,8 @@ const FulfilmentCheckIn = () => {
             <a className="card fc-link" href="/what-we-do/masterclass">
               <span className="ico"><IconRoom /></span>
               <span className="fc-link-t">
-                <span className="pill">Free · 60–90 min</span>
-                <b>A free Masterclass</b>
+                <span className="pill">60–90 min</span>
+                <b>A Masterclass</b>
                 <span className="body">A working session for your leadership team. You leave with a clear picture of where your culture sits across the Five Pillars.</span>
               </span>
               <span className="fc-arr"><IconChevron /></span>

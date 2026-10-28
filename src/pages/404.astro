@@ -1,20 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { PILLARS } from '../data/aoh';
 
 const LINKS = [
-  ['/', 'Home', 'Start from the beginning.'],
-  ['/what-we-do/keynotes-workshops', 'Keynotes & workshops', 'Book Ian to speak at your event.'],
-  ['/what-we-do', 'Ways to work together', 'Masterclass, programs, coaching and consulting.'],
-  ['/framework', 'The Five Pillars', 'The framework behind everything we do.'],
-  ['/fulfilment-check-in', 'Fulfilment check-in', 'See where you are across the Five Pillars.'],
-  ['/what-we-do/norma', 'nørma', 'The wellbeing operating system.'],
-  ['/about', 'About Ian', 'The story behind The Artistry of Humanity.'],
-  ['/contact', 'Contact', 'Book a call or send us a message.'],
-];
+  ['/', 'Home', 'Start from the beginning.', 'compass'],
+  ['/what-we-do/keynotes-workshops', 'Keynotes & workshops', 'Book Ian to speak at your event.', 'mic'],
+  ['/what-we-do', 'Ways to work together', 'Masterclass, programs, coaching and consulting.', 'layers'],
+  ['/framework', 'The Five Pillars', 'The framework behind everything we do.', 'norma'],
+  ['/fulfilment-check-in', 'Fulfilment check-in', 'See where you are across the Five Pillars.', 'target'],
+  ['/what-we-do/norma', 'nørma', 'Wellbeing at scale, for every person and team.', ''],
+  ['/about', 'About Ian', 'The story behind The Artistry of Humanity.', 'person'],
+  ['/contact', 'Contact', 'Book a call or send us a message.', 'mail'],
+] as const;
 ---
 <Base title="Page not found · The Artistry of Humanity" description="We couldn’t find that page. Here are some good places to pick up from." path="/404" noindex>
   <section style="background:var(--cream)">
     <div class="wrap center" style="padding-top:clamp(56px,8vw,112px);padding-bottom:clamp(110px,12vw,160px)">
+      <div class="lost" role="img" aria-label="Five pillar icons, with one wandered off">
+        {PILLARS.map(p => <span style={`background:${p.tint}`}><Icon paths={p.paths} size={22} stroke="#14231A" width={1.5} /></span>)}
+      </div>
       <span class="eyebrow">404 · Page not found</span>
       <h1>This page has <span class="mk">wandered off</span>.</h1>
       <p class="lead" style="margin-left:auto;margin-right:auto">The link may be old, or the page may have moved when we rebuilt the site. These are good places to pick up from.</p>
@@ -24,14 +29,27 @@ const LINKS = [
   <section class="bg-sand lift">
     <div class="wrap sec">
       <div class="grid g4">
-        {LINKS.map(([href, title, text]) => (
-          <a class="card" href={href} style="padding:26px 24px">
-            <h3 style="font-size:23px">{title}</h3>
-            <p class="body" style="font-size:15.5px;margin-top:8px">{text}</p>
-            <span class="link" style="margin-top:14px">Go ›</span>
+        {LINKS.map(([href, title, text, icon]) => (
+          <a class="card go" href={href}>
+            {icon ? <span class="ico"><Icon name={icon} /></span> : <img class="go-img" src="/assets/norma-app-icon.png" alt="" width="52" height="52" />}
+            <h3>{title}</h3>
+            <p class="body">{text}</p>
+            <span class="link">Go ›</span>
           </a>
         ))}
       </div>
     </div>
   </section>
 </Base>
+
+<style>
+  .lost{display:flex;justify-content:center;gap:10px;margin-bottom:30px}
+  .lost span{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;box-shadow:0 0 0 4px #FAF8F0}
+  .lost span:last-child{transform:translate(18px,-16px) rotate(18deg)}
+  .go{display:flex;flex-direction:column;padding:26px 24px}
+  .go h3{margin-top:18px;font-size:23px}
+  .go .body{font-size:15.5px;margin-top:8px}
+  .go .link{margin-top:auto;padding-top:14px}
+  .go-img{width:52px;height:52px;border-radius:16px}
+  @media (max-width:560px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.go{padding:18px 16px}.go h3{margin-top:14px;font-size:19px}.go .body{font-size:14px}.go .ico,.go-img{width:44px;height:44px}}
+</style>

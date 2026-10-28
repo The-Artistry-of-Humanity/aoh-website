@@ -1,36 +1,39 @@
 ---
 import Base from '../layouts/Base.astro';
-import { PILLARS } from '../data/aoh';
+import Icon from '../components/Icon.astro';
+import { PILLARS, SERVICES } from '../data/aoh';
 
 const BELIEFS = [
-  ['Culture is the operating system, not a benefit', 'How people feel inside an organisation shapes every decision they make, every conversation they have and every result they produce. Getting culture right isn’t a nice-to-have. It’s the foundation everything else is built on.'],
-  ['Work is one part of a whole human life', 'Performance, focus and resilience are shaped by everything that happens outside the office too. A tool or program that ignores the rest of a person’s life is working with half the picture.'],
-  ['If you can see it, you can manage it', 'Most organisations are navigating in the dark because they don’t have a clear, honest view of how their people are actually doing. Visibility creates accountability. Accountability creates change.'],
-  ['You can always find the positive', 'This isn’t toxic positivity or ignoring what’s hard. It’s the belief that there is always a next step, always a controllable, always a direction to move in. That orientation changes everything.'],
-];
-
-const WAYS = [
-  { href: '/what-we-do/keynotes-workshops', tag: 'Speaking', title: 'Keynotes & workshops', text: 'From a conference keynote to a full-day session, tailored to your audience and the conversation you want to start.', cta: 'See the keynotes', dark: true },
-  { href: '/what-we-do/masterclass', tag: 'Free · 60–90 min', title: 'Masterclass', text: 'A working session for your leadership team, and the best place to start.', cta: 'Book a Masterclass' },
-  { href: '/what-we-do/wellness-accelerator', tag: '6 weeks', title: 'Wellness Accelerator', text: 'A six-week program through all Five Pillars. Structured, facilitated and measurable.', cta: 'See the program' },
-  { href: '/what-we-do/leadership-coaching', tag: '1:1', title: 'Leadership coaching', text: 'For leaders who want to model what they ask of their teams.', cta: 'About coaching' },
-];
+  { icon: 'layers', t: 'Culture is the operating system, not a benefit', d: 'How people feel inside an organisation shapes every decision they make, every conversation they have and every result they produce. Getting culture right isn’t a nice-to-have. It’s the foundation everything else is built on.' },
+  { icon: 'heart', t: 'Work is one part of a whole human life', d: 'Performance, focus and resilience are shaped by everything that happens outside the office too. A tool or program that ignores the rest of a person’s life is working with half the picture.' },
+  { icon: 'eye', t: 'If you can see it, you can manage it', d: 'Most organisations are navigating in the dark because they don’t have a clear, honest view of how their people are actually doing. Visibility creates accountability. Accountability creates change.' },
+  { icon: 'sun', t: 'You can always find the positive', d: 'This isn’t toxic positivity or ignoring what’s hard. It’s the belief that there is always a next step, always a controllable, always a direction to move in. That orientation changes everything.' },
+] as const;
 
 const PODCAST = [
   ['Spotify', 'https://open.spotify.com/show/6C9jBcH8FHdlAdaQL9lfEQ'],
   ['Apple Podcasts', 'https://podcasts.apple.com/ca/podcast/the-artistry-of-humanity/id1775703355'],
   ['YouTube', 'https://www.youtube.com/@alignwithwillo'],
 ];
+
+const QUOTE_MARK = 'M0 48V28C0 12 8 3 24 0l3 6C17 9 13 15 12.5 22H26v26zm36 0V28c0-16 8-25 24-28l3 6c-10 3-14 9-14.5 16H62v26z';
 ---
 <Base title="About Ian Williams · The Artistry of Humanity" description="The Artistry of Humanity was founded by Ian Williams, who has spent more than thirty years leading teams and building high-performing cultures across three continents. The story behind the Five Pillars of Fulfilment." path="/about">
 
   <!-- Hero -->
   <section style="background:var(--cream);overflow:hidden">
+    <div class="glow" style="right:-12%;top:-20%;width:56%;background:radial-gradient(closest-side,rgba(217,234,110,.26),rgba(217,234,110,0) 70%)"></div>
     <div class="wrap split" style="padding-top:clamp(40px,6vw,88px);padding-bottom:clamp(120px,13vw,180px)">
       <div style="max-width:600px">
         <span class="eyebrow">Our story</span>
         <h1>Built from the <span class="mk">inside out</span>.</h1>
-        <p class="lead">The Artistry of Humanity didn’t start with a business plan. It started with a pattern, one that Ian Williams had been watching for more than thirty years inside some of the world’s largest organisations.</p>
+        <p class="lead">The Artistry of Humanity didn’t start with a business plan. It started with a pattern Ian Williams kept seeing for more than thirty years, inside some of the world’s largest organisations.</p>
+        <ul class="facts">
+          <li><Icon name="pin" size={20} /><span>Grew up in <b>Liverpool</b></span></li>
+          <li><Icon name="users" size={20} /><span>Leading people since <b>17</b></span></li>
+          <li><Icon name="clock" size={20} /><span><b>30+ years</b> leading teams</span></li>
+          <li><Icon name="globe" size={20} /><span><b>Three continents</b></span></li>
+        </ul>
         <div class="btns">
           <a class="btn btn-lime" href="/what-we-do/keynotes-workshops#enquire">Book Ian to speak</a>
           <a class="btn btn-ghost" href="/contact">Book a call</a>
@@ -45,63 +48,149 @@ const PODCAST = [
     </div>
   </section>
 
-  <!-- Ian's story -->
+  <!-- Ian's path, as a timeline -->
   <section class="bg-sand lift">
     <div class="wrap sec">
-      <div class="story">
-        <p class="lead first">Ian was seventeen when he stepped into his first leadership role. Growing up in Liverpool, he didn’t have a theory about management or a framework for culture. He just noticed something: when people felt seen, trusted and supported, they worked differently. They cared more. They gave more. And the results followed.</p>
-        <p class="body">That observation never left him.</p>
-        <p class="body">Over the next three decades Ian led teams across three continents, at DHL and some of the world’s largest organisations: managing hundreds of people, running complex operations across multiple countries, turning around underperforming businesses and building high-performing cultures from the ground up. Every context was different. The pattern was always the same.</p>
-
-        <figure class="pull" data-rv>
-          <blockquote class="quote">“The biggest asset of every company I ever worked in was the people. Not the strategy. Not the systems. The people.”</blockquote>
-          <figcaption class="who">Ian Williams</figcaption>
-        </figure>
-
-        <p class="body">The organisations that outperformed didn’t do it through pressure or process alone. They did it because someone had taken the time to build a culture where people felt they belonged, understood why their work mattered, and trusted that the person leading them actually gave a damn.</p>
-        <p class="body">And the ones that struggled? It was rarely about talent or intention. It was about disconnection: between the work people were doing and the lives they were actually living, and between what leaders said they valued and how the place actually felt.</p>
-        <p class="body">Ian kept seeing the same things surface. The high performer running on empty. The manager who couldn’t delegate because they’d never been taught to trust. The employee who looked fine from the outside but was quietly falling apart. The warning signs were always there. Nobody had the language, or the structure, to act on them.</p>
+      <div class="narrow center">
+        <span class="eyebrow">Ian’s story</span>
+        <h2>How a pattern became <span class="mk">a framework</span>.</h2>
       </div>
 
-      <figure class="photo story-photo" data-rv>
-        <img src="/assets/ian-presenting.jpg" alt="Ian Williams at the front of a workshop room, beside notes from the session pinned to a brick wall" width="1024" height="683" loading="lazy" />
-      </figure>
+      <ol class="tl">
+        <li class="tl-i" data-rv>
+          <div class="tl-k"><b>Liverpool</b><span>Where it starts</span></div>
+          <span class="tl-n"><Icon name="pin" size={24} /></span>
+          <div class="tl-c">
+            <h3>Growing up in Liverpool</h3>
+            <p class="body">Ian didn’t have a theory about management or a framework for culture. Those came later, built from years of watching people.</p>
+          </div>
+        </li>
 
-      <div class="story">
-        <figure class="pull" data-rv style="margin-top:0">
-          <blockquote class="quote">“If you can see it, you can manage it. The problem is that most organisations can’t see what’s actually going on.”</blockquote>
-          <figcaption class="who">Ian Williams</figcaption>
-        </figure>
-        <p class="body">After years of watching this play out across boardrooms, warehouses and leadership teams on three continents, Ian came to one clear conclusion: the tools organisations used to support their people were built on an incomplete picture of what a human being actually is.</p>
-        <p class="body">Work is one part of life. One pillar of five. And when the other four are under pressure, when someone’s relationships are strained, their health is declining, their sense of purpose is missing or their connections are thin, it shows up at work whether anyone acknowledges it or not.</p>
-        <p class="body">That insight became the Five Pillars of Fulfilment. Not a theory borrowed from a textbook, but a framework built from the patterns of real people, across real organisations, over a very long time.</p>
+        <li class="tl-i" data-rv>
+          <div class="tl-k"><b class="num">17</b><span>A first leadership role</span></div>
+          <span class="tl-n"><Icon name="users" size={24} /></span>
+          <div class="tl-c">
+            <h3>The observation that never left him</h3>
+            <p class="body">Ian was seventeen when he stepped into his first leadership role, and he noticed something straight away: when people felt <b>seen, trusted and supported</b>, they worked differently. They cared more. They gave more. And the results followed.</p>
+          </div>
+        </li>
 
-        <figure class="pull" data-rv>
-          <blockquote class="quote">“You can only control the controllables. But first, you have to be honest about what’s actually happening.”</blockquote>
-          <figcaption class="who">Ian Williams</figcaption>
-        </figure>
+        <li class="tl-i" data-rv>
+          <div class="tl-k"><b class="num">30+</b><span>Years leading teams</span></div>
+          <span class="tl-n"><Icon name="globe" size={24} /></span>
+          <div class="tl-c">
+            <h3>Three continents, at DHL and some of the world’s largest organisations</h3>
+            <p class="body">Managing hundreds of people and running complex operations across multiple countries. Turning around underperforming businesses and building high-performing cultures from the ground up.</p>
+            <ul class="tl-tags"><li>Turnarounds</li><li>High-performing cultures</li><li>Boardrooms, warehouses, leadership teams</li></ul>
+          </div>
+        </li>
 
-        <p class="body">The Artistry of Humanity is Ian’s attempt to give organisations, and the people inside them, a better tool. One that starts with the whole human, creates accountability on both sides, and treats culture not as a nice-to-have but as the operating system everything else runs on.</p>
-        <p class="body">Today Ian is its founder and CEO, and works with leadership teams as a consultant, facilitator and keynote speaker.</p>
-        <p class="sign"><b>Ian Williams</b><span>Founder &amp; CEO, The Artistry of Humanity</span></p>
-      </div>
+        <li class="tl-q q-dark" data-rv>
+          <figure>
+            <svg class="q-mark" width="52" height="39" viewBox="0 0 64 48" aria-hidden="true"><path d={QUOTE_MARK} /></svg>
+            <blockquote>The biggest asset of every company I ever worked in was the people. Not the strategy. Not the systems. <span class="mk mk-d">The people.</span></blockquote>
+            <figcaption class="q-by"><img src="/assets/ian-portrait.webp" alt="" width="900" height="802" loading="lazy" /><span><b>Ian Williams</b><span>Founder &amp; CEO</span></span></figcaption>
+          </figure>
+        </li>
+
+        <li class="tl-i" data-rv>
+          <div class="tl-k"><b class="word">The pattern</b><span>Different every time, the same every time</span></div>
+          <span class="tl-n"><Icon name="search" size={24} /></span>
+          <div class="tl-c">
+            <h3>What made the difference was never the plan</h3>
+            <div class="two">
+              <div class="two-up">
+                <span class="two-k"><Icon name="climb" size={18} />The ones that outperformed</span>
+                <p>Someone had built a culture where people felt they belonged, understood why their work mattered, and trusted that the person leading them actually gave a damn.</p>
+              </div>
+              <div class="two-down">
+                <span class="two-k"><Icon name="loop" size={18} />The ones that struggled</span>
+                <p>Rarely about talent or intention. It was disconnection: between the work and the lives people were living, and between what leaders said they valued and how the place felt.</p>
+              </div>
+            </div>
+            <div class="accs" style="margin-top:20px">
+              <details class="acc">
+                <summary>The warning signs he kept seeing</summary>
+                <div class="acc-body">
+                  <ul class="list">
+                    <li>The high performer running on empty.</li>
+                    <li>The manager who couldn’t delegate because they’d never been taught to trust.</li>
+                    <li>The employee who looked fine from the outside but was quietly falling apart.</li>
+                  </ul>
+                  <p>The warning signs were always there. Nobody had the language, or the structure, to act on them.</p>
+                </div>
+              </details>
+            </div>
+          </div>
+        </li>
+
+        <li class="tl-q q-lime" data-rv>
+          <figure>
+            <svg class="q-mark" width="52" height="39" viewBox="0 0 64 48" aria-hidden="true"><path d={QUOTE_MARK} /></svg>
+            <blockquote><span class="mk mk-w">If you can see it, you can manage it.</span> The problem is that most organisations can’t see what’s actually going on.</blockquote>
+            <figcaption class="q-by"><img src="/assets/ian-portrait.webp" alt="" width="900" height="802" loading="lazy" /><span><b>Ian Williams</b><span>Founder &amp; CEO</span></span></figcaption>
+          </figure>
+        </li>
+
+        <li class="tl-i" data-rv>
+          <div class="tl-k"><b class="num">1<small>of</small>5</b><span>Work is one pillar</span></div>
+          <span class="tl-n"><Icon name="norma" size={24} /></span>
+          <div class="tl-c">
+            <h3>The insight: the Five Pillars of Fulfilment</h3>
+            <p class="body">The tools organisations used to support their people were built on an incomplete picture of a human being. Work is one part of life. When relationships are strained, health is declining, purpose is missing or connections are thin, it shows up at work whether anyone acknowledges it or not.</p>
+            <ul class="tl-pillars" aria-label="The Five Pillars of Fulfilment">
+              {PILLARS.map(p => <li><span style={`background:${p.tint}`}><Icon paths={p.paths} size={20} stroke="#14231A" width={1.5} /></span>{p.name}</li>)}
+            </ul>
+            <a class="link" href="/framework">Explore the framework ›</a>
+          </div>
+        </li>
+
+        <li class="tl-q q-paper" data-rv>
+          <figure>
+            <svg class="q-mark" width="52" height="39" viewBox="0 0 64 48" aria-hidden="true"><path d={QUOTE_MARK} /></svg>
+            <blockquote>You can only control the controllables. But first, you have to be <span class="mk">honest about what’s actually happening</span>.</blockquote>
+            <figcaption class="q-by"><img src="/assets/ian-portrait.webp" alt="" width="900" height="802" loading="lazy" /><span><b>Ian Williams</b><span>Founder &amp; CEO</span></span></figcaption>
+          </figure>
+        </li>
+
+        <li class="tl-i" data-rv>
+          <div class="tl-k"><b class="word">Founder</b><span>The Artistry of Humanity</span></div>
+          <span class="tl-n tl-img"><img src="/assets/aoh-logo-new.png" alt="" width="56" height="56" /></span>
+          <div class="tl-c">
+            <h3>A better tool for organisations</h3>
+            <p class="body">Ian founded The Artistry of Humanity to give organisations, and the people inside them, something that starts with the whole human, creates accountability on both sides, and treats culture as the operating system everything else runs on. Today he leads it as founder and CEO, and works with leadership teams as a consultant, facilitator and keynote speaker.</p>
+            <figure class="photo tl-photo"><img src="/assets/ian-presenting.jpg" alt="Ian Williams at the front of a workshop room, beside notes from the session pinned to a brick wall" width="1024" height="683" loading="lazy" /></figure>
+          </div>
+        </li>
+
+        <li class="tl-i tl-last" data-rv>
+          <div class="tl-k"><b class="word">nørma</b><span>Wellbeing at scale</span></div>
+          <span class="tl-n tl-img"><img src="/assets/norma-app-icon.png" alt="" width="56" height="56" /></span>
+          <div class="tl-c">
+            <h3>Every person, every team</h3>
+            <p class="body">Keynotes, programs and coaching reach one room, one team or one leader at a time. nørma, the newest thing from The Artistry of Humanity, reaches everyone: the Five Pillars in a private app for each person, and a live, anonymous read on culture for leaders across every team.</p>
+            <a class="link" href="/what-we-do/norma">Meet nørma ›</a>
+          </div>
+        </li>
+      </ol>
     </div>
   </section>
 
   <!-- Beliefs -->
   <section class="lift-b" style="background:var(--cream)">
-    <div class="wrap sec">
-      <div class="split" style="align-items:end">
-        <div><span class="eyebrow">What we believe</span><h2>What drives <span class="mk">everything we do</span>.</h2></div>
-        <p class="lead" style="margin-top:0">Four beliefs sit underneath every keynote, program and conversation we have with a leadership team.</p>
+    <div class="wrap sec split" style="align-items:start">
+      <div class="bel-side">
+        <span class="eyebrow">What we believe</span>
+        <h2>What drives <span class="mk">everything we do</span>.</h2>
+        <p class="lead">Four beliefs sit underneath every keynote, program and conversation we have with a leadership team.</p>
+        <figure class="photo bel-photo" data-rv><img src="/assets/ian-speaking.webp" alt="Ian Williams speaking to a room of business leaders" width="632" height="783" loading="lazy" /></figure>
       </div>
-      <div class="grid g2x2" style="margin-top:clamp(44px,5vw,64px)">
-        {BELIEFS.map(([t, d], i) => (
-          <div class="card" data-rv>
-            <span class="small" style="font-weight:600;letter-spacing:1px">0{i + 1}</span>
-            <h3 style="margin-top:10px">{t}</h3>
-            <p class="body">{d}</p>
-          </div>
+      <div class="accs bel" data-rv>
+        {BELIEFS.map((b, i) => (
+          <details class="acc" open={i === 0}>
+            <summary><span class="ico"><Icon name={b.icon} size={22} /></span><span><span class="bel-n">0{i + 1}</span>{b.t}</span></summary>
+            <div class="acc-body"><p>{b.d}</p></div>
+          </details>
         ))}
       </div>
     </div>
@@ -110,48 +199,56 @@ const PODCAST = [
   <!-- Where the pillars came from -->
   <section class="bg-dark lift">
     <div class="glow" style="right:-16%;top:-26%;width:56%;background:radial-gradient(closest-side,rgba(217,234,110,.12),rgba(217,234,110,0) 70%)"></div>
-    <div class="wrap sec split" style="align-items:start">
-      <div style="max-width:520px">
-        <span class="eyebrow">The framework</span>
-        <h2>Where the Five Pillars <span class="mk mk-d">came from</span>.</h2>
-        <p class="lead">The Five Pillars of Fulfilment weren’t designed in a workshop or borrowed from academic research. They were built from observation: more than thirty years of watching what actually makes people thrive, and what quietly destroys them.</p>
-        <p class="body">Five dimensions of a human life that are always connected, whether we acknowledge them or not.</p>
-        <div class="btns"><a class="btn btn-lime" href="/framework">Explore the framework</a><a class="btn btn-ghost" href="/fulfilment-check-in">Take the check-in</a></div>
+    <div class="wrap sec">
+      <div class="split" style="align-items:end">
+        <div><span class="eyebrow">The framework</span><h2>Where the Five Pillars <span class="mk mk-d">came from</span>.</h2></div>
+        <p class="lead" style="margin-top:0">Not designed in a workshop or borrowed from academic research. Built from more than thirty years of watching what actually makes people thrive, and what quietly destroys them.</p>
       </div>
-      <ol class="pillars">
+      <ol class="cols">
         {PILLARS.map((p, i) => (
-          <li class="tile" data-rv><span>0{i + 1}</span><div><h3>{p.name}</h3><p class="body">{p.short}</p></div></li>
+          <li data-rv style={`--t:${p.tint};--d:${i * 0.08}s`}>
+            <span class="col-dot"><Icon paths={p.paths} size={26} stroke="#14231A" width={1.5} /></span>
+            <span class="col-n">0{i + 1}</span>
+            <h3>{p.name}</h3>
+            <p class="body">{p.short}</p>
+          </li>
         ))}
       </ol>
+      <div class="btns cols-btns"><a class="btn btn-lime" href="/framework">Explore the framework</a><a class="btn btn-ghost" href="/fulfilment-check-in">Take the free check-in</a></div>
     </div>
   </section>
 
   <!-- Beyond the boardroom -->
   <section class="bg-sand lift-b">
     <div class="wrap sec">
-      <div class="narrow center">
-        <span class="eyebrow">Ian’s other work</span>
-        <h2>The work <span class="mk">beyond the boardroom</span>.</h2>
+      <div class="split" style="align-items:end">
+        <div><span class="eyebrow">Ian’s other work</span><h2>The work <span class="mk">beyond the boardroom</span>.</h2></div>
+        <p class="lead" style="margin-top:0">Two places where Ian goes further than the leadership room: an honest podcast, and a focused initiative for men.</p>
       </div>
-      <div class="split" style="margin-top:clamp(44px,5vw,64px)">
-        <figure class="photo" style="margin:0;flex:0 1 420px;aspect-ratio:1" data-rv>
-          <img src="/assets/podcast-cover.webp" alt="Cover art for The Artistry of Humanity podcast: Be the author of your story, with Ian Williams" width="900" height="900" loading="lazy" />
-        </figure>
-        <div>
-          <span class="eyebrow">The podcast</span>
-          <h3 style="margin-top:12px;font-size:clamp(28px,3vw,38px)">The Artistry of Humanity podcast</h3>
-          <p class="lead">The best way to understand what Ian thinks, and how he thinks, is to hear him talk.</p>
-          <p class="body">The podcast goes deep on leadership, culture, human connection and what it actually means to live a fulfilled life. No scripts, no corporate polish. Just honest conversation.</p>
-          <div class="btns">{PODCAST.map(([l, u], i) => <a class={i === 0 ? 'btn btn-dark' : 'btn btn-ghost'} href={u} rel="noopener">{l} ↗</a>)}</div>
+      <div class="bb" data-tabs>
+        <div class="tablist" role="tablist" aria-label="Ian’s other work">
+          <button type="button" class="tab" role="tab" id="bb-t0" aria-controls="bb-p0"><Icon name="headphones" size={18} />The podcast</button>
+          <button type="button" class="tab" role="tab" id="bb-t1" aria-controls="bb-p1"><Icon name="users" size={18} />Good Men Helping Good Men</button>
         </div>
-      </div>
-      <div class="card-dark gm" data-rv>
-        <div style="max-width:640px">
-          <span class="eyebrow">Good Men Helping Good Men</span>
-          <h3 style="margin-top:12px">Male disconnection and loneliness are at crisis levels.</h3>
-          <p class="body">It’s something Ian has felt personally and seen professionally for years. Good Men Helping Good Men (GMHGM) is the focused initiative within The Artistry of Humanity that addresses it directly, through workshops, peer circles, coaching and a community app built for the challenges men face today.</p>
+        <div class="card bb-p" role="tabpanel" id="bb-p0" aria-labelledby="bb-t0">
+          <figure class="photo bb-cover"><img src="/assets/podcast-cover.webp" alt="Cover art for The Artistry of Humanity podcast: Be the author of your story, with Ian Williams" width="900" height="900" loading="lazy" /></figure>
+          <div>
+            <span class="eyebrow">The podcast</span>
+            <h3 style="margin-top:12px">The Artistry of Humanity podcast</h3>
+            <p class="body">The best way to understand what Ian thinks, and how he thinks, is to hear him talk. Leadership, culture, human connection and what it actually means to live a fulfilled life. No scripts, no corporate polish.</p>
+            <div class="btns" style="margin-top:24px">{PODCAST.map(([l, u], i) => <a class={i === 0 ? 'btn btn-dark' : 'btn btn-ghost'} href={u} rel="noopener">{l} ↗</a>)}</div>
+          </div>
         </div>
-        <a class="btn btn-lime" href="https://gmhgm.com/" rel="noopener">Visit GMHGM ↗</a>
+        <div class="card-dark bb-p" role="tabpanel" id="bb-p1" aria-labelledby="bb-t1">
+          <div class="bb-gm"><span class="ico"><Icon name="users" size={30} /></span></div>
+          <div>
+            <span class="eyebrow">Good Men Helping Good Men</span>
+            <h3 style="margin-top:12px">Male disconnection and loneliness are at crisis levels.</h3>
+            <p class="body">It’s something Ian has felt personally and seen professionally for years. Good Men Helping Good Men (GMHGM) is the focused initiative within The Artistry of Humanity that addresses it directly.</p>
+            <ul class="bb-list"><li>Workshops</li><li>Peer circles</li><li>Coaching</li><li>A community app</li></ul>
+            <div class="btns" style="margin-top:24px"><a class="btn btn-lime" href="https://gmhgm.com/" rel="noopener">Visit GMHGM ↗</a></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -161,11 +258,20 @@ const PODCAST = [
     <div class="wrap sec">
       <div class="split" style="align-items:end">
         <div><span class="eyebrow">Work with us</span><h2>Grounded in the pillars. <span class="mk">Shaped around you.</span></h2></div>
-        <p class="lead" style="margin-top:0">Every engagement is built on the Five Pillars of Fulfilment. The format depends on where you are and what you need, and <a href="/what-we-do/norma" style="color:var(--ink);text-decoration:underline;text-underline-offset:3px">nørma</a> keeps the work going after we leave the room.</p>
+        <p class="lead" style="margin-top:0">Every engagement is built on the Five Pillars of Fulfilment. The format depends on where you are and what you need, and nørma takes it to every person and every team: wellbeing at scale.</p>
       </div>
-      <div class="grid g2x2" style="margin-top:clamp(44px,5vw,64px)">
-        {WAYS.map(w => (
-          <a class={w.dark ? 'card-dark' : 'card'} href={w.href} data-rv><span class="pill">{w.tag}</span><h3 style="margin-top:16px">{w.title}</h3><p class="body">{w.text}</p><span class="link">{w.cta} ›</span></a>
+      <div class="ways">
+        <a class="way way-norma" href="/what-we-do/norma" data-rv>
+          <img src="/assets/norma-app-icon.png" alt="" width="52" height="52" />
+          <span><b>nørma</b><small>Wellbeing at scale. Every person, every team, every month.</small></span>
+          <Icon name="arrow" size={20} />
+        </a>
+        {SERVICES.map(s => (
+          <a class="way" href={s.href} data-rv>
+            <span class="ico"><Icon name={s.icon} size={24} /></span>
+            <span><b>{s.title}</b><small>{s.line}</small></span>
+            <Icon name="arrow" size={20} />
+          </a>
         ))}
       </div>
     </div>
@@ -177,30 +283,138 @@ const PODCAST = [
       <div class="card-dark center" style="max-width:860px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(24px,5vw,64px)">
         <span class="eyebrow">Let’s start a conversation</span>
         <h2 style="margin-left:auto;margin-right:auto;max-width:14em">Ready to bring this into your organisation?</h2>
-        <p class="lead" style="margin-left:auto;margin-right:auto">Start with a conversation, or apply for a free Masterclass with your leadership team.</p>
-        <div class="btns"><a class="btn btn-lime" href="/contact">Book a call</a><a class="btn btn-ghost" href="/what-we-do/masterclass">Apply for a free Masterclass</a></div>
+        <p class="lead" style="margin-left:auto;margin-right:auto">Start with a conversation, or ask about a Masterclass for your leadership team.</p>
+        <div class="btns"><a class="btn btn-lime" href="/contact">Book a call</a><a class="btn btn-ghost" href="/what-we-do/masterclass">Ask about a Masterclass</a></div>
       </div>
     </div>
   </section>
 </Base>
 
 <style>
-  .story{max-width:720px;margin:0 auto}
-  .story .first{margin-top:0;max-width:none;font-size:clamp(19px,1.7vw,22px);color:var(--ink)}
-  .story .first::first-letter{float:left;margin:6px 12px 0 0;font:400 4.1em/.8 var(--serif);color:var(--olive)}
-  .story .body{font-size:17.5px}
-  .pull{margin:clamp(40px,5vw,56px) 0;padding-left:22px;border-left:3px solid var(--lime-3)}
-  blockquote.quote{margin-inline:0}
-  .story-photo{max-width:980px;margin:clamp(48px,6vw,72px) auto;aspect-ratio:3/2}
-  .sign{display:flex;flex-direction:column;gap:4px;margin:36px 0 0;padding-top:22px;border-top:1px solid var(--line)}
-  .sign b{font:400 26px/1.1 var(--serif)}
-  .sign span{font-size:14px;color:var(--muted-2)}
+  /* Hero facts */
+  .facts{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,max-content);gap:10px}
+  .facts li span{white-space:nowrap}
+  .facts li{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:16px 12px 16px 10px / 12px 16px 10px 16px;background:rgba(250,248,240,.75);box-shadow:inset 0 0 0 1px rgba(20,35,26,.08);font-size:14.5px;line-height:1.3;color:var(--muted)}
+  .facts li :global(svg){flex:none;color:var(--olive)}
+  .facts b{font-weight:600;color:var(--ink)}
+  @media (max-width:560px){.facts{grid-template-columns:minmax(0,1fr);gap:8px}.facts li{padding:10px 14px}}
 
-  .pillars{list-style:none;margin:0;padding:0;display:grid;gap:12px;flex:1 1 420px}
-  .pillars li{display:flex;gap:18px;align-items:baseline;padding:20px 24px}
-  .pillars li > span{font:400 22px/1 var(--serif);color:#DCEC85;min-width:30px}
-  .pillars h3{font-size:22px}
-  .pillars .body{margin-top:6px;font-size:15.5px}
+  /* The timeline: key | node | content, joined by a dotted line. */
+  .tl{--key:clamp(180px,20vw,250px);--node:64px;position:relative;list-style:none;margin:clamp(48px,6vw,80px) auto 0;padding:0;max-width:1060px}
+  .tl::before{content:'';position:absolute;top:10px;bottom:40px;left:calc(var(--key) + var(--node) / 2 - 1px);width:2px;background:repeating-linear-gradient(180deg,rgba(74,107,58,.45) 0 5px,transparent 5px 11px)}
+  .tl-i{position:relative;display:grid;grid-template-columns:var(--key) var(--node) minmax(0,1fr);gap:0 clamp(20px,3vw,40px);padding-bottom:clamp(48px,6vw,72px)}
+  .tl-k{text-align:right;padding-top:4px}
+  .tl-k b{display:block;font:400 clamp(40px,4.6vw,62px)/1 var(--serif);letter-spacing:-1px;color:var(--olive)}
+  .tl-k b.word{font-size:clamp(28px,2.8vw,38px);letter-spacing:-.4px;color:var(--ink)}
+  .tl-k b small{margin:0 .14em;font:600 .3em var(--sans);letter-spacing:1px;text-transform:uppercase;vertical-align:.9em;color:var(--muted-2)}
+  .tl-k span{display:block;margin-top:10px;font:600 11px/1.4 var(--sans);letter-spacing:1.8px;text-transform:uppercase;color:var(--muted-2)}
+  .tl-n{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:var(--node);height:var(--node);border-radius:50%;background:var(--dark);color:var(--lime);box-shadow:0 0 0 8px var(--sand)}
+  .tl-img{background:none;overflow:hidden}
+  .tl-img img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+  .tl-c{max-width:600px;padding-top:6px}
+  .tl-c h3{font-size:clamp(24px,2.3vw,30px)}
+  .tl-c .body{margin-top:12px;font-size:17px}
+  .tl-c .body b{font-weight:600;color:var(--ink)}
+  .tl-tags{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0}
+  .tl-tags li{padding:7px 13px;border-radius:999px;background:rgba(20,35,26,.06);font:600 13px/1.3 var(--sans);color:var(--olive)}
+  .tl-pillars{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0;padding:0}
+  .tl-pillars li{display:inline-flex;align-items:center;gap:8px;padding:4px 14px 4px 4px;border-radius:999px;background:rgba(250,248,240,.8);font:600 13.5px/1.3 var(--sans);color:var(--ink)}
+  .tl-pillars span{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%}
+  .tl-photo{margin:24px 0 0;aspect-ratio:16/10}
+  .tl-last{padding-bottom:0}
+  .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+  .two > div{padding:18px 20px;border-radius:20px 16px 20px 14px / 16px 20px 14px 20px}
+  .two p{margin:10px 0 0;font-size:15.5px;line-height:1.55;color:var(--muted)}
+  .two-up{background:rgba(217,234,110,.34)}
+  .two-down{background:rgba(250,248,240,.7);box-shadow:inset 0 0 0 1px rgba(20,35,26,.08)}
+  .two-k{display:flex;align-items:center;gap:8px;font:600 11px/1.3 var(--sans);letter-spacing:1.6px;text-transform:uppercase;color:var(--ink)}
+  .two-k :global(svg){flex:none;color:var(--olive)}
+  .tl .accs{max-width:600px}
 
-  .gm{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px;margin-top:clamp(56px,6vw,80px)}
+  /* Ian's three lines: sans, large, each on its own card across the line. */
+  .tl-q{position:relative;z-index:1;padding-bottom:clamp(48px,6vw,72px)}
+  .tl-q figure{margin:0;padding:clamp(30px,4vw,56px) clamp(24px,4.4vw,64px);border-radius:var(--r-a)}
+  .tl-q blockquote{margin:20px 0 0;font:500 clamp(26px,3.1vw,42px)/1.22 var(--sans);letter-spacing:-.8px;text-wrap:pretty}
+  .q-mark{display:block}
+  .q-dark figure{background:var(--dark);color:var(--on-dark);box-shadow:0 36px 70px -34px rgba(20,35,26,.6)}
+  .q-dark .q-mark{fill:var(--lime)}
+  .q-lime figure{background:radial-gradient(70% 90% at 85% 0%,#EFF8A8,rgba(239,248,168,0) 70%),linear-gradient(160deg,#E2EF84,#D3E45F);color:var(--dark)}
+  .q-lime .q-mark{fill:var(--dark)}
+  .mk-w{--mk:rgba(250,248,240,.8)}
+  .q-paper figure{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(20,35,26,.07),0 30px 60px -36px rgba(20,35,26,.35)}
+  .q-paper .q-mark{fill:var(--lime-3)}
+  .q-by{display:flex;align-items:center;gap:14px;margin-top:26px}
+  .q-by img{flex:none;width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:50% 8%;background:#E8EACB;box-shadow:0 0 0 3px rgba(217,234,110,.85)}
+  .q-by b{display:block;font:600 15px/1.3 var(--sans)}
+  .q-by span span{display:block;font-size:13.5px;opacity:.7}
+  .q-lime .q-by img{box-shadow:0 0 0 3px rgba(250,248,240,.85)}
+
+  @media (max-width:760px){
+    .tl{--node:48px}
+    .tl::before{left:calc(var(--node) / 2 - 1px);top:6px}
+    .tl-i{grid-template-columns:var(--node) minmax(0,1fr);gap:0 18px;padding-bottom:44px}
+    .tl-k{grid-column:2;grid-row:1;text-align:left;padding-top:0}
+    .tl-k b{font-size:44px}
+    .tl-k b.word{font-size:30px}
+    .tl-k span{margin-top:6px}
+    .tl-n{grid-column:1;grid-row:1;box-shadow:0 0 0 6px var(--sand)}
+    .tl-n :global(svg){width:21px;height:21px}
+    .tl-c{grid-column:2;padding-top:16px}
+    .two{grid-template-columns:minmax(0,1fr)}
+    .tl-q{padding-bottom:44px}
+  }
+
+  /* Beliefs */
+  .bel-side{flex:1 1 360px;max-width:480px}
+  .bel-photo{margin:32px 0 0;aspect-ratio:4/3}
+  .bel-photo img{object-position:50% 25%}
+  .bel{flex:1 1 460px}
+  .bel .acc summary{font-size:clamp(18px,1.6vw,20px)}
+  .bel-n{display:block;margin-bottom:2px;font:600 11px var(--sans);letter-spacing:1.8px;color:var(--olive)}
+  .bel .acc-body{padding-left:58px;font-size:16.5px}
+  @media (max-width:520px){.bel .acc-body{padding-left:0}}
+
+  /* Five pillars, standing side by side */
+  .cols{list-style:none;margin:clamp(44px,5vw,64px) 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+  .cols li{position:relative;display:flex;flex-direction:column;padding:26px 22px 28px;border-radius:999px 999px 26px 22px / 140px 140px 26px 22px;background:linear-gradient(180deg,color-mix(in srgb,var(--t) 26%,transparent),rgba(228,240,214,.04) 70%);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--t) 30%,transparent);text-align:center;align-items:center}
+  .col-dot{display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;background:var(--t);box-shadow:0 0 0 6px rgba(15,32,21,.6)}
+  .col-n{margin-top:18px;font:600 11px var(--sans);letter-spacing:2px;color:var(--t)}
+  .cols h3{margin-top:6px;font-size:clamp(20px,1.8vw,23px)}
+  .cols .body{margin-top:10px;font-size:14.5px;line-height:1.5}
+  .cols-btns{margin-top:clamp(36px,4vw,52px)}
+  @media (max-width:1000px){
+    .cols{grid-template-columns:minmax(0,1fr);gap:10px}
+    .cols li{flex-direction:row;flex-wrap:wrap;align-items:center;text-align:left;gap:4px 16px;padding:16px 20px 16px 16px;border-radius:999px 26px 26px 999px / 999px 26px 26px 999px;background:linear-gradient(90deg,color-mix(in srgb,var(--t) 24%,transparent),rgba(228,240,214,.04) 80%)}
+    .col-dot{width:52px;height:52px;flex:none}
+    .col-n{display:none}
+    .cols h3{margin:0;flex:1 1 160px}
+    .cols .body{margin:0;flex:1 1 100%;padding-left:68px}
+  }
+  @media (max-width:520px){.cols .body{padding-left:0}.cols li{border-radius:26px 22px 26px 20px / 22px 26px 20px 26px}}
+
+  /* Beyond the boardroom: two tabs */
+  .bb{margin-top:clamp(36px,4vw,52px)}
+  .bb-p{display:flex;flex-wrap:wrap;align-items:center;gap:28px clamp(28px,4vw,56px);margin-top:20px}
+  .bb-p > div:last-child{flex:1 1 380px;min-width:0}
+  .bb-cover{flex:0 1 320px;margin:0;aspect-ratio:1}
+  .bb-gm{flex:0 1 320px;display:flex;align-items:center;justify-content:center;aspect-ratio:1;max-height:320px;border-radius:var(--r-b);background:radial-gradient(closest-side,rgba(217,234,110,.2),rgba(217,234,110,0) 80%)}
+  .bb-gm .ico{width:120px;height:120px;border-radius:44px 34px 44px 30px / 34px 44px 30px 44px}
+  .bb-list{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0}
+  .bb-list li{padding:7px 13px;border-radius:999px;background:rgba(217,234,110,.14);font:600 13px/1.3 var(--sans);color:#DCEC85}
+  @media (max-width:640px){.bb-cover{flex-basis:100%}.bb-gm{flex-basis:100%;max-height:180px;aspect-ratio:auto;height:180px}}
+
+  /* Work with us: one row per way */
+  .ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:12px;margin-top:clamp(40px,5vw,60px)}
+  .way{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:var(--r-b);background:rgba(250,248,240,.8);box-shadow:inset 0 0 0 1px rgba(20,35,26,.07),0 20px 40px -30px rgba(20,35,26,.35);transition:transform .25s var(--ease),box-shadow .25s ease}
+  .way:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1px rgba(20,35,26,.14),0 24px 44px -28px rgba(20,35,26,.4)}
+  .way .ico{flex:none}
+  .way > span:not(.ico){flex:1;min-width:0}
+  .way b{display:block;font:600 16.5px/1.3 var(--sans);color:var(--ink)}
+  .way small{display:block;margin-top:3px;font-size:14px;line-height:1.45;color:var(--muted-2)}
+  .way > :global(svg:last-child){flex:none;color:var(--olive)}
+  .way-norma{background:var(--dark)}
+  .way-norma img{flex:none;width:52px;height:52px;border-radius:16px}
+  .way-norma b{color:var(--on-dark)}
+  .way-norma small{color:var(--on-dark-muted)}
+  .way-norma > :global(svg:last-child){color:var(--lime)}
 </style>

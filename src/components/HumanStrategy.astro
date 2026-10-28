@@ -1,12 +1,13 @@
 ---
 /* The human strategy landing page, used by /human-strategy and
-   /build-a-human-strategy. Written in Ian's voice (first person), as on the
-   previous site. The cost calculator runs in the browser; its benchmarks are
-   the previous site's. */
+   /build-a-human-strategy, and shared with clients. Written in Ian's voice
+   (first person), as on the previous site. The cost calculator runs in the
+   browser; its benchmarks are the previous site's. */
+import Icon from './Icon.astro';
 import { PILLARS } from '../data/aoh';
 
 const BOOKING_URL = 'https://calendar.app.google/P14aVTpPNqgrVAbHA';
-const INTERESTS = ['Consulting', 'Free Masterclass', 'Wellness Accelerator', 'Leadership Coaching', 'Keynote or Workshop', 'nørma', 'Just exploring'];
+const INTERESTS = ['Consulting', 'Masterclass', 'Wellness Accelerator', 'Leadership Coaching', 'Keynote or Workshop', 'nørma', 'Just exploring'];
 
 const PILLAR_TEXT = [
   'The energy your team actually shows up with.',
@@ -17,12 +18,19 @@ const PILLAR_TEXT = [
 ];
 
 const FORMATS = [
-  { flag: 'Deepest engagement', title: 'Consulting', text: 'I come in alongside your leadership team and build your human strategy with you. We map where your team actually stands across the Five Pillars, design the operating model, and embed it as a system you run, not a program you launch.', href: '/what-we-do/culture-consulting' },
-  { flag: 'Best starting point', title: 'Masterclass', text: 'A focused 60 to 90 minute session for your leadership team. You leave with a shared language for the human side of the business and a clear read on where your team is strong, and where it is quietly under strain.', href: '/what-we-do/masterclass' },
-  { flag: '6 weeks', title: 'Wellness Accelerator', text: 'A facilitated six-week program that takes a team through each of the Five Pillars with structured exercises, accountability and visible progress. The fastest way to move a team from idea to practice.', href: '/what-we-do/wellness-accelerator' },
-  { flag: '1:1', title: 'Leadership coaching', text: 'Private coaching for senior leaders who want to model what they are asking of their teams. Grounded in the same framework, applied to your own life and your own leadership.', href: '/what-we-do/leadership-coaching' },
-  { flag: 'Events', title: 'Keynotes and workshops', text: 'From a 45-minute keynote to a full-day immersive session. Tailored to your event, your audience and the conversation you want to start.', href: '/what-we-do/keynotes-workshops' },
-];
+  { icon: 'compass', flag: 'Deepest engagement', title: 'Consulting', text: 'I come in alongside your leadership team and build your human strategy with you. We map where your team actually stands across the Five Pillars, design the operating model, and embed it as a system you run, not a program you launch.', href: '/what-we-do/culture-consulting' },
+  { icon: 'board', flag: 'Best starting point', title: 'Masterclass', text: 'A focused 60 to 90 minute session for your leadership team. You leave with a shared language for the human side of the business and a clear read on where your team is strong, and where it is quietly under strain.', href: '/what-we-do/masterclass' },
+  { icon: 'climb', flag: '6 weeks', title: 'Wellness Accelerator', text: 'A facilitated six-week program that takes a team through each of the Five Pillars with structured exercises, accountability and visible progress. The fastest way to move a team from idea to practice.', href: '/what-we-do/wellness-accelerator' },
+  { icon: 'talk', flag: '1:1', title: 'Leadership coaching', text: 'Private coaching for senior leaders who want to model what they are asking of their teams. Grounded in the same framework, applied to your own life and your own leadership.', href: '/what-we-do/leadership-coaching' },
+  { icon: 'mic', flag: 'Events', title: 'Keynotes and workshops', text: 'From a 45-minute keynote to a full-day immersive session. Tailored to your event, your audience and the conversation you want to start.', href: '/what-we-do/keynotes-workshops' },
+] as const;
+
+const CALL = [
+  { icon: 'users', t: 'Get to know each other' },
+  { icon: 'search', t: 'Unpack the challenges you are facing' },
+  { icon: 'compass', t: 'Explore how a human strategy might help' },
+  { icon: 'check', t: 'Leave with something useful, either way' },
+] as const;
 
 /* Calculator benchmarks, from the previous site. Keep in step with the script
    at the bottom of this file. */
@@ -72,7 +80,7 @@ const N0 = 250, S0 = INDUSTRIES.other.salary;
 const r = calc(N0, 'other', S0);
 ---
 
-<!-- Hero -->
+<!-- Hero: Ian, and the strategy most companies are missing. -->
 <section style="background:var(--cream);overflow:hidden">
   <div class="glow" style="right:-12%;top:-20%;width:56%;background:radial-gradient(closest-side,rgba(217,234,110,.28),rgba(217,234,110,0) 70%)"></div>
   <div class="wrap split" style="padding-top:clamp(40px,6vw,88px);padding-bottom:clamp(120px,13vw,180px)">
@@ -85,30 +93,62 @@ const r = calc(N0, 'other', S0);
         <a class="btn btn-ghost" href="#calculator">See what it’s costing you</a>
       </div>
     </div>
-    <figure style="margin:0;flex:0 1 400px">
+    <figure class="hs-hero">
       <div class="arch" style="aspect-ratio:420/520;background:radial-gradient(64% 42% at 50% 22%,rgba(217,234,110,.6),rgba(217,234,110,.16) 55%,rgba(217,234,110,0) 82%),linear-gradient(180deg,#E8EACB,#ECE8D7 52%,#E4DFCA);position:relative">
         <img src="/assets/ian-portrait.webp" alt="Ian Williams" width="900" height="802" style="position:absolute;left:50%;bottom:0;width:128%;max-width:none;transform:translateX(-50%)" />
       </div>
-      <figcaption style="text-align:center;margin-top:18px"><b style="display:block;font:400 22px/1.1 var(--serif)">Ian Williams</b><span class="who" style="display:block;margin-top:8px">Founder &amp; CEO</span></figcaption>
+      <div class="hs-card" aria-hidden="true">
+        <p class="hs-row"><span class="hs-ok"><Icon name="check" size={16} width={2.2} /></span><span><b>Business strategy</b><small>Market · product · numbers · plan</small></span></p>
+        <p class="hs-row hs-miss"><span class="hs-q">?</span><span><b>Human strategy</b><small>Energy · clarity · trust</small></span></p>
+      </div>
+      <figcaption><b>Ian Williams</b><span class="who">Founder &amp; CEO</span></figcaption>
     </figure>
   </div>
 </section>
 
-<!-- The idea -->
+<!-- The idea: the plan stands on the people. -->
 <section class="bg-sand lift">
-  <div class="wrap sec split" style="align-items:start">
-    <div style="flex:1 1 440px">
-      <span class="eyebrow">The idea</span>
-      <h2>You have a business strategy. The thing it actually runs on is <span class="mk">people</span>.</h2>
-      <p class="lead">You have built a strategy for the business. The market, the product, the numbers, the plan. But the thing all of it actually runs on is people. How they are doing, how they connect, whether they trust each other, whether they have anything left to give.</p>
-      <p class="body">That is your human strategy. Most leaders have never named it, let alone built one.</p>
-      <p class="body">A human strategy is the operating model for the part of your business that lives inside the people doing the work. It is the system that decides whether your team has the energy, clarity and trust to actually execute the plan you have set. Built well, it is quiet and load bearing. Built badly, or not at all, it is the reason good strategy quietly stops moving.</p>
+  <div class="wrap sec">
+    <div class="split" style="align-items:end">
+      <div style="flex:1 1 520px"><span class="eyebrow">The idea</span><h2>You have a business strategy. The thing it actually runs on is <span class="mk">people</span>.</h2></div>
+      <p class="lead" style="margin-top:0;flex:1 1 360px">How they are doing, how they connect, whether they trust each other, whether they have anything left to give. That is your human strategy. Most leaders have never named it, let alone built one.</p>
     </div>
-    <div class="card hs-pillars" data-rv style="flex:1 1 380px">
-      <p class="pl-lead">The Five Pillars of Fulfilment are the dimensions a team actually runs on. Not a wellbeing program. The operating model itself.</p>
-      <ol>
-        {PILLARS.map((p, i) => <li><span>0{i + 1}</span><div><h3>{p.name}</h3><p class="body">{PILLAR_TEXT[i]}</p></div></li>)}
-      </ol>
+
+    <div class="idea" data-tabs>
+      <figure class="bld" role="img" aria-label="A building: your business strategy is the roof, held up by five columns, the Five Pillars of Fulfilment, which together are your human strategy">
+        <div class="bld-roof"><span class="eyebrow">Your business strategy</span><b>The market, the product, the numbers, the plan.</b></div>
+        <ol class="bld-cols">
+          {PILLARS.map((p, i) => (
+            <li style={`--t:${p.tint};--d:${i * 0.07}s`}>
+              <span class="bc-dot"><Icon paths={p.paths} size={24} stroke="#14231A" width={1.5} /></span>
+              <span class="bc-tx"><b>{p.name}</b><small>{PILLAR_TEXT[i]}</small></span>
+            </li>
+          ))}
+        </ol>
+        <div class="bld-base"><span class="eyebrow">Your human strategy</span><b>The Five Pillars of Fulfilment</b></div>
+      </figure>
+
+      <div class="idea-side">
+        <p class="idea-k">The Five Pillars are the dimensions a team actually runs on. Not a wellbeing program. <span class="mk">The operating model itself.</span></p>
+        <div class="tablist" role="tablist" aria-label="Built well, or not at all">
+          <button type="button" class="tab" role="tab" id="hs-b0" aria-controls="hs-bp0"><Icon name="check" size={18} width={2} />Built well</button>
+          <button type="button" class="tab" role="tab" id="hs-b1" aria-controls="hs-bp1"><Icon name="loop" size={18} />Built badly, or not at all</button>
+        </div>
+        <div class="idea-p" role="tabpanel" id="hs-bp0" aria-labelledby="hs-b0">
+          <h3>Quiet and load bearing.</h3>
+          <p class="body">It decides whether your team has the energy, clarity and trust to actually execute the plan you have set.</p>
+        </div>
+        <div class="idea-p" role="tabpanel" id="hs-bp1" aria-labelledby="hs-b1">
+          <h3>The reason good strategy quietly stops moving.</h3>
+          <p class="body">The plan is still there. The people it stands on are running low on energy, clarity or trust, and nobody is looking.</p>
+        </div>
+        <div class="accs" style="margin-top:28px">
+          <details class="acc">
+            <summary>What exactly is a human strategy?</summary>
+            <div class="acc-body"><p>A human strategy is the operating model for the part of your business that lives inside the people doing the work. It is the system that decides whether your team has the energy, clarity and trust to actually execute the plan you have set. Built well, it is quiet and load bearing. Built badly, or not at all, it is the reason good strategy quietly stops moving.</p></div>
+          </details>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -165,6 +205,7 @@ const r = calc(N0, 'other', S0);
             </div>
             <div class="cost-total"><b data-o="total">{aud(r.total)}</b><small>per year, indicative</small></div>
           </div>
+          <div class="ice" data-ice style={`--hid:${r.hiddenPct}%`} aria-hidden="true"><span class="ice-v"><i>Visible</i></span><span class="ice-h"><i>Hidden</i></span></div>
           <div class="buckets">
             <div class="bucket">
               <span class="b-k">Visible</span><span class="b-t">In the books</span>
@@ -184,8 +225,15 @@ const r = calc(N0, 'other', S0);
           <p class="risk-hd"><span class="eyebrow">Regulatory exposure · Victoria</span><span class="risk-pill" data-o="risk">{r.risk}</span></p>
           <p class="risk-line"><span data-o="crisis-n">{num(r.crisis)} {r.crisis === 1 ? 'person' : 'people'}</span> in crisis is <span class="hot-t" data-o="claims">{claimText(r.claims)}</span></p>
           <p class="range-out"><b data-o="low">{aud(r.low)}</b><span>to</span><b data-o="high">{aud(r.high)}</b></p>
-          <p class="body">Anchored to <i>WorkSafe Victoria v Court Services Victoria</i>, 2023: AU$379,157 for a single psychosocial safety breach. Applied to your at-risk group at an 8% claim conversion rate.</p>
-          <p class="body" style="font-size:15px">Since 1 December 2025, Victoria’s amended OHS Regulations make managing psychosocial hazards an explicit legal duty. Maximum body-corporate penalties reach AU$3.85M per offence. Equivalent duties now apply in NSW, QLD, WA, SA and the UK.</p>
+          <div class="accs risk-acc">
+            <details class="acc">
+              <summary>Where this range comes from</summary>
+              <div class="acc-body">
+                <p>Anchored to <i>WorkSafe Victoria v Court Services Victoria</i>, 2023: AU$379,157 for a single psychosocial safety breach. Applied to your at-risk group at an 8% claim conversion rate.</p>
+                <p>Since 1 December 2025, Victoria’s amended OHS Regulations make managing psychosocial hazards an explicit legal duty. Maximum body-corporate penalties reach AU$3.85M per offence. Equivalent duties now apply in NSW, QLD, WA, SA and the UK.</p>
+              </div>
+            </details>
+          </div>
         </div>
       </div>
     </div>
@@ -194,24 +242,48 @@ const r = calc(N0, 'other', S0);
   </div>
 </section>
 
-<!-- How I can help -->
+<!-- How I can help: five formats as tabs, and the platform that keeps it going. -->
 <section class="lift" style="background:var(--cream)">
   <div class="wrap sec">
     <div class="split" style="align-items:end">
-      <div><span class="eyebrow">How I can help</span><h2>Five ways I work with leaders. <span class="mk">One platform</span> to keep it going.</h2></div>
+      <div><span class="eyebrow">How I can help</span><h2>Five ways I work with leaders. <span class="mk">One platform</span> that reaches everyone.</h2></div>
       <p class="lead" style="margin-top:0">Every team meets me at a different point. The goal is the same: a human strategy that actually runs inside your organisation, owned by the leaders who built it.</p>
     </div>
-    <div class="grid g2" style="margin-top:clamp(44px,5vw,64px)">
-      {FORMATS.map(f => (
-        <a class="card fmt" href={f.href} data-rv><span class="pill">{f.flag}</span><h3 style="margin-top:16px">{f.title}</h3><p class="body">{f.text}</p><span class="link">Find out more ›</span></a>
-      ))}
-      <a class="card-dark fmt norma" href="https://joinnorma.com/" data-rv>
-        <div class="glow" style="right:-30%;top:-50%;width:90%;background:radial-gradient(closest-side,rgba(217,234,110,.18),rgba(217,234,110,0) 70%)"></div>
+    <div class="fm" data-tabs>
+      <div class="tablist fm-list" role="tablist" aria-label="Ways to work with Ian">
+        {FORMATS.map((f, i) => (
+          <button type="button" class="fm-t" role="tab" id={`fm-t${i}`} aria-controls={`fm-p${i}`}>
+            <span class="ico"><Icon name={f.icon} size={22} /></span>
+            <span><b>{f.title}</b><small>{f.flag}</small></span>
+          </button>
+        ))}
+      </div>
+      <div class="fm-panels">
+        {FORMATS.map((f, i) => (
+          <div class="card fm-p" role="tabpanel" id={`fm-p${i}`} aria-labelledby={`fm-t${i}`}>
+            <span class="fm-big"><Icon name={f.icon} size={34} /></span>
+            <span class="pill">{f.flag}</span>
+            <h3>{f.title}</h3>
+            <p class="body">{f.text}</p>
+            <a class="link" href={f.href}>Find out more ›</a>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="card-dark nm" data-rv>
+      <div class="glow" style="right:-20%;top:-50%;width:80%;background:radial-gradient(closest-side,rgba(217,234,110,.16),rgba(217,234,110,0) 70%)"></div>
+      <div class="nm-tx">
         <p class="live"><span class="pill">Available now</span><span class="dot">Live</span></p>
         <p class="norma-word"><img src="/assets/norma-app-icon.png" alt="" width="44" height="44" />nørma</p>
-        <p class="body">The wellbeing operating system. A private fulfilment companion for your people. Honest, aggregated signals for your leaders. Your human strategy, put into practice.</p>
-        <span class="link">Get access now ↗</span>
-      </a>
+        <p class="nm-scale">Wellbeing at scale.</p>
+        <p class="body">Consulting, coaching and workshops reach one leader or one team at a time. nørma reaches every person and every team: a private fulfilment companion for your people, and honest, aggregated signals for your leaders. Your human strategy, put into practice.</p>
+        <div class="btns"><a class="btn btn-lime" href="https://joinnorma.com/">Get access now ↗</a><a class="btn btn-ghost" href="/what-we-do/norma">How it fits our work</a></div>
+      </div>
+      <div class="nm-vis">
+        <div class="photo nm-dash"><img src="/assets/dash-hero.webp" alt="The nørma leader dashboard" width="1120" height="816" loading="lazy" /></div>
+        <div class="nm-phone"><div><img src="/assets/app-where-you-stand.webp" alt="The nørma app: where you stand across the Five Pillars" loading="lazy" /></div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -225,9 +297,22 @@ const r = calc(N0, 'other', S0);
     <div style="flex:1 1 460px">
       <span class="eyebrow">About Ian</span>
       <h2 style="font-size:clamp(30px,3.4vw,44px)">I am Ian Williams. I have spent more than thirty years inside the part of business that does not show up on <span class="mk">the org chart</span>.</h2>
-      <p class="lead">I am the founder and CEO of The Artistry of Humanity. I work with leadership teams as a consultant, facilitator and keynote speaker. The work is the same in every form: helping leaders see the human side of their business clearly, and giving them a way to actually run it.</p>
-      <p class="body">I grew up in Liverpool and took my first leadership role at seventeen. Since then I have turned around underperforming businesses and built high-performing cultures across three continents, including at DHL and some of the world’s largest organisations.</p>
-      <p class="body">I built the Five Pillars of Fulfilment because the language we were using for wellbeing was not load bearing enough to carry the weight leaders are now carrying. Human strategy is the conversation I think every leadership team needs to have, and most are not having yet.</p>
+      <p class="lead">I am the founder and CEO of The Artistry of Humanity. I have turned around underperforming businesses and built high-performing cultures, and today I work with leadership teams as a consultant, facilitator and keynote speaker.</p>
+      <ul class="facts">
+        <li><Icon name="pin" size={20} /><span>Grew up in <b>Liverpool</b></span></li>
+        <li><Icon name="users" size={20} /><span>Leading people since <b>17</b></span></li>
+        <li><Icon name="chart" size={20} /><span>Led teams at <b>DHL</b></span></li>
+        <li><Icon name="globe" size={20} /><span><b>Three continents</b></span></li>
+      </ul>
+      <figure class="ian-q">
+        <blockquote>Human strategy is the conversation I think every leadership team needs to have, and <span class="mk">most are not having yet</span>.</blockquote>
+      </figure>
+      <div class="accs" style="margin-top:24px">
+        <details class="acc">
+          <summary>Why I built the Five Pillars</summary>
+          <div class="acc-body"><p>The language we were using for wellbeing was not load bearing enough to carry the weight leaders are now carrying. The work is the same in every form: helping leaders see the human side of their business clearly, and giving them a way to actually run it.</p></div>
+        </details>
+      </div>
       <a class="link" href="/about">Read my story ›</a>
     </div>
   </div>
@@ -239,19 +324,18 @@ const r = calc(N0, 'other', S0);
     <div class="narrow center">
       <span class="eyebrow">Book time with us</span>
       <h2>Start with a free <span class="mk">diagnostic session</span>.</h2>
-      <p class="lead" style="margin-left:auto;margin-right:auto">Thirty minutes with Ian, direct. A chance to get to know each other, unpack the challenges you are sitting with, and see how a human strategy might help. In most conversations you will leave with something useful, whether we work together or not.</p>
+      <p class="lead" style="margin-left:auto;margin-right:auto">Thirty minutes with Ian, direct. In most conversations you will leave with something useful, whether we work together or not.</p>
     </div>
     <div class="split" style="align-items:start;margin-top:clamp(44px,5vw,64px)">
-      <div class="card" data-rv style="flex:1 1 360px">
-        <span class="pill">Free · 30 minutes · No obligation</span>
-        <h3 style="margin-top:16px">A conversation with Ian, on the house.</h3>
-        <ul class="list" style="margin-top:20px">
-          <li>Get to know each other</li>
-          <li>Unpack the challenges you are facing</li>
-          <li>Explore how a human strategy might help</li>
-          <li>Leave with something useful, either way</li>
-        </ul>
-        <div class="btns" style="margin-top:26px"><a class="btn btn-lime" href={BOOKING_URL} rel="noopener">Book a slot ↗</a></div>
+      <div class="card-dark call" data-rv style="flex:1 1 360px">
+        <div class="call-hd">
+          <img src="/assets/ian-portrait.webp" alt="" width="900" height="802" loading="lazy" />
+          <span><span class="pill">Free · 30 minutes · No obligation</span><b>A conversation with Ian, on the house.</b></span>
+        </div>
+        <ol class="call-steps">
+          {CALL.map(c => <li><span class="ico"><Icon name={c.icon} size={20} /></span>{c.t}</li>)}
+        </ol>
+        <div class="btns" style="margin-top:28px"><a class="btn btn-lime" href={BOOKING_URL} rel="noopener">Book a slot ↗</a></div>
       </div>
       <div style="flex:1 1 460px">
         <span class="eyebrow">Or write us a message</span>
@@ -334,6 +418,7 @@ const r = calc(N0, 'other', S0);
       set('absc', aud(r.absenteeism)); set('turnc', aud(r.turnover)); set('vis', aud(r.visible)); set('presc', aud(r.presenteeism));
       set('risk', r.risk); set('crisis-n', `${num(r.crisis)} ${r.crisis === 1 ? 'person' : 'people'}`); set('claims', claimText(r.claims));
       set('low', aud(r.low)); set('high', aud(r.high));
+      root.querySelector<HTMLElement>('[data-ice]')?.style.setProperty('--hid', r.hiddenPct + '%');
     };
 
     nIn.addEventListener('input', render);
@@ -357,13 +442,6 @@ const r = calc(N0, 'other', S0);
 </script>
 
 <style>
-  .hs-pillars .pl-lead{margin:0;font:400 clamp(21px,2vw,25px)/1.32 var(--serif);color:var(--ink);text-wrap:pretty}
-  .hs-pillars ol{list-style:none;margin:22px 0 0;padding:0}
-  .hs-pillars li{display:flex;gap:16px;align-items:baseline;padding:16px 0;border-top:1px solid var(--line)}
-  .hs-pillars li > span{font:400 20px/1 var(--serif);color:var(--olive);min-width:28px}
-  .hs-pillars h3{font-size:21px}
-  .hs-pillars .body{margin-top:4px;font-size:15.5px}
-
   /* Calculator (dark section) */
   .calc{--hot:#F2A483;display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:clamp(16px,2vw,22px);margin-top:clamp(44px,5vw,64px);align-items:start}
   @media (max-width:920px){.calc{grid-template-columns:minmax(0,1fr)}}
@@ -437,17 +515,122 @@ const r = calc(N0, 'other', S0);
   .calc-end{margin:clamp(48px,6vw,72px) auto 0;max-width:640px;text-align:center;font:400 clamp(22px,2.4vw,30px)/1.3 var(--serif);color:var(--on-dark)}
   .calc-end span{color:#DCEC85}
 
-  /* Formats */
-  .fmt{display:flex;flex-direction:column;align-items:flex-start}
-  .fmt .body{flex:1}
-  .fmt .live{align-self:stretch}
-  .norma .live{display:flex;justify-content:space-between;align-items:center;margin:0}
-  .norma .dot{display:inline-flex;align-items:center;gap:8px;font:600 11px var(--sans);letter-spacing:1.6px;text-transform:uppercase;color:rgba(201,212,194,.7)}
-  .norma .dot::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(217,234,110,.18)}
-  .norma-word{display:flex;align-items:center;gap:14px;margin:26px 0 0;font:400 clamp(46px,5vw,60px)/1 var(--serif);letter-spacing:-1px;color:var(--on-dark)}
+  /* Visible against hidden cost, as one bar. */
+  .ice{display:flex;height:34px;margin-top:22px;border-radius:12px 10px 12px 9px / 10px 12px 9px 12px;overflow:hidden;font:600 10.5px var(--sans);letter-spacing:1.4px;text-transform:uppercase}
+  .ice span{display:flex;align-items:center;min-width:0;padding:0 12px;transition:flex-basis .5s var(--ease)}
+  .ice i{font-style:normal;white-space:nowrap;overflow:hidden}
+  .ice-v{flex:0 0 calc(100% - var(--hid,50%));background:rgba(244,242,230,.16);color:var(--on-dark)}
+  .ice-h{flex:1 1 auto;justify-content:flex-end;background:repeating-linear-gradient(135deg,rgba(242,164,131,.9) 0 8px,rgba(242,164,131,.72) 8px 16px);color:#2A1408}
+  .risk-acc{margin-top:18px;border-color:rgba(242,164,131,.25)}
+  .risk-acc .acc{border-color:rgba(242,164,131,.25)}
+  .risk-acc .acc summary{font-size:15.5px;padding:16px 0}
+  .risk-acc .acc-body{font-size:15px}
+
+  /* Hero: the strategy card beside Ian */
+  .hs-hero{position:relative;margin:0;flex:0 1 400px}
+  .hs-hero figcaption{margin-top:18px;text-align:center}
+  .hs-hero figcaption b{display:block;font:400 22px/1.1 var(--serif)}
+  .hs-hero figcaption .who{display:block;margin-top:8px}
+  .hs-card{position:absolute;left:-22%;bottom:16%;display:grid;gap:8px;width:min(300px,78%);padding:12px;border-radius:24px 18px 24px 16px / 18px 24px 16px 24px;background:rgba(250,248,240,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 30px 60px -24px rgba(20,35,26,.45),inset 0 0 0 1px rgba(20,35,26,.06)}
+  .hs-row{display:flex;align-items:center;gap:12px;margin:0;padding:10px 12px;border-radius:16px;background:rgba(20,35,26,.04)}
+  .hs-row b{display:block;font:600 14.5px/1.3 var(--sans);color:var(--ink)}
+  .hs-row small{display:block;margin-top:1px;font-size:12.5px;color:var(--muted-2)}
+  .hs-ok,.hs-q{flex:none;display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%}
+  .hs-ok{background:var(--dark);color:var(--lime)}
+  .hs-miss{background:transparent;box-shadow:inset 0 0 0 1.5px rgba(74,107,58,.4);border:0;outline:1.5px dashed rgba(74,107,58,.5);outline-offset:-1.5px}
+  .hs-q{border:1.5px dashed var(--olive);font:600 15px var(--sans);color:var(--olive)}
+  @media (max-width:860px){.hs-card{left:-4%;bottom:12%}}
+  @media (max-width:560px){.hs-card{position:relative;left:auto;bottom:auto;width:auto;margin:-64px 14px 0}.hs-row small{font-size:12px}}
+  @media (max-width:420px){.call-hd img{width:56px;height:56px}.call-hd .pill{font-size:10px;letter-spacing:1.2px}}
+
+  /* The idea: strategy is the roof, the five pillars hold it up. */
+  .idea{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:clamp(44px,5vw,64px)}
+  .bld{margin:0;display:flex;flex-direction:column;align-items:stretch}
+  .bld-roof{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;padding:clamp(44px,5vw,64px) 14% 18px;text-align:center;background:var(--dark);color:var(--on-dark);clip-path:polygon(50% 0,100% 72%,100% 100%,0 100%,0 72%);transform-origin:12% 100%;transition:transform .6s var(--ease)}
+  .bld-roof b{font:400 clamp(19px,1.9vw,24px)/1.2 var(--serif);text-wrap:balance}
+  .bld-roof .eyebrow{color:#DCEC85}
+  .bld-cols{list-style:none;margin:0 4%;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(6px,1vw,12px)}
+  .bld-cols li{display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px 8px 18px;background:linear-gradient(90deg,color-mix(in srgb,var(--t) 70%,#fff) 0 14%,color-mix(in srgb,var(--t) 52%,#FAF8F0) 14% 86%,color-mix(in srgb,var(--t) 70%,#fff) 86%);border-top:8px solid color-mix(in srgb,var(--t) 60%,#14231A 12%);text-align:center;transition:opacity .5s ease var(--d),filter .5s ease var(--d),transform .6s var(--ease) var(--d)}
+  .bc-dot{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:#FAF8F0}
+  .bc-tx b{display:block;font:600 13.5px/1.25 var(--sans);color:var(--ink)}
+  .bc-tx small{display:block;margin-top:8px;font-size:12.5px;line-height:1.4;color:rgba(20,35,26,.72)}
+  .bld-base{display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 16px 18px;text-align:center;background:var(--olive);color:var(--on-dark);border-radius:0 0 22px 18px / 0 0 18px 22px;box-shadow:0 30px 50px -30px rgba(20,35,26,.6)}
+  .bld-base b{font:400 clamp(18px,1.7vw,22px)/1.2 var(--serif)}
+  .bld-base .eyebrow{color:#DCEC85}
+  .idea-k{margin:0 0 26px;font:500 clamp(21px,2vw,26px)/1.32 var(--sans);letter-spacing:-.3px;color:var(--ink);text-wrap:pretty}
+  .idea-p{margin-top:22px}
+  .idea-p h3{font-size:clamp(23px,2.2vw,28px)}
+  .idea-p .body{margin-top:10px}
+  /* Pick "built badly" and the building shows it. */
+  .idea:has(#hs-b1[aria-selected=true]) .bld-roof{transform:rotate(-4deg) translateY(10px)}
+  .idea:has(#hs-b1[aria-selected=true]) .bld-cols li{opacity:.38;filter:grayscale(.8);transform:translateY(6px)}
+  .idea:has(#hs-b1[aria-selected=true]) .bld-cols li:nth-child(2),.idea:has(#hs-b1[aria-selected=true]) .bld-cols li:nth-child(4){transform:translateY(18px) scaleY(.9)}
+  @media (max-width:900px){.idea{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:640px){
+    .bld-roof{padding:44px 10% 14px}
+    .bld-cols{grid-template-columns:minmax(0,1fr);gap:6px;margin:0 3%}
+    .bld-cols li{flex-direction:row;align-items:center;gap:14px;padding:12px 14px;text-align:left;border-top:0;border-left:8px solid color-mix(in srgb,var(--t) 60%,#14231A 12%);background:color-mix(in srgb,var(--t) 52%,#FAF8F0)}
+    .bc-dot{flex:none;width:42px;height:42px}
+    .bc-tx small{margin-top:3px}
+    .idea:has(#hs-b1[aria-selected=true]) .bld-cols li,.idea:has(#hs-b1[aria-selected=true]) .bld-cols li:nth-child(2),.idea:has(#hs-b1[aria-selected=true]) .bld-cols li:nth-child(4){transform:translateX(10px)}
+    .idea:has(#hs-b1[aria-selected=true]) .bld-roof{transform:rotate(-3deg) translateY(8px)}
+  }
+
+  /* Formats: tabs down the side, one at a time */
+  .fm{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(20px,3vw,40px);margin-top:clamp(44px,5vw,64px);align-items:start}
+  .fm-list{flex-direction:column;flex-wrap:nowrap;gap:8px}
+  .fm-t{display:flex;align-items:center;gap:14px;width:100%;padding:12px 16px 12px 12px;border:1px solid rgba(20,35,26,.1);border-radius:22px 18px 22px 16px / 18px 22px 16px 22px;background:rgba(250,248,240,.6);text-align:left;cursor:pointer;transition:background .25s ease,border-color .25s ease}
+  .fm-t:hover{border-color:rgba(20,35,26,.3)}
+  .fm-t .ico{flex:none;width:44px;height:44px;border-radius:14px 11px 14px 10px / 11px 14px 10px 14px}
+  .fm-t b{display:block;font:600 16px/1.3 var(--sans);color:var(--ink)}
+  .fm-t small{display:block;margin-top:2px;font:600 10.5px var(--sans);letter-spacing:1.4px;text-transform:uppercase;color:var(--muted-2)}
+  .fm-t[aria-selected=true]{background:var(--dark);border-color:var(--dark)}
+  .fm-t[aria-selected=true] b{color:var(--on-dark)}
+  .fm-t[aria-selected=true] small{color:#DCEC85}
+  .fm-t[aria-selected=true] .ico{background:var(--lime);color:#152213}
+  .fm-p{display:flex;flex-direction:column;align-items:flex-start;min-height:100%}
+  .fm-p + .fm-p{margin-top:18px}
+  :global(.tabs-on) .fm-p + .fm-p{margin-top:0}
+  .fm-big{display:flex;align-items:center;justify-content:center;width:76px;height:76px;margin-bottom:22px;border-radius:26px 20px 26px 18px / 20px 26px 18px 26px;background:var(--lime);color:#152213}
+  .fm-p h3{margin-top:14px;font-size:clamp(28px,2.8vw,36px)}
+  .fm-p .body{font-size:17px}
+  @media (max-width:860px){.fm{grid-template-columns:minmax(0,1fr)}}
+
+  /* nørma */
+  .nm{display:flex;flex-wrap:wrap;align-items:center;gap:36px clamp(32px,5vw,72px);margin-top:clamp(28px,3vw,40px)}
+  .nm > *{position:relative}
+  .nm > .glow{position:absolute}
+  .nm-tx{flex:1 1 360px;max-width:500px}
+  .nm .live{display:flex;align-items:center;gap:14px;margin:0}
+  .nm .dot{display:inline-flex;align-items:center;gap:8px;font:600 11px var(--sans);letter-spacing:1.6px;text-transform:uppercase;color:rgba(201,212,194,.7)}
+  .nm .dot::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(217,234,110,.18)}
+  .norma-word{display:flex;align-items:center;gap:14px;margin:22px 0 0;font:400 clamp(46px,5vw,60px)/1 var(--serif);letter-spacing:-1px;color:var(--on-dark)}
   .norma-word img{width:44px;height:44px;border-radius:13px}
-  .norma > *{position:relative}
-  .norma > .glow{position:absolute}
+  .nm-scale{margin:18px 0 0;font:500 clamp(22px,2.2vw,28px)/1.25 var(--sans);letter-spacing:-.4px;color:#EAF79B}
+  .nm-vis{flex:1 1 400px;max-width:600px;padding:0 4% 8% 0}
+  .nm-dash{border-radius:18px 14px 20px 12px / 14px 20px 12px 18px;background:#F6F5EE}
+  .nm-phone{position:absolute;right:0;bottom:0;width:28%;padding:5px;border-radius:26px;background:#0B140E;box-shadow:0 30px 60px -18px rgba(0,0,0,.75),0 0 0 1px rgba(228,240,214,.08)}
+  .nm-phone div{border-radius:21px;overflow:hidden;aspect-ratio:390/844}
+  .nm-phone img{width:100%;height:100%;object-fit:cover;object-position:top}
+
+  /* About Ian */
+  .facts li span{white-space:nowrap}
+  .facts{list-style:none;margin:26px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,max-content);gap:10px}
+  .facts li{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:16px 12px 16px 10px / 12px 16px 10px 16px;background:rgba(250,248,240,.75);box-shadow:inset 0 0 0 1px rgba(20,35,26,.08);font-size:14.5px;line-height:1.3;color:var(--muted)}
+  .facts li :global(svg){flex:none;color:var(--olive)}
+  .facts b{font-weight:600;color:var(--ink)}
+  @media (max-width:560px){.facts{grid-template-columns:minmax(0,1fr);gap:8px}.facts li{padding:10px 14px}}
+  .ian-q{margin:30px 0 0;padding:4px 0 4px 22px;border-left:4px solid var(--lime-3)}
+  .ian-q blockquote{margin:0;font:500 clamp(21px,2vw,26px)/1.35 var(--sans);letter-spacing:-.3px;color:var(--ink);text-wrap:pretty}
+
+  /* The call */
+  .call-hd{display:flex;align-items:center;gap:16px}
+  .call-hd img{flex:none;width:68px;height:68px;border-radius:50%;object-fit:cover;object-position:50% 8%;background:#E8EACB;box-shadow:0 0 0 3px var(--lime)}
+  .call-hd b{display:block;margin-top:10px;font:400 clamp(22px,2.2vw,27px)/1.2 var(--serif);color:var(--on-dark)}
+  .call-steps{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:4px}
+  .call-steps li{position:relative;display:flex;align-items:center;gap:14px;padding:8px 0;font-size:16px;color:var(--on-dark)}
+  .call-steps li .ico{flex:none;width:42px;height:42px;border-radius:14px 11px 14px 10px / 11px 14px 10px 14px}
+  .call-steps li + li::before{content:'';position:absolute;left:20px;top:-6px;height:12px;width:2px;background:rgba(217,234,110,.3)}
 
   /* Contact form */
   .form{display:grid;gap:16px;margin-top:20px}
