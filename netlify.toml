@@ -2,6 +2,16 @@
   command = "npm run build"
   publish = "dist"
 
+# Built from netlify/src by `npm run build` (scripts/build-functions.mjs).
+[functions]
+  directory = "netlify/functions"
+
+# The report's fonts and images travel with the function that draws it.
+[functions.send-report]
+  # pdfkit loads its built-in fonts (and their shared chunks) by name, which
+  # the bundler cannot see, so its whole js folder ships too.
+  included_files = ["public/report/fonts/*.woff", "public/report/*.png", "public/report/*.jpg", "node_modules/pdfkit/js/**"]
+
 # Not-found pages are served from src/pages/404.astro (dist/404.html), which
 # Netlify picks up automatically. This is a static site: no SPA catch-all.
 

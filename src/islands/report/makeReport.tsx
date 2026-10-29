@@ -23,8 +23,7 @@ export async function makeReport(input: Omit<ReportInput, 'base'>): Promise<Blob
   return pdf(<ReportDoc d={{ ...input, base }} />).toBlob();
 }
 
-export const reportFileName = (name: string) =>
-  `Fulfilment Report - ${name.replace(/[^\p{L}\p{N} .'-]/gu, '').trim() || 'You'}.pdf`;
+export { reportFileName } from './content';
 
 export function saveFile(url: string, fileName: string) {
   const a = document.createElement('a');

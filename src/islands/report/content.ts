@@ -30,6 +30,10 @@ export interface Practice {
   text: string;
 }
 
+/** The PDF's file name, in downloads and as the email attachment. */
+export const reportFileName = (name: string) =>
+  `Fulfilment Report - ${name.replace(/[^\p{L}\p{N} .'-]/gu, '').trim() || 'You'}.pdf`;
+
 /** Possible pillar scores run 0, 8, 17 … 92, 100: up to 42 is low, 75 and up is high. */
 export const bandOf = (v: number): Band => (v < 50 ? 'low' : v < 75 ? 'mid' : 'high');
 export const BAND_LABEL: Record<Band, string> = { low: 'Room to grow', mid: 'Getting there', high: 'Well tended' };

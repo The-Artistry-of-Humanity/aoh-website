@@ -4,8 +4,9 @@ import { makeReport, reportFileName, saveFile } from './makeReport';
 import type { Relationship } from './content';
 
 // "Get your full report", under the check-in results: first name and email,
-// then the PDF is made in the browser and downloads straight away. The
-// Netlify form tells us who asked; the download never waits on it.
+// then the report is emailed (netlify/src/send-report.tsx). If that fails,
+// the PDF is made here in the browser and downloads instead, so nobody leaves
+// empty-handed. The Netlify form tells us who asked; nothing waits on it.
 
 interface Props {
   scores: number[];
@@ -19,7 +20,7 @@ interface Props {
   weakest: string;
 }
 
-type State = 'idle' | 'making' | 'done' | 'error';
+type State = 'idle' | 'making' | 'sent' | 'done' | 'error';
 
 const FORM = 'fulfilment-report';
 
@@ -49,7 +50,7 @@ const ReportOffer = (p: Props) => {
   const doneRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => () => { if (file) URL.revokeObjectURL(file.url); }, [file]);
-  useEffect(() => { if (state === 'done') doneRef.current?.focus(); }, [state]);
+  useEffect(() => { if (state === 'sent' || state === 'done') doneRef.current?.focus(); }, [state]);
 
   const who = name.trim();
 
@@ -67,6 +68,17 @@ const ReportOffer = (p: Props) => {
       });
       fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() }).catch(() => {});
     }
+
+    // The reader's own date for the report, not the server's.
+    const now = new Date();
+    const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    try {
+      const res = await fetch('/.netlify/functions/send-report', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: who, email: email.trim(), answers: p.answers, relationship: p.relationship, date, 'bot-field': bot || '' }),
+      });
+      if (res.ok) { setState('sent'); return; }
+    } catch { /* fall through to the download */ }
 
     try {
       const blob = await makeReport({
@@ -97,7 +109,13 @@ const ReportOffer = (p: Props) => {
       </div>
 
       <div className="fc-rep-body">
-        {state !== 'done' ? (
+        {state === 'sent' ? (
+          <div role="status">
+            <span className="eyebrow">On its way</span>
+            <h2 ref={doneRef} tabIndex={-1} className="fc-next-h">Check your inbox, {who}.</h2>
+            <p className="body">We’ve emailed your report to {email.trim()}. Start with the pillar marked <b>Start here</b>, and pick one thing to try this week.</p>
+          </div>
+        ) : state !== 'done' ? (
           <>
             <span className="eyebrow">Free · PDF · 12 pages</span>
             <h2 id="fc-rep-h" className="fc-next-h">Get your full report.</h2>
@@ -110,19 +128,19 @@ const ReportOffer = (p: Props) => {
                 <label className="field"><span>Email</span><input type="email" name="email" autoComplete="email" maxLength={255} required value={email} onChange={(e) => setEmail(e.target.value)} /></label>
               </div>
               <button className="btn btn-lime" type="submit" disabled={state === 'making'} aria-busy={state === 'making'}>
-                {state === 'making' ? 'Making your report…' : 'Get my report'}
+                {state === 'making' ? 'Sending your report…' : 'Email me my report'}
               </button>
               {state === 'error' && (
                 <p className="fc-rep-err" role="alert">Something went wrong making your report. Please try again, or write to <a href="mailto:ian@artistry-of-humanity.com">ian@artistry-of-humanity.com</a>.</p>
               )}
-              <p className="fc-rep-fine">It downloads straight away. We keep your name and email to stay in touch now and then, never share them, and you can unsubscribe any time. <a href="/privacy">Privacy</a></p>
+              <p className="fc-rep-fine">We’ll email it to you straight away. We keep your name and email to stay in touch now and then, never share them, and you can unsubscribe any time. <a href="/privacy">Privacy</a></p>
             </form>
           </>
         ) : (
           <div role="status">
             <span className="eyebrow">Your report is ready</span>
             <h2 ref={doneRef} tabIndex={-1} className="fc-next-h">Enjoy the read, {who}.</h2>
-            <p className="body">It’s in your downloads as “{file?.name}”. Start with the pillar marked <b>Start here</b>, and pick one thing to try this week.</p>
+            <p className="body">We couldn’t email it just now, so it’s in your downloads as “{file?.name}”. Start with the pillar marked <b>Start here</b>, and pick one thing to try this week.</p>
             {file && <a className="btn btn-lime" href={file.url} download={file.name}>Download it again</a>}
           </div>
         )}
