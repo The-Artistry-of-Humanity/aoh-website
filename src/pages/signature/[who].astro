@@ -1,0 +1,125 @@
+---
+/* Email signatures (28 Oct 2026, from the Claude Design mock-up for Ian), one
+   page per person in src/data/signatures.ts, each with a one-click copy for
+   pasting into Gmail. Unlisted: noindex and not in the sitemap. Moved here
+   from joinnorma.com on 29 Oct 2026; the old links redirect.
+   Email-safe on purpose, so it holds up in classic Outlook too: tables and
+   inline styles only, spacing on table cells and the button as a cell (Outlook
+   ignores padding on div and a). Fonts and colours sit on the cells that hold
+   text, never on the tables around them: pasting into Gmail drops any style a
+   parent already has, and Outlook doesn't pass fonts into nested tables. For
+   the same reason it's Helvetica, not Arial, which matches Gmail's own default
+   (Windows shows Helvetica as Arial).
+   Images are in public/signature/, so they come from the same domain as the
+   emails (made by tools/signature/make-assets.mjs in the nørma website
+   repo, which has the nørma artwork). Outlook holds them back until
+   the reader trusts the sender, so the photo and icon have empty alt text:
+   the name and the card's words already say it. Gmail caches images, so give
+   a changed image a new file name. */
+import { PEOPLE, type Person } from '../../data/signatures';
+export function getStaticPaths() {
+  return PEOPLE.map((p) => ({ params: { who: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Person };
+const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const IMG = 'https://artistry-of-humanity.com/signature';
+const F = "Helvetica,Arial,sans-serif", SERIF = "Georgia,'Times New Roman',serif";
+const T = 'cellpadding="0" cellspacing="0" border="0" role="presentation"';
+const link = 'color:#14231A;text-decoration:none';
+const sig = `<table ${T} width="500" style="border-collapse:collapse;width:500px">
+<tr>
+<td width="88" valign="top" style="padding:0 22px 0 0;vertical-align:top;width:88px"><img src="${IMG}/${p.photo}" width="88" height="88" alt="" style="display:block;border:0;width:88px;height:88px"></td>
+<td valign="top" style="padding:0 0 0 22px;vertical-align:top;border-left:3px solid #DCEB7F">
+<table ${T} style="border-collapse:collapse"><tr>
+<td style="padding:0 10px 0 0;font-family:${SERIF};font-size:27px;line-height:30px;color:#14231A;white-space:nowrap">${esc(p.name)}</td>${p.linkedin ? `
+<td valign="middle" style="vertical-align:middle"><a href="${p.linkedin}" style="text-decoration:none"><img src="${IMG}/linkedin.png" width="22" height="22" alt="LinkedIn" style="display:block;border:0;width:22px;height:22px;font-family:${F};font-size:10px;color:#4A6B3A"></a></td>` : ''}
+</tr></table>
+<table ${T} style="border-collapse:collapse">
+<tr><td style="padding:7px 0 10px;font-family:${F};font-size:11px;line-height:15px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:#4A6B3A">${p.role.map(esc).join('<br>')}</td></tr>
+<tr><td style="font-family:${F};font-size:14px;line-height:22px;color:#14231A"><a href="tel:${p.tel}" style="${link}">${p.phone}</a><br><a href="mailto:${p.email}" style="${link}">${p.email}</a><br><a href="https://artistry-of-humanity.com" style="${link}">artistry-of-humanity.com</a></td></tr>
+</table>
+</td>
+</tr>
+<tr><td colspan="2" style="padding:20px 0 0">
+<table ${T} width="500" bgcolor="#243D2C" style="border-collapse:separate;width:500px;background-color:#243D2C;border-radius:18px">
+<tr>
+<td width="64" valign="middle" style="padding:18px 0 18px 20px;vertical-align:middle;width:64px"><img src="${IMG}/norma-icon.png" width="64" height="64" alt="" style="display:block;border:0;width:64px;height:64px"></td>
+<td valign="middle" style="padding:16px 12px 16px 14px;vertical-align:middle">
+<table ${T} style="border-collapse:collapse">
+<tr><td style="font-family:${F};font-size:9.5px;line-height:14px;font-weight:bold;letter-spacing:1.6px;text-transform:uppercase;color:#DCEB7F;white-space:nowrap">New from Artistry of Humanity</td></tr>
+<tr><td style="padding:4px 0 0;font-family:${SERIF};font-size:23px;line-height:28px;color:#F6F4E9">Meet <i>nørma</i>.</td></tr>
+<tr><td style="padding:4px 0 0;font-family:${F};font-size:12px;line-height:18px;color:#C9D4C2">Give your people access to themselves and watch what it does for your business.</td></tr>
+</table>
+</td>
+<td valign="middle" style="padding:0 20px 0 0;vertical-align:middle">
+<table ${T} style="border-collapse:separate"><tr><td bgcolor="#DCEB7F" style="padding:10px 16px;border-radius:999px;background-color:#DCEB7F;white-space:nowrap"><a href="https://joinnorma.com/" style="font-family:${F};font-size:13px;line-height:16px;font-weight:bold;color:#14231A;text-decoration:none;white-space:nowrap">joinnorma.com&nbsp;›</a></td></tr></table>
+</td>
+</tr>
+</table>
+</td></tr>
+</table>`;
+---
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="only light" />
+  <title>{`Email signature · ${p.name}`}</title>
+  <link rel="icon" href="/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    :root{color-scheme:only light}
+    body{margin:0;background:#F4F2E6;color:#14231A;font:400 16px/1.6 'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
+    main{max-width:620px;margin:0 auto;padding:48px 20px 72px}
+    h1{margin:0;font:400 clamp(30px,5vw,40px)/1.1 'DM Serif Display',serif;letter-spacing:-.4px}
+    .lead{margin:12px 0 0;color:rgba(20,35,26,.7)}
+    .card{margin-top:28px;padding:28px 24px;border-radius:22px;background:#fff;box-shadow:0 24px 50px -30px rgba(20,35,26,.35);overflow-x:auto}
+    .copy{display:inline-flex;align-items:center;gap:8px;margin-top:22px;height:52px;padding:0 26px;border:0;border-radius:999px;background:linear-gradient(180deg,#E9F693,#D3E45F);color:#152213;font:600 15.5px 'DM Sans',sans-serif;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 12px 28px rgba(217,234,110,.25)}
+    .copy:active{transform:scale(.985)}
+    .done{margin-left:14px;font-size:14.5px;color:#4A6B3A;opacity:0;transition:opacity .3s ease}
+    .done.on{opacity:1}
+    h2{margin:40px 0 0;font:400 24px/1.2 'DM Serif Display',serif}
+    ol{margin:14px 0 0;padding-left:22px}
+    li{margin:8px 0;padding-left:4px}
+    b{font-weight:600}
+    .note{margin-top:22px;font-size:14.5px;color:rgba(20,35,26,.62)}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Your email signature</h1>
+    <p class="lead">Two minutes in Gmail on a computer. Copy it here, paste it there.</p>
+    <div class="card"><div id="sig" set:html={sig}></div></div>
+    <button class="copy" type="button" id="copy">Copy signature</button><span class="done" id="done" role="status">Copied. Now paste it into Gmail.</span>
+    <h2>Then, in Gmail</h2>
+    <ol>
+      <li>Click the <b>cog</b> at the top right, then <b>See all settings</b>.</li>
+      <li>On the <b>General</b> tab, scroll down to <b>Signature</b> and click <b>Create new</b>. Name it “{p.first}”. Already have one from this page? Click it instead and delete what’s in the box.</li>
+      <li>Click into the box and paste: <b>Cmd + V</b> on a Mac, <b>Ctrl + V</b> on Windows.</li>
+      <li>Under <b>Signature defaults</b>, choose “{p.first}” for new emails and for replies.</li>
+      <li>Scroll to the very bottom and click <b>Save Changes</b>.</li>
+    </ol>
+    <p class="note">The Gmail phone app keeps its own, simpler signature. This one is for Gmail on a computer.</p>
+  </main>
+  <script is:inline>
+    // Copies the signature as formatted content (not code), so Gmail pastes it
+    // as it looks. Falls back to selecting it for browsers without the API.
+    document.getElementById('copy').addEventListener('click', async () => {
+      const el = document.getElementById('sig'), done = document.getElementById('done');
+      try {
+        await navigator.clipboard.write([new ClipboardItem({
+          'text/html': new Blob([el.innerHTML], { type: 'text/html' }),
+          'text/plain': new Blob([el.innerText], { type: 'text/plain' }),
+        })]);
+      } catch (e) {
+        const r = document.createRange(); r.selectNodeContents(el);
+        const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+        document.execCommand('copy'); s.removeAllRanges();
+      }
+      done.classList.add('on'); setTimeout(() => done.classList.remove('on'), 4000);
+    });
+  </script>
+</body>
+</html>
