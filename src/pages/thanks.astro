@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 
 const NEXT = [
-  { href: '/fulfilment-check-in', icon: 'target', title: 'Take the Fulfilment check-in', text: 'Twenty questions, about four minutes, free.' },
+  { href: '/fulfilment-check-in', icon: 'target', title: 'Take the Fulfilment check-in', text: 'Find out where you stand, with your full report.' },
   { href: '/framework', icon: 'norma', title: 'Explore the Five Pillars', text: 'The framework behind everything we do.' },
   { href: '/what-we-do/keynotes-workshops', icon: 'mic', title: 'See the keynotes', text: 'A selection of what Ian delivers often. Every session is tailored.' },
 ] as const;
@@ -25,7 +25,7 @@ const NEXT = [
         <span class="eyebrow center" style="display:block">While you wait</span>
         <div class="grid g3" style="margin-top:20px">
           {NEXT.map(n => (
-            <a class="card nx" href={n.href}>
+            <a class="card nx" href={n.href} target={n.href === '/fulfilment-check-in' ? '_blank' : undefined}>
               <span class="ico"><Icon name={n.icon} /></span>
               <span><b>{n.title}</b><small>{n.text}</small></span>
             </a>

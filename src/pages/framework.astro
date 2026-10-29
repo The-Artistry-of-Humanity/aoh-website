@@ -116,7 +116,7 @@ const ciIcons = pts(CI.cx, CI.cy, () => CI.r + 30);
         <p class="lead">Human wellbeing isn’t one idea. It’s five distinct, connected parts of life. Strengthen them all, and everything changes.</p>
         <div class="btns">
           <a class="btn btn-lime" href="#explore">Explore the pillars</a>
-          <a class="btn btn-ghost" href="/fulfilment-check-in">Take the check-in</a>
+          <a class="btn btn-ghost" href="/fulfilment-check-in" target="_blank">Take the check-in</a>
         </div>
       </div>
       <figure class="hero-fig">
@@ -281,14 +281,13 @@ const ciIcons = pts(CI.cx, CI.cy, () => CI.r + 30);
           <h2>Where are you <span class="mk mk-d">right now</span>?</h2>
           <p class="lead">Every engagement with us begins here: an honest pulse check across all Five Pillars. Not a personality quiz, not a clinical diagnostic. A clear picture of where you are.</p>
           <ul class="ci-stats">
-            <li><b>20</b><span>questions</span></li>
             <li><b>5</b><span>pillars</span></li>
-            <li><b>4</b><span>minutes or so</span></li>
+            <li><b>1</b><span>full report</span></li>
             <li><b>1</b><span>clear starting point</span></li>
           </ul>
-          <div class="btns"><a class="btn btn-lime" href="/fulfilment-check-in">Take the free check-in</a><a class="btn btn-ghost" href="/what-we-do/norma">Track it with nørma</a></div>
+          <div class="btns"><a class="btn btn-lime" href="/fulfilment-check-in" target="_blank">Take the free check-in</a><a class="btn btn-ghost" href="/what-we-do/norma">Track it with nørma</a></div>
         </div>
-        <a class="ci-card" href="/fulfilment-check-in" data-rv>
+        <a class="ci-card" href="/fulfilment-check-in" target="_blank" data-rv>
           <svg viewBox="0 0 320 320" role="img" aria-label="An example Fulfilment check-in result: a shape across the Five Pillars, strong in some and with room to grow in others">
             {ciRings.map(r => <polygon points={r} fill="none" stroke="rgba(228,240,214,.13)" stroke-width="1" />)}
             {pts(CI.cx, CI.cy, () => CI.r).map(([x, yy]) => <line x1={CI.cx} y1={CI.cy} x2={x} y2={yy} stroke="rgba(228,240,214,.1)" stroke-width="1" />)}
@@ -301,12 +300,12 @@ const ciIcons = pts(CI.cx, CI.cy, () => CI.r + 30);
               </g>
             ))}
           </svg>
-          <span class="ci-go"><span>Free · about four minutes · no sign-up</span><b>Find your shape <Icon name="arrow" size={18} width={2} /></b></span>
+          <span class="ci-go"><span>Free · full report included</span><b>Find your shape <Icon name="arrow" size={18} width={2} /></b></span>
         </a>
       </div>
       <ol class="steps ci-steps" style="--n:3">
-        <li><h3>Answer twenty questions</h3><p class="body">Honest, quick, and across all five pillars of your life.</p></li>
-        <li><h3>See your picture</h3><p class="body">Where you’re strong, and the pillar with the most room to grow.</p></li>
+        <li><h3>Answer honestly</h3><p class="body">Quick questions across all five pillars of your life.</p></li>
+        <li><h3>Get your full report</h3><p class="body">Your score in every pillar, where you’re strong, and where to start.</p></li>
         <li><h3>Take it to everyone with nørma</h3><p class="body">Wellbeing at scale: every person tracks their score privately, and leaders see it in aggregate across every team.</p></li>
       </ol>
       <div class="accs ci-acc">
@@ -483,11 +482,10 @@ const ciIcons = pts(CI.cx, CI.cy, () => CI.r + 30);
   .mk-w{--mk:rgba(250,248,240,.75)}
 
   /* The Fulfilment Score */
-  .ci-stats{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:560px}
+  .ci-stats{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:440px}
   .ci-stats li{display:flex;flex-direction:column;gap:6px;padding:16px 14px;border-radius:18px 14px 18px 12px / 14px 18px 12px 18px;background:rgba(228,240,214,.06);box-shadow:inset 0 0 0 1px var(--line-dark)}
   .ci-stats b{font:400 clamp(36px,3.6vw,46px)/1 var(--serif);color:#EAF79B}
   .ci-stats span{font-size:13px;line-height:1.35;color:var(--on-dark-muted)}
-  @media (max-width:520px){.ci-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
   .ci-card{flex:0 1 420px;display:flex;flex-direction:column;align-items:center;gap:18px;margin:0 auto;padding:clamp(26px,3vw,40px) clamp(20px,3vw,36px) clamp(22px,2.6vw,30px);border-radius:var(--r-a);background:rgba(228,240,214,.05);box-shadow:inset 0 0 0 1px var(--line-dark);transition:background .25s ease,box-shadow .25s ease}
   .ci-card:hover{background:rgba(228,240,214,.09);box-shadow:inset 0 0 0 1px rgba(217,234,110,.4)}
   .ci-card svg{display:block;width:100%;max-width:340px;height:auto;overflow:visible}

@@ -12,8 +12,12 @@ interface Props {
   /** Social preview image path under /assets/. */
   og?: string;
   noindex?: boolean;
+  /** Workshop focus: no header and a slim footer, so nothing pulls people away. The page shows its own logo. */
+  focus?: boolean;
 }
-const { title, description, path, og = '/assets/og-home.jpg', noindex = false } = Astro.props;
+const { title, description, path, og = '/assets/og-home.jpg', noindex = false, focus = false } = Astro.props;
+/** The check-in always opens in its own tab (it's used live in workshops). */
+const CHECKIN = '/fulfilment-check-in';
 const SITE = 'https://artistry-of-humanity.com';
 const canonical = SITE + (path === '/' ? '/' : path);
 const here = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -50,7 +54,7 @@ const org = { '@context': 'https://schema.org', '@type': 'Organization', name: '
     <script is:inline>if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) document.documentElement.classList.add('js');</script>
   </head>
   <body>
-    <header class="hd">
+    {!focus && <header class="hd">
       <div class="wrap hd-bar">
         <a class="brand" href="/" aria-label="The Artistry of Humanity, home">
           <img src="/assets/aoh-logo-new.png" alt="" width="34" height="34" />
@@ -64,11 +68,12 @@ const org = { '@context': 'https://schema.org', '@type': 'Organization', name: '
               <div class="dd-in">
                 {SERVICES.map(sv => <a href={sv.href}><span class="ico"><Icon name={sv.icon} size={20} /></span><span><b>{sv.title}</b><small>{sv.line}</small></span></a>)}
                 <a class="dd-norma" href="/what-we-do/norma"><img src="/assets/norma-app-icon.png" alt="" width="44" height="44" /><span><b>nørma: wellbeing at scale</b><small>Every person, every team, every month. The rest of our work, kept going.</small></span><span class="dd-go">Meet nørma ›</span></a>
-                <div class="dd-foot"><a href="/what-we-do">All ways to work ›</a><a href="/fulfilment-check-in">Free Fulfilment check-in ›</a></div>
+                <div class="dd-foot"><a href="/what-we-do">All ways to work ›</a></div>
               </div>
             </div>
           </div>
           {NAV.slice(1).map(([href, label]) => <a href={href} aria-current={cur(href)}>{label}</a>)}
+          <a href={CHECKIN} target="_blank">Check in</a>
           <a class="norma" href="/what-we-do/norma" aria-current={cur('/what-we-do/norma')}><img src="/assets/norma-app-icon.png" alt="" width="24" height="24" />nørma</a>
         </nav>
         <div style="display:flex;align-items:center;gap:10px">
@@ -80,29 +85,29 @@ const org = { '@context': 'https://schema.org', '@type': 'Organization', name: '
               <a href="/what-we-do">Ways to work</a>
               <div class="m-sub">{SERVICES.map(sv => <a href={sv.href}>{sv.title}</a>)}</div>
               {NAV.slice(1).map(([href, label]) => <a href={href}>{label}</a>)}
-              <a href="/fulfilment-check-in">Fulfilment check-in</a>
+              <a href={CHECKIN} target="_blank">Check in</a>
               <a href="/contact">Book a call</a>
             </nav>
           </details>
         </div>
       </div>
-    </header>
+    </header>}
     <main>
       <slot />
     </main>
-    <footer class="ft">
+    <footer class:list={['ft', { 'ft-slim': focus }]}>
       <div class="wrap">
-        <div class="ft-top">
+        {!focus && <div class="ft-top">
           <div style="max-width:320px">
             <a class="brand" href="/"><img src="/assets/aoh-logo-new.png" alt="" width="34" height="34" /><span><b>Artistry of Humanity</b><small>Culture &amp; leadership consultancy</small></span></a>
             <p class="small" style="margin-top:18px;color:rgba(201,212,194,.7)">Keynotes, leadership work and nørma, for organisations that want their people at their best.</p>
           </div>
           <div class="ft-cols">
             <div><b>Work with us</b><a href="/what-we-do/keynotes-workshops">Keynotes &amp; workshops</a><a href="/what-we-do/masterclass">Masterclass</a><a href="/what-we-do/leadership-coaching">Leadership coaching</a><a href="/what-we-do/wellness-accelerator">Wellness Accelerator</a><a href="/what-we-do/culture-consulting">Culture consulting</a></div>
-            <div><b>Explore</b><a href="/framework">The Five Pillars</a><a href="/fulfilment-check-in">Fulfilment check-in</a><a href="/human-strategy">Human strategy</a><a href="/what-we-do/norma">nørma</a><a href="https://joinnorma.com/">joinnorma.com ↗</a></div>
+            <div><b>Explore</b><a href="/framework">The Five Pillars</a><a href={CHECKIN} target="_blank">Fulfilment check-in</a><a href="/human-strategy">Human strategy</a><a href="/what-we-do/norma">nørma</a><a href="https://joinnorma.com/">joinnorma.com ↗</a></div>
             <div><b>Company</b><a href="/about">About</a><a href="/contact">Contact</a><a href="https://www.linkedin.com/company/artistry-of-humanity">LinkedIn ↗</a></div>
           </div>
-        </div>
+        </div>}
         <div class="ft-bot"><span>© 2026 The Artistry of Humanity Pty Ltd</span><span><a href="/privacy">Privacy policy</a></span></div>
       </div>
     </footer>

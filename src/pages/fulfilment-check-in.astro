@@ -4,14 +4,15 @@
 import Base from '../layouts/Base.astro';
 import FulfilmentCheckIn from '../islands/FulfilmentCheckIn.tsx';
 ---
-<Base title="Fulfilment check-in · The Artistry of Humanity" description="Twenty honest questions across the Five Pillars of Fulfilment. About four minutes, no sign-up, and a clear picture of where to put your attention next." path="/fulfilment-check-in">
+<Base title="Fulfilment check-in · The Artistry of Humanity" description="Check in on the five pillars of your life and get your full Fulfilment Report: your score in every pillar and practical things to try." path="/fulfilment-check-in" focus>
   <section style="background:var(--cream);overflow:hidden">
     <div class="glow" style="left:-22%;top:-28%;width:60%;background:radial-gradient(closest-side,rgba(217,234,110,.28),rgba(217,234,110,0) 70%)"></div>
     <div class="wrap fc-page">
       <div class="narrow center">
+        <a class="fc-logo" href="/" aria-label="The Artistry of Humanity, home"><img src="/assets/aoh-logo-new.png" alt="" width="52" height="52" /></a>
         <span class="eyebrow">Fulfilment check-in · Free</span>
-        <h1>A clear look at the <span class="mk">five pillars</span> holding up your life.</h1>
-        <p class="lead">Twenty honest questions. About four minutes. A picture of where you are right now, and where to put your attention next.</p>
+        <h1>Find out <span class="mk">where you stand</span>.</h1>
+        <p class="lead">Check in on the five pillars of your life. At the end, you get your full Fulfilment Report: your score in every pillar and practical things to try.</p>
       </div>
       <FulfilmentCheckIn client:load />
       <!-- Lets Netlify find the report form, which only appears after the check-in. -->
@@ -26,6 +27,8 @@ import FulfilmentCheckIn from '../islands/FulfilmentCheckIn.tsx';
 
 <style>
   .fc-page{position:relative;padding-top:clamp(40px,6vw,84px);padding-bottom:clamp(80px,9vw,128px)}
+  .fc-logo{display:block;width:52px;margin:0 auto 22px}
+  .fc-logo img{display:block;width:52px;height:52px;border-radius:15px}
   .fc-page h1{font-size:clamp(36px,4.6vw,60px)}
   .fc-page .lead{margin-left:auto;margin-right:auto}
 </style>

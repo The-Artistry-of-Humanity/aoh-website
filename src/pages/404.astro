@@ -30,7 +30,7 @@ const LINKS = [
     <div class="wrap sec">
       <div class="grid g4">
         {LINKS.map(([href, title, text, icon]) => (
-          <a class="card go" href={href}>
+          <a class="card go" href={href} target={href === '/fulfilment-check-in' ? '_blank' : undefined}>
             {icon ? <span class="ico"><Icon name={icon} /></span> : <img class="go-img" src="/assets/norma-app-icon.png" alt="" width="52" height="52" />}
             <h3>{title}</h3>
             <p class="body">{text}</p>
