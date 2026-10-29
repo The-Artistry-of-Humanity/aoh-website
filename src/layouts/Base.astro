@@ -73,7 +73,7 @@ const org = { '@context': 'https://schema.org', '@type': 'Organization', name: '
             </div>
           </div>
           {NAV.slice(1).map(([href, label]) => <a href={href} aria-current={cur(href)}>{label}</a>)}
-          <a href={CHECKIN} target="_blank">Check in</a>
+          <a href={CHECKIN} target="_blank">Try the check-in</a>
           <a class="norma" href="/what-we-do/norma" aria-current={cur('/what-we-do/norma')}><img src="/assets/norma-app-icon.png" alt="" width="24" height="24" />nørma</a>
         </nav>
         <div style="display:flex;align-items:center;gap:10px">
@@ -85,7 +85,7 @@ const org = { '@context': 'https://schema.org', '@type': 'Organization', name: '
               <a href="/what-we-do">Ways to work</a>
               <div class="m-sub">{SERVICES.map(sv => <a href={sv.href}>{sv.title}</a>)}</div>
               {NAV.slice(1).map(([href, label]) => <a href={href}>{label}</a>)}
-              <a href={CHECKIN} target="_blank">Check in</a>
+              <a href={CHECKIN} target="_blank">Try the check-in</a>
               <a href="/contact">Book a call</a>
             </nav>
           </details>

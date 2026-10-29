@@ -141,7 +141,7 @@ h4{margin:0;font:600 16px/1.4 var(--sans)}
 .menu nav{position:absolute;left:0;right:0;top:70px;display:flex;flex-direction:column;padding:8px var(--gut) 22px;background:rgba(244,242,230,.98);border-radius:0 0 26px 20px / 0 0 20px 26px;box-shadow:0 20px 40px -20px rgba(20,35,26,.3);font:400 22px var(--serif)}
 .menu nav a{padding:12px 0;border-bottom:1px solid var(--line)}
 .menu nav a:last-child{border:0}
-@media (max-width:1060px){.nav{display:none}.menu{display:block}}
+@media (max-width:1110px){.nav{display:none}.menu{display:block}}
 @media (max-width:420px){.hd .btn{display:none}}
 
 /* Footer */
