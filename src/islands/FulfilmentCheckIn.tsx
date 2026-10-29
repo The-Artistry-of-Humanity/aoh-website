@@ -30,12 +30,11 @@ const Svg = ({ children, size = 18 }: { children: ReactNode; size?: number }) =>
 const IconHelp = () => <Svg size={16}><circle cx="12" cy="12" r="9" /><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8 1c0 1.7-2.4 2.2-2.4 3.7" /><path d="M12 17.2h.01" /></Svg>;
 const IconLeft = () => <Svg><path d="M19 12H5M11 6l-6 6 6 6" /></Svg>;
 const IconRight = () => <Svg><path d="M5 12h14M13 6l6 6-6 6" /></Svg>;
-const IconPentagon = () => <Svg size={15}><path d="M12 3.5 20.5 9.7 17.3 19.7H6.7L3.5 9.7Z" /></Svg>;
-const IconBars = () => <Svg size={15}><path d="M5 20V11M12 20V5M19 20v-6M3 20h18" /></Svg>;
 const IconAgain = () => <Svg size={16}><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1L3.5 8.5" /><path d="M3.5 3.5v5h5" /></Svg>;
 const IconRoom = () => <Svg size={24}><circle cx="12" cy="7" r="3" /><path d="M6 20a6 6 0 0 1 12 0" /><circle cx="4.5" cy="10" r="2" /><circle cx="19.5" cy="10" r="2" /></Svg>;
 const IconCall = () => <Svg size={24}><rect x="3.5" y="5" width="17" height="15" rx="3" /><path d="M3.5 10h17M8 3v4M16 3v4" /></Svg>;
 const IconChevron = () => <Svg size={20}><path d="m9 6 6 6-6 6" /></Svg>;
+const IconDown = () => <Svg size={20}><path d="M12 5v14M6 13l6 6 6-6" /></Svg>;
 
 const FulfilmentCheckIn = () => {
   const [stage, setStage] = useState<Stage>('landing');
@@ -43,7 +42,6 @@ const FulfilmentCheckIn = () => {
   const [questionIdx, setQuestionIdx] = useState(0);
   const [relationshipStatus, setRelationshipStatus] = useState<RelationshipStatus>('partnered');
   const [answers, setAnswers] = useState<number[][]>(emptyAnswers);
-  const [view, setView] = useState<'pentagon' | 'bars'>('pentagon');
   const [contextOpen, setContextOpen] = useState(false);
 
   const rootRef = useRef<HTMLDivElement>(null);
@@ -137,7 +135,6 @@ const FulfilmentCheckIn = () => {
     setPillarIdx(0);
     setQuestionIdx(0);
     setStage('landing');
-    setView('pentagon');
   };
 
   // Interpretation
@@ -163,19 +160,13 @@ const FulfilmentCheckIn = () => {
     }
   }, [stage, pillarIdx, questionIdx]);
 
-  // Draw the highlighter and grow the bars once the results are on screen.
+  // Draw the highlighter once the results are on screen.
   const [drawn, setDrawn] = useState(false);
   useEffect(() => {
     if (stage !== 'results') { setDrawn(false); return; }
     const t = setTimeout(() => setDrawn(true), 350);
     return () => clearTimeout(t);
   }, [stage]);
-  const [barsOn, setBarsOn] = useState(false);
-  useEffect(() => {
-    if (stage !== 'results' || view !== 'bars') { setBarsOn(false); return; }
-    const r = requestAnimationFrame(() => requestAnimationFrame(() => setBarsOn(true)));
-    return () => cancelAnimationFrame(r);
-  }, [stage, view]);
 
   const ctxId = `fc-ctx-${pillarIdx}-${questionIdx}`;
 
@@ -281,33 +272,10 @@ const FulfilmentCheckIn = () => {
             <span className="eyebrow">Your check-in</span>
             <h2 ref={headRef} tabIndex={-1} className="fc-h fc-res-h">Here’s where you are <span className={`mk mk-d${drawn ? ' on' : ''}`}>right now</span>.</h2>
 
-            <div className="fc-seg" role="group" aria-label="Chart style">
-              <button type="button" aria-pressed={view === 'pentagon'} onClick={() => setView('pentagon')}><IconPentagon /> Pentagon</button>
-              <button type="button" aria-pressed={view === 'bars'} onClick={() => setView('bars')}><IconBars /> Bars</button>
-            </div>
-
             <div className="fc-vis">
-              {view === 'pentagon' ? (
-                <div className="fc-res-pent">
-                  <PentagonDiagram scores={pillarScores} size={320} showLabels={true} centre={overallScore} />
-                </div>
-              ) : (
-                <div className="fc-bars">
-                  {pillarScores.map((s, i) => (
-                    <div key={i}>
-                      <div className="fc-bars-row">
-                        <span>{PILLARS[i].name}</span>
-                        <b>{s}</b>
-                      </div>
-                      <div className="fc-track"><i style={{ width: `${barsOn ? s : 0}%` }} /></div>
-                    </div>
-                  ))}
-                  <div className="fc-overall">
-                    <span>Overall Fulfilment</span>
-                    <b>{overallScore}</b>
-                  </div>
-                </div>
-              )}
+              <div className="fc-res-pent">
+                <PentagonDiagram scores={pillarScores} size={320} showLabels={true} centre={overallScore} />
+              </div>
             </div>
 
             <p className="fc-tone">{interpretation.tone}</p>
@@ -323,8 +291,9 @@ const FulfilmentCheckIn = () => {
             </div>
             <p className="fc-hint">{interpretation.weakHint}</p>
 
+            <p className="fc-more">Your score in every pillar is in your full report.</p>
             <div className="fc-res-act">
-              <a className="btn btn-lime" href="#fc-report">Get your full report</a>
+              <a className="btn btn-lime fc-rep-go" href="#fc-report">Get your full report <IconDown /></a>
               <button type="button" className="fc-tx fc-again" onClick={reset}>
                 <IconAgain /> Take it again
               </button>

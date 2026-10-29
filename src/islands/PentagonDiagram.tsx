@@ -83,7 +83,7 @@ const PentagonDiagram = ({ scores = [80, 65, 70, 55, 75], size = 320, showLabels
   const names = LABELS.map((l) => l.lines.join(' '));
   const aria = sample || !showLabels
     ? 'The Five Pillars: ' + names.join(', ')
-    : 'Your Five Pillars: ' + names.map((n, i) => `${n} ${Math.round(scores[i] ?? 0)}`).join(', ');
+    : 'Your shape across the Five Pillars' + (centre !== undefined ? `, overall ${centre}` : '');
 
   return (
     <svg ref={ref} viewBox={vb.map((n) => n.toFixed(1)).join(' ')} className={className} role="img"

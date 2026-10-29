@@ -64,19 +64,8 @@
 .fc-wait-h{margin:0;font:400 clamp(24px,2.6vw,28px)/1.2 var(--serif);color:var(--on-dark)}
 
 /* Results */
-.fc-seg{display:inline-flex;gap:4px;margin-top:26px;padding:4px;border-radius:999px;border:1px solid rgba(244,242,230,.15);background:rgba(244,242,230,.04)}
-.fc-seg button{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border:0;border-radius:999px;background:none;color:rgba(201,212,194,.82);font:600 12px var(--sans);letter-spacing:1.4px;text-transform:uppercase;cursor:pointer;transition:background .25s ease,color .25s ease;-webkit-tap-highlight-color:transparent}
-.fc-seg button:hover{color:var(--on-dark)}
-.fc-seg button[aria-pressed=true]{background:var(--lime);color:#152213}
-.fc-vis{margin-top:16px;padding:clamp(14px,3.4vw,34px) clamp(10px,3.4vw,34px);border-radius:var(--r-b);background:rgba(228,240,214,.05);box-shadow:inset 0 0 0 1px rgba(228,240,214,.08)}
+.fc-vis{margin-top:26px;padding:clamp(14px,3.4vw,34px) clamp(10px,3.4vw,34px);border-radius:var(--r-b);background:rgba(228,240,214,.05);box-shadow:inset 0 0 0 1px rgba(228,240,214,.08)}
 .fc-res-pent{max-width:430px;margin:0 auto}
-.fc-bars{display:grid;gap:18px;padding:8px 6px}
-.fc-bars-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:15.5px;color:rgba(246,244,233,.9)}
-.fc-bars-row b,.fc-overall b{font:400 21px/1 var(--serif);color:var(--lime)}
-.fc-track{height:8px;margin-top:8px;border-radius:99px;background:rgba(228,240,214,.12);overflow:hidden}
-.fc-track i{display:block;height:100%;border-radius:inherit;background:var(--lime);transition:width 1s var(--ease)}
-.fc-overall{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:4px;padding-top:18px;border-top:1px solid var(--line-dark);font:600 11px var(--sans);letter-spacing:2.2px;text-transform:uppercase;color:rgba(201,212,194,.75)}
-.fc-overall b{font-size:34px;letter-spacing:0}
 .fc-tone{margin:28px 0 0;font:400 clamp(18px,1.8vw,21px)/1.55 var(--sans);color:var(--on-dark);text-wrap:pretty}
 .fc-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px;margin-top:20px}
 .fc-two > div{padding:18px 20px;border-radius:var(--r-a)}
@@ -112,21 +101,26 @@
   .fc-ico-norma img{width:42px;height:42px}
   .fc-link-t b{margin-top:8px}
   .fc-arr{display:none}
-  .fc-seg button{padding:0 14px}
 }
 @media (prefers-reduced-motion:reduce){
   .fc-step{animation:none}
   .fc-pulse i{animation:none!important}
-  .fc-bar i,.fc-track i,.fc-ctx{transition:none}
+  .fc-bar i,.fc-ctx{transition:none}
 }
 
 /* Results: the two actions under the read-out */
-.fc-res-act{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:26px}
+.fc-more{margin:30px 0 0;font:400 clamp(21px,2.2vw,26px)/1.3 var(--serif);color:var(--on-dark)}
+.fc-res-act{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:18px}
 .fc-res-act .fc-again{margin-top:0}
+/* The way to the report: the biggest button on the results */
+.fc-res-act .fc-rep-go{height:62px;padding:0 32px;font-size:17px}
+@media (max-width:520px){.fc-res-act .fc-rep-go{width:100%}}
 
 /* The report offer: a fanned stack of pages (the front one live, with their
-   name and shape), then first name and email */
-.fc-rep{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:clamp(28px,4.4vw,52px);align-items:center;margin-top:clamp(40px,5vw,60px);padding:clamp(26px,3.6vw,40px);background:#FAF8F0;border:1px solid rgba(20,35,26,.1);border-radius:var(--r-a);box-shadow:0 30px 60px -42px rgba(15,32,21,.5);scroll-margin-top:96px}
+   name and shape), then first name, email and company. Lit in lime so it
+   reads as the reward for finishing. */
+.fc-rep{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:clamp(28px,4.4vw,52px);align-items:center;margin-top:clamp(40px,5vw,60px);padding:clamp(26px,3.6vw,44px);background:radial-gradient(70% 90% at 0% 0%,rgba(217,234,110,.6),rgba(217,234,110,0) 65%),radial-gradient(60% 70% at 100% 100%,rgba(217,234,110,.28),rgba(217,234,110,0) 70%),#FAF8F0;border:1.5px solid rgba(122,154,34,.4);border-radius:var(--r-a);box-shadow:0 34px 70px -38px rgba(90,120,20,.55);scroll-margin-top:24px}
+.fc-rep .fc-next-h{font-size:clamp(36px,4.4vw,52px)}
 .fc-rep-vis{position:relative;width:100%;max-width:220px;aspect-ratio:400/565;margin:0 auto;container-type:inline-size}
 .fc-rep-page{position:absolute;inset:0;width:100%;height:100%;border-radius:6px;box-shadow:0 16px 30px -16px rgba(15,32,21,.55)}
 .fc-rep-p2{transform:rotate(8deg) translate(15%,1%)}

@@ -3,7 +3,7 @@ import { PILLARS } from '../../data/aoh';
 import { makeReport, reportFileName, saveFile } from './makeReport';
 import type { Relationship } from './content';
 
-// "Get your full report", under the check-in results: first name and email,
+// "Get your full report", under the check-in results: first name, email and (optionally) company,
 // then the report is emailed (netlify/src/send-report.tsx). If that fails,
 // the PDF is made here in the browser and downloads instead, so nobody leaves
 // empty-handed. The Netlify form tells us who asked; nothing waits on it.
@@ -45,6 +45,7 @@ const MiniPentagon = ({ scores, overall }: { scores: number[]; overall: number }
 const ReportOffer = (p: Props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [company, setCompany] = useState('');
   const [state, setState] = useState<State>('idle');
   const [file, setFile] = useState<{ url: string; name: string } | null>(null);
   const doneRef = useRef<HTMLHeadingElement>(null);
@@ -63,7 +64,7 @@ const ReportOffer = (p: Props) => {
     const bot = (form.elements.namedItem('bot-field') as HTMLInputElement | null)?.value;
     if (!bot) {
       const body = new URLSearchParams({
-        'form-name': FORM, name: who, email: email.trim(),
+        'form-name': FORM, name: who, email: email.trim(), company: company.trim(),
         overall: String(p.overall), strongest: p.strongest, 'needs-attention': p.weakest,
       });
       fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() }).catch(() => {});
@@ -126,6 +127,7 @@ const ReportOffer = (p: Props) => {
               <div className="fields">
                 <label className="field"><span>First name</span><input type="text" name="name" autoComplete="given-name" maxLength={40} required value={name} onChange={(e) => setName(e.target.value)} /></label>
                 <label className="field"><span>Email</span><input type="email" name="email" autoComplete="email" maxLength={255} required value={email} onChange={(e) => setEmail(e.target.value)} /></label>
+                <label className="field"><span>Company (optional)</span><input type="text" name="company" autoComplete="organization" maxLength={150} value={company} onChange={(e) => setCompany(e.target.value)} /></label>
               </div>
               <button className="btn btn-lime" type="submit" disabled={state === 'making'} aria-busy={state === 'making'}>
                 {state === 'making' ? 'Sending your report…' : 'Email me my report'}
@@ -133,7 +135,7 @@ const ReportOffer = (p: Props) => {
               {state === 'error' && (
                 <p className="fc-rep-err" role="alert">Something went wrong making your report. Please try again, or write to <a href="mailto:ian@artistry-of-humanity.com">ian@artistry-of-humanity.com</a>.</p>
               )}
-              <p className="fc-rep-fine">We’ll email it to you straight away. We keep your name and email to stay in touch now and then, never share them, and you can unsubscribe any time. <a href="/privacy">Privacy</a></p>
+              <p className="fc-rep-fine">We’ll email it to you straight away. We keep these details to stay in touch now and then, never share them, and you can unsubscribe any time. <a href="/privacy">Privacy</a></p>
             </form>
           </>
         ) : (

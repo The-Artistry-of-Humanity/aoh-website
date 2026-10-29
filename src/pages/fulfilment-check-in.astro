@@ -18,7 +18,7 @@ import FulfilmentCheckIn from '../islands/FulfilmentCheckIn.tsx';
       <!-- Lets Netlify find the report form, which only appears after the check-in. -->
       <form name="fulfilment-report" data-netlify="true" netlify-honeypot="bot-field" hidden>
         <input type="hidden" name="form-name" value="fulfilment-report" />
-        <input name="bot-field" /><input name="name" /><input type="email" name="email" />
+        <input name="bot-field" /><input name="name" /><input type="email" name="email" /><input name="company" />
         <input name="overall" /><input name="strongest" /><input name="needs-attention" />
       </form>
     </div>
