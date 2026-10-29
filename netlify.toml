@@ -76,3 +76,12 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "SAMEORIGIN"
+
+# Email signature images, linked from every email the team sends (made by
+# tools/signature/make-assets.mjs in the nørma website repo). A changed image
+# gets a new file name, so a week's cache is safe. Kept out of search.
+[[headers]]
+  for = "/signature/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+    X-Robots-Tag = "noindex"
