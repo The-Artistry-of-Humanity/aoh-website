@@ -1,7 +1,7 @@
 // People with an email signature page at /signature/<slug>/. Each photo tile is
-// in public/signature/ (made by tools/signature/make-assets.mjs in the nørma
-// website repo). Business contact details only, as they appear on every email
-// these people send.
+// in src/assets/signature/ (made by tools/signature/make-assets.mjs in the
+// nørma website repo). Business contact details only, as they appear on every
+// email these people send.
 export interface Person {
   slug: string;
   name: string;

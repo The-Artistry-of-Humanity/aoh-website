@@ -10,29 +10,32 @@
    parent already has, and Outlook doesn't pass fonts into nested tables. For
    the same reason it's Helvetica, not Arial, which matches Gmail's own default
    (Windows shows Helvetica as Arial).
-   Images are in public/signature/, so they come from the same domain as the
-   emails (made by tools/signature/make-assets.mjs in the nørma website
-   repo, which has the nørma artwork). Outlook holds them back until
-   the reader trusts the sender, so the photo and icon have empty alt text:
-   the name and the card's words already say it. Gmail caches images, so give
-   a changed image a new file name. */
+   Images are embedded, not linked: company Outlook won't download pictures
+   from senders it doesn't know, but it shows ones carried in the email. Gmail
+   keeps data: images pasted into its Signature box and sends them as inline
+   attachments (checked at Cisco, 30 Oct 2026). They're in
+   src/assets/signature/ (made by tools/signature/make-assets.mjs in the nørma
+   website repo). public/signature/ keeps the earlier linked images for emails
+   already sent. The photo and icon have empty alt text: the name and the
+   card's words already say it. */
+import fs from 'node:fs';
 import { PEOPLE, type Person } from '../../data/signatures';
 export function getStaticPaths() {
   return PEOPLE.map((p) => ({ params: { who: p.slug }, props: { p } }));
 }
 const { p } = Astro.props as { p: Person };
 const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-const IMG = 'https://artistry-of-humanity.com/signature';
+const img = (f: string) => `data:image/png;base64,${fs.readFileSync(`src/assets/signature/${f}`).toString('base64')}`;
 const F = "Helvetica,Arial,sans-serif", SERIF = "Georgia,'Times New Roman',serif";
 const T = 'cellpadding="0" cellspacing="0" border="0" role="presentation"';
 const link = 'color:#14231A;text-decoration:none';
 const sig = `<table ${T} width="500" style="border-collapse:collapse;width:500px">
 <tr>
-<td width="88" valign="top" style="padding:0 22px 0 0;vertical-align:top;width:88px"><img src="${IMG}/${p.photo}" width="88" height="88" alt="" style="display:block;border:0;width:88px;height:88px"></td>
+<td width="88" valign="top" style="padding:0 22px 0 0;vertical-align:top;width:88px"><img src="${img(p.photo)}" width="88" height="88" alt="" style="display:block;border:0;width:88px;height:88px"></td>
 <td valign="top" style="padding:0 0 0 22px;vertical-align:top;border-left:3px solid #DCEB7F">
 <table ${T} style="border-collapse:collapse"><tr>
 <td style="padding:0 10px 0 0;font-family:${SERIF};font-size:27px;line-height:30px;color:#14231A;white-space:nowrap">${esc(p.name)}</td>${p.linkedin ? `
-<td valign="middle" style="vertical-align:middle"><a href="${p.linkedin}" style="text-decoration:none"><img src="${IMG}/linkedin.png" width="22" height="22" alt="LinkedIn" style="display:block;border:0;width:22px;height:22px;font-family:${F};font-size:10px;color:#4A6B3A"></a></td>` : ''}
+<td valign="middle" style="vertical-align:middle"><a href="${p.linkedin}" style="text-decoration:none"><img src="${img('linkedin.png')}" width="22" height="22" alt="LinkedIn" style="display:block;border:0;width:22px;height:22px;font-family:${F};font-size:10px;color:#4A6B3A"></a></td>` : ''}
 </tr></table>
 <table ${T} style="border-collapse:collapse">
 <tr><td style="padding:7px 0 10px;font-family:${F};font-size:11px;line-height:15px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:#4A6B3A">${p.role.map(esc).join('<br>')}</td></tr>
@@ -43,7 +46,7 @@ const sig = `<table ${T} width="500" style="border-collapse:collapse;width:500px
 <tr><td colspan="2" style="padding:20px 0 0">
 <table ${T} width="500" bgcolor="#243D2C" style="border-collapse:separate;width:500px;background-color:#243D2C;border-radius:18px">
 <tr>
-<td width="64" valign="middle" style="padding:18px 0 18px 20px;vertical-align:middle;width:64px"><img src="${IMG}/norma-icon.png" width="64" height="64" alt="" style="display:block;border:0;width:64px;height:64px"></td>
+<td width="64" valign="middle" style="padding:18px 0 18px 20px;vertical-align:middle;width:64px"><img src="${img('norma-icon.png')}" width="64" height="64" alt="" style="display:block;border:0;width:64px;height:64px"></td>
 <td valign="middle" style="padding:16px 12px 16px 14px;vertical-align:middle">
 <table ${T} style="border-collapse:collapse">
 <tr><td style="font-family:${F};font-size:9.5px;line-height:14px;font-weight:bold;letter-spacing:1.6px;text-transform:uppercase;color:#DCEB7F;white-space:nowrap">From Artistry of Humanity</td></tr>

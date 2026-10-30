@@ -77,9 +77,8 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "SAMEORIGIN"
 
-# Email signatures: the copy pages and the images every email links to (made
-# by tools/signature/make-assets.mjs in the nørma website repo). Kept out of
-# search.
+# Email signatures: the copy pages, and the linked images that emails sent
+# before they were embedded still load. Kept out of search.
 [[headers]]
   for = "/signature/*"
   [headers.values]
