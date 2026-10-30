@@ -6,7 +6,7 @@
 /** Ian's showreel on YouTube ("Watch Ian live"). */
 export const VIDEO = 'iV0k9AT4i3U';
 
-export const CLIENTS = ['Cisco', 'DHL', 'Qantas', 'Datasite', 'Boston Scientific', 'Northrop', 'USI Insurance Services', 'McPhee Distribution Services'];
+export const CLIENTS = ['Cisco', 'DHL', 'Qantas', 'Datasite', 'Northrop', 'USI Insurance Services', 'McPhee Distribution Services'];
 
 export const KEYNOTES = [
   {
