@@ -42,8 +42,8 @@ const CULTURE = ['Heard', 'Valued', 'Safe to speak'];
 const PRIVATE = ['Check-in answers', 'Reflections', 'Recordings'];
 
 const MORE = [
-  { href: 'https://joinnorma.com/your-people/', icon: 'person', title: 'The app', text: 'What your people see, and how nørma helps them work on the gaps.', cta: 'See the app' },
-  { href: 'https://joinnorma.com/for-leaders/', icon: 'chart', title: 'The dashboard', text: 'The nørma Score for every group, and where to look first.', cta: 'See the dashboard' },
+  { href: 'https://joinnorma.com/app/', icon: 'person', title: 'The app', text: 'What your people see, and how nørma helps them work on the gaps.', cta: 'See the app' },
+  { href: 'https://joinnorma.com/dashboard/', icon: 'chart', title: 'The dashboard', text: 'The nørma Score for every group, and where to look first.', cta: 'See the dashboard' },
   { href: 'https://joinnorma.com/roi/', icon: 'target', title: 'Your ROI', text: 'Work out what nørma could return for your organisation.', cta: 'Work out your ROI' },
   { href: 'https://joinnorma.com/book-a-demo/', icon: 'calendar', title: 'Book a demo', text: 'See the app and the dashboard for yourself.', cta: 'Book a demo' },
 ] as const;
@@ -127,7 +127,7 @@ const MORE = [
             <p class="body">Work is one pillar of five. Once a month, a short check-in shows each person where they are across all five and where the gaps are, and nørma helps them work on them.</p>
             <ul class="chips">{PILLARS.map(p => <li><span style={`background:${p.tint}`}><Icon paths={p.paths} size={18} stroke="#14231A" /></span>{p.name}</li>)}</ul>
             <p class="sd-own"><Icon name="lock" size={18} />It’s theirs. Nobody at work can read it.</p>
-            <a class="link" href="https://joinnorma.com/your-people/">See the app ↗</a>
+            <a class="link" href="https://joinnorma.com/app/">See the app ↗</a>
           </div>
         </div>
         <div class="side" role="tabpanel" id="sd-p1" aria-labelledby="sd-t1">
@@ -140,7 +140,7 @@ const MORE = [
             <h3>The culture they walk into is yours to shape.</h3>
             <p class="body">You see both sides as group figures: how fulfilled your people are, and whether they feel heard, valued and safe to speak. So you know where to look first and what to do.</p>
             <ul class="chips chips-c">{CULTURE.map(c => <li><span><Icon name="check" size={16} stroke="#14231A" width={2} /></span>{c}</li>)}</ul>
-            <a class="link" href="https://joinnorma.com/for-leaders/">See the dashboard ↗</a>
+            <a class="link" href="https://joinnorma.com/dashboard/">See the dashboard ↗</a>
           </div>
         </div>
       </div>
