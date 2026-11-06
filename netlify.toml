@@ -61,10 +61,17 @@
   status = 301
   force = true
 
-# Route alias from the old App.tsx (both addresses showed the same page).
+# The page was renamed on 6 Nov 2026 (it was /human-strategy, and
+# /build-a-human-strategy before that). Links already shared still land on it.
+[[redirects]]
+  from = "/human-strategy"
+  to = "/people-strategy"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/build-a-human-strategy"
-  to = "/human-strategy"
+  to = "/people-strategy"
   status = 301
   force = true
 

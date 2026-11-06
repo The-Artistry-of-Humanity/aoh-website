@@ -7,7 +7,7 @@ const PAGES = [
   '/contact',
   '/framework',
   '/fulfilment-check-in',
-  '/human-strategy',
+  '/people-strategy',
   '/privacy',
   '/what-we-do',
   '/what-we-do/keynotes-workshops',

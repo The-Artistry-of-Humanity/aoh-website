@@ -1,8 +1,7 @@
 ---
-/* The human strategy landing page, used by /human-strategy and
-   /build-a-human-strategy, and shared with clients. Written in Ian's voice
-   (first person), as on the previous site. The cost calculator runs in the
-   browser; its benchmarks are the previous site's. */
+/* The people strategy landing page, at /people-strategy, shared with clients.
+   Written in Ian's voice (first person), as on the previous site. The cost
+   calculator runs in the browser; its benchmarks are the previous site's. */
 import Icon from './Icon.astro';
 import { PILLARS } from '../data/aoh';
 
@@ -18,7 +17,7 @@ const PILLAR_TEXT = [
 ];
 
 const FORMATS = [
-  { icon: 'compass', flag: 'Deepest engagement', title: 'Consulting', text: 'I come in alongside your leadership team and build your human strategy with you. We map where your team actually stands across the Five Pillars, design the operating model, and embed it as a system you run, not a program you launch.', href: '/what-we-do/culture-consulting' },
+  { icon: 'compass', flag: 'Deepest engagement', title: 'Consulting', text: 'I come in alongside your leadership team and build your people strategy with you. We map where your team actually stands across the Five Pillars, design the operating model, and embed it as a system you run, not a program you launch.', href: '/what-we-do/culture-consulting' },
   { icon: 'board', flag: 'Best starting point', title: 'Masterclass', text: 'A focused 60 to 90 minute session for your leadership team. You leave with a shared language for the human side of the business and a clear read on where your team is strong, and where it is quietly under strain.', href: '/what-we-do/masterclass' },
   { icon: 'climb', flag: '6 weeks', title: 'Wellness Accelerator', text: 'A facilitated six-week program that takes a team through each of the Five Pillars with structured exercises, accountability and visible progress. The fastest way to move a team from idea to practice.', href: '/what-we-do/wellness-accelerator' },
   { icon: 'talk', flag: '1:1', title: 'Leadership coaching', text: 'Private coaching for senior leaders who want to model what they are asking of their teams. Grounded in the same framework, applied to your own life and your own leadership.', href: '/what-we-do/leadership-coaching' },
@@ -28,7 +27,7 @@ const FORMATS = [
 const CALL = [
   { icon: 'users', t: 'Get to know each other' },
   { icon: 'search', t: 'Unpack the challenges you are facing' },
-  { icon: 'compass', t: 'Explore how a human strategy might help' },
+  { icon: 'compass', t: 'Explore how a people strategy might help' },
   { icon: 'check', t: 'Leave with something useful, either way' },
 ] as const;
 
@@ -85,8 +84,8 @@ const r = calc(N0, 'other', S0);
   <div class="glow" style="right:-12%;top:-20%;width:56%;background:radial-gradient(closest-side,rgba(217,234,110,.28),rgba(217,234,110,0) 70%)"></div>
   <div class="wrap split" style="padding-top:clamp(40px,6vw,88px);padding-bottom:clamp(120px,13vw,180px)">
     <div style="max-width:620px">
-      <span class="eyebrow">Human strategy, with Ian Williams</span>
-      <h1>Most companies have a business strategy. Few have a <span class="mk">human strategy</span>.</h1>
+      <span class="eyebrow">People strategy, with Ian Williams</span>
+      <h1>Most companies have a business strategy. Few have a <span class="mk">people strategy</span>.</h1>
       <p class="lead">I help leadership teams build theirs.</p>
       <div class="btns">
         <a class="btn btn-lime" href="#contact">Book time with us</a>
@@ -99,7 +98,7 @@ const r = calc(N0, 'other', S0);
       </div>
       <div class="hs-card" aria-hidden="true">
         <p class="hs-row"><span class="hs-ok"><Icon name="check" size={16} width={2.2} /></span><span><b>Business strategy</b><small>Market · product · numbers · plan</small></span></p>
-        <p class="hs-row hs-miss"><span class="hs-q">?</span><span><b>Human strategy</b><small>Energy · clarity · trust</small></span></p>
+        <p class="hs-row hs-miss"><span class="hs-q">?</span><span><b>People strategy</b><small>Energy · clarity · trust</small></span></p>
       </div>
       <figcaption><b>Ian Williams</b><span class="who">Founder &amp; CEO</span></figcaption>
     </figure>
@@ -111,11 +110,11 @@ const r = calc(N0, 'other', S0);
   <div class="wrap sec">
     <div class="split" style="align-items:end">
       <div style="flex:1 1 520px"><span class="eyebrow">The idea</span><h2>You have a business strategy. The thing it actually runs on is <span class="mk">people</span>.</h2></div>
-      <p class="lead" style="margin-top:0;flex:1 1 360px">How they are doing, how they connect, whether they trust each other, whether they have anything left to give. That is your human strategy. Most leaders have never named it, let alone built one.</p>
+      <p class="lead" style="margin-top:0;flex:1 1 360px">How they are doing, how they connect, whether they trust each other, whether they have anything left to give. That is your people strategy. Most leaders have never named it, let alone built one.</p>
     </div>
 
     <div class="idea" data-tabs>
-      <figure class="bld" role="img" aria-label="A building: your business strategy is the roof, held up by five columns, the Five Pillars of Fulfilment, which together are your human strategy">
+      <figure class="bld" role="img" aria-label="A building: your business strategy is the roof, held up by five columns, the Five Pillars of Fulfilment, which together are your people strategy">
         <div class="bld-roof"><span class="eyebrow">Your business strategy</span><b>The market, the product, the numbers, the plan.</b></div>
         <ol class="bld-cols">
           {PILLARS.map((p, i) => (
@@ -125,7 +124,7 @@ const r = calc(N0, 'other', S0);
             </li>
           ))}
         </ol>
-        <div class="bld-base"><span class="eyebrow">Your human strategy</span><b>The Five Pillars of Fulfilment</b></div>
+        <div class="bld-base"><span class="eyebrow">Your people strategy</span><b>The Five Pillars of Fulfilment</b></div>
       </figure>
 
       <div class="idea-side">
@@ -144,8 +143,8 @@ const r = calc(N0, 'other', S0);
         </div>
         <div class="accs" style="margin-top:28px">
           <details class="acc">
-            <summary>What exactly is a human strategy?</summary>
-            <div class="acc-body"><p>A human strategy is the operating model for the part of your business that lives inside the people doing the work. It is the system that decides whether your team has the energy, clarity and trust to actually execute the plan you have set. Built well, it is quiet and load bearing. Built badly, or not at all, it is the reason good strategy quietly stops moving.</p></div>
+            <summary>What exactly is a people strategy?</summary>
+            <div class="acc-body"><p>A people strategy is the operating model for the part of your business that lives inside the people doing the work. It is the system that decides whether your team has the energy, clarity and trust to actually execute the plan you have set. Built well, it is quiet and load bearing. Built badly, or not at all, it is the reason good strategy quietly stops moving.</p></div>
           </details>
         </div>
       </div>
@@ -159,7 +158,7 @@ const r = calc(N0, 'other', S0);
   <div class="wrap sec">
     <div style="max-width:760px">
       <span class="eyebrow">The cost of standing still</span>
-      <h2>What is it costing you, today, not to have a <span class="mk mk-d">human strategy</span>?</h2>
+      <h2>What is it costing you, today, not to have a <span class="mk mk-d">people strategy</span>?</h2>
       <p class="lead">Tell me the size of your team. I will show you what the human side looks like in real terms, what it is quietly costing you each year, and the risk you are carrying without knowing it.</p>
     </div>
 
@@ -238,7 +237,7 @@ const r = calc(N0, 'other', S0);
       </div>
     </div>
 
-    <p class="calc-end">This is the cost of not having a human strategy.<br /><span>Here is how we build one.</span></p>
+    <p class="calc-end">This is the cost of not having a people strategy.<br /><span>Here is how we build one.</span></p>
   </div>
 </section>
 
@@ -247,7 +246,7 @@ const r = calc(N0, 'other', S0);
   <div class="wrap sec">
     <div class="split" style="align-items:end">
       <div><span class="eyebrow">How I can help</span><h2>Five ways I work with leaders. <span class="mk">One platform</span> that reaches everyone.</h2></div>
-      <p class="lead" style="margin-top:0">Every team meets me at a different point. The goal is the same: a human strategy that actually runs inside your organisation, owned by the leaders who built it.</p>
+      <p class="lead" style="margin-top:0">Every team meets me at a different point. The goal is the same: a people strategy that actually runs inside your organisation, owned by the leaders who built it.</p>
     </div>
     <div class="fm" data-tabs>
       <div class="tablist fm-list" role="tablist" aria-label="Ways to work with Ian">
@@ -277,7 +276,7 @@ const r = calc(N0, 'other', S0);
         <p class="live"><span class="pill">Available now</span><span class="dot">Live</span></p>
         <p class="norma-word"><img src="/assets/norma-app-icon.png" alt="" width="44" height="44" />nørma</p>
         <p class="nm-scale">Wellbeing at scale.</p>
-        <p class="body">Consulting, coaching and workshops reach one leader or one team at a time. nørma reaches every person and every team: a private fulfilment companion for your people, and honest, aggregated signals for your leaders. Your human strategy, put into practice.</p>
+        <p class="body">Consulting, coaching and workshops reach one leader or one team at a time. nørma reaches every person and every team: a private fulfilment companion for your people, and honest, aggregated signals for your leaders. Your people strategy, put into practice.</p>
         <div class="btns"><a class="btn btn-lime" href="https://joinnorma.com/">Get access now ↗</a><a class="btn btn-ghost" href="/what-we-do/norma">How it fits our work</a></div>
       </div>
       <div class="nm-vis">
@@ -305,7 +304,7 @@ const r = calc(N0, 'other', S0);
         <li><Icon name="globe" size={20} /><span><b>Three continents</b></span></li>
       </ul>
       <figure class="ian-q">
-        <blockquote>Human strategy is the conversation I think every leadership team needs to have, and <span class="mk">most are not having yet</span>.</blockquote>
+        <blockquote>People strategy is the conversation I think every leadership team needs to have, and <span class="mk">most are not having yet</span>.</blockquote>
       </figure>
       <div class="accs" style="margin-top:24px">
         <details class="acc">
@@ -367,7 +366,7 @@ const r = calc(N0, 'other', S0);
 <!-- Closing statement -->
 <section class="bg-dark lift-b">
   <div class="wrap sec center">
-    <p class="closing">Because <span class="mk mk-d">human strategy</span> is the precursor to business strategy.</p>
+    <p class="closing">Because <span class="mk mk-d">people strategy</span> is the precursor to business strategy.</p>
   </div>
 </section>
 
